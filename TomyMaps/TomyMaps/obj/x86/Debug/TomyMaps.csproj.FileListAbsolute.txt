@@ -9,3 +9,10 @@ C:\Documents and Settings\novellat\Desktop\TomyMaps\TomyMaps\obj\x86\Debug\TomyM
 C:\Documents and Settings\novellat\Desktop\TomyMaps\TomyMaps\obj\x86\Debug\TomyMaps.pdb
 D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\obj\x86\Debug\TomyMaps.exe
 D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\obj\x86\Debug\TomyMaps.pdb
+D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\bin\Debug\TomyMaps.exe
+D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\bin\Debug\TomyMaps.pdb
+D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\obj\x86\Debug\TomyMaps.Form1.resources
+D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\obj\x86\Debug\TomyMaps.Properties.Resources.resources
+D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\school\TRETIAK\bakalarka\github-path-planner\TomyMaps\TomyMaps\obj\x86\Debug\GenerateResource.write.1.tlog

@@ -22,6 +22,12 @@ namespace TomyMaps
         //change later on to private 
         public string[] map;
 
+        //public char this[int y, int x]
+        //{
+        //    get { return map[x][y]; }
+        //    private set;
+        //}
+
         private int width;
         private int height;
 
@@ -36,7 +42,7 @@ namespace TomyMaps
             get {return height;}
             set { return; }
         }
-        public void loadMap(string filename)
+        public void Load(string filename)
         {
             StreamReader sr = new StreamReader(filename);
             string line;
@@ -71,15 +77,19 @@ namespace TomyMaps
             sr.Close(); // so that I can edit the text file after loading it 
         }
 
-        public void DrawMap(Canvas c)
+        public void Draw(Canvas c, Point p, int squareSize)
         {
+            if (p == null)
+                p = new Point(0, 0);
+
+
+
             // MessageBox.Show(Width.ToString() + "--" + Height.ToString());
             c.SetPenWidth(1);
 
             c.SetColor(Color.Yellow);
             //c.DrawNormalRectangle(0, 0, c.Width, c.Height);
 
-            int squareSize = 3;
             int iTo = Math.Min(c.Height / squareSize, this.height);
             int jTo = Math.Min(c.Width / squareSize, this.width);
 
@@ -88,7 +98,7 @@ namespace TomyMaps
                 for (int j = 0; j < jTo; j++)
                 {
                     Color col;
-            
+
                     switch (map[i][j])
                     {
                         case 'W':
@@ -100,6 +110,7 @@ namespace TomyMaps
                         case '@':
                             col = Color.Gray;
                             break;
+                        case 'S':
                         case '.':
                             col = Color.PapayaWhip;
                             break;
@@ -112,6 +123,11 @@ namespace TomyMaps
                 }
             }
 
+        }
+
+        public void Draw(Canvas c)
+        {
+            Draw(c, new Point(0, 0), 3);
         }
     }
 }

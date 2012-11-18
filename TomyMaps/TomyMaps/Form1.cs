@@ -13,6 +13,18 @@ namespace TomyMaps
     {
         private Map map;
         private bool imageLoaded = false;
+        private int squareSize = 3;
+
+        public void DrawZoomedMap() 
+        {
+            if (imageLoaded)
+            {
+                Canvas c = new Canvas(zoomedMap.Width, zoomedMap.Height);
+                map.Draw(c, new Point(0,0), squareSize);
+                zoomedMap.Image = c.Finish();
+            }
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -34,7 +46,7 @@ namespace TomyMaps
 
             try
             {
-                map.loadMap(ofd.FileName);
+                map.Load(ofd.FileName);
             }
             catch (Exception ex)
             {
@@ -43,15 +55,16 @@ namespace TomyMaps
             }
 
             imageLoaded = true;
-            
 
+            // redraw a map after loading
+            DrawZoomedMap();
         }
 
 
         private void button2_Click(object sender, EventArgs e)
         {
             Canvas c = new Canvas(zoomedMap.Width, zoomedMap.Height);
-            map.DrawMap(c);
+            map.Draw(c);
             zoomedMap.Image = c.Finish();
         }
 
@@ -62,17 +75,24 @@ namespace TomyMaps
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            if (imageLoaded)
-            {
-                Canvas c = new Canvas(zoomedMap.Width, zoomedMap.Height);
-                map.DrawMap(c);
-                zoomedMap.Image = c.Finish();
-            }
+            DrawZoomedMap();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        //private void Form1_Load(object sender, EventArgs e)
+        //{
 
+        //}
+
+        private void zoomInButton_Click(object sender, EventArgs e)
+        {
+            squareSize += 1;
+            DrawZoomedMap();
+        }
+
+        private void zoomOutButton_Click(object sender, EventArgs e)
+        {
+            squareSize -= 1;
+            DrawZoomedMap();
         }
 
 
