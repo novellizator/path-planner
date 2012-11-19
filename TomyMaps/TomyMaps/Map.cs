@@ -17,16 +17,14 @@ namespace TomyMaps
             b = tmp;
         }
     }
+    /// <summary>
+    /// This class takes care of the map algebraic representation 
+    /// and about drawing it on the canvas it using graphic library
+    /// </summary>
     class Map
     {
         //change later on to private 
         public string[] map;
-
-        //public char this[int y, int x]
-        //{
-        //    get { return map[x][y]; }
-        //    private set;
-        //}
 
         private int width;
         private int height;
@@ -79,21 +77,15 @@ namespace TomyMaps
 
         public void Draw(Canvas c, Point p, int squareSize)
         {
-            if (p == null)
-                p = new Point(0, 0);
 
-
-
-            // MessageBox.Show(Width.ToString() + "--" + Height.ToString());
             c.SetPenWidth(1);
 
             c.SetColor(Color.Yellow);
-            //c.DrawNormalRectangle(0, 0, c.Width, c.Height);
 
             int iTo = Math.Min(c.Height / squareSize, this.height);
             int jTo = Math.Min(c.Width / squareSize, this.width);
 
-            for (int i = 0; i < iTo; i++) // pocet riadkov
+            for (int i = 0; i < iTo; i++) // pocet riadkov // nepojde presne lebo riadok != pixel!!!!
             {
                 for (int j = 0; j < jTo; j++)
                 {
@@ -124,6 +116,7 @@ namespace TomyMaps
             }
 
         }
+
 
         public void Draw(Canvas c)
         {

@@ -37,6 +37,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.zoomInButton = new System.Windows.Forms.Button();
             this.zoomOutButton = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.zoomedMap)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -46,7 +47,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(9, 21);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 0;
@@ -61,18 +62,19 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.zoomedMap.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.zoomedMap.Location = new System.Drawing.Point(16, 15);
-            this.zoomedMap.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zoomedMap.Margin = new System.Windows.Forms.Padding(4);
             this.zoomedMap.Name = "zoomedMap";
-            this.zoomedMap.Size = new System.Drawing.Size(747, 523);
+            this.zoomedMap.Size = new System.Drawing.Size(574, 523);
             this.zoomedMap.TabIndex = 1;
             this.zoomedMap.TabStop = false;
-            this.zoomedMap.Click += new System.EventHandler(this.zoomedMap_Click);
+            this.zoomedMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.zoomedMap_MouseMove);
+            this.zoomedMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.zoomedMap_MouseUp);
             // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Location = new System.Drawing.Point(9, 87);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 28);
             this.button2.TabIndex = 2;
@@ -84,7 +86,7 @@
             // 
             this.buttonSaveWhole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSaveWhole.Location = new System.Drawing.Point(9, 139);
-            this.buttonSaveWhole.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonSaveWhole.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSaveWhole.Name = "buttonSaveWhole";
             this.buttonSaveWhole.Size = new System.Drawing.Size(100, 28);
             this.buttonSaveWhole.TabIndex = 3;
@@ -95,7 +97,7 @@
             // 
             this.buttonSaveSelection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSaveSelection.Location = new System.Drawing.Point(9, 187);
-            this.buttonSaveSelection.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonSaveSelection.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSaveSelection.Name = "buttonSaveSelection";
             this.buttonSaveSelection.Size = new System.Drawing.Size(100, 28);
             this.buttonSaveSelection.TabIndex = 4;
@@ -109,7 +111,7 @@
             this.panel1.Controls.Add(this.buttonSaveSelection);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.buttonSaveWhole);
-            this.panel1.Location = new System.Drawing.Point(815, 300);
+            this.panel1.Location = new System.Drawing.Point(863, 300);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(127, 238);
             this.panel1.TabIndex = 5;
@@ -118,7 +120,7 @@
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.SystemColors.GrayText;
-            this.pictureBox1.Location = new System.Drawing.Point(770, 15);
+            this.pictureBox1.Location = new System.Drawing.Point(818, 15);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(202, 209);
             this.pictureBox1.TabIndex = 6;
@@ -127,7 +129,7 @@
             // zoomInButton
             // 
             this.zoomInButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.zoomInButton.Location = new System.Drawing.Point(792, 249);
+            this.zoomInButton.Location = new System.Drawing.Point(840, 249);
             this.zoomInButton.Name = "zoomInButton";
             this.zoomInButton.Size = new System.Drawing.Size(75, 23);
             this.zoomInButton.TabIndex = 7;
@@ -138,7 +140,7 @@
             // zoomOutButton
             // 
             this.zoomOutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.zoomOutButton.Location = new System.Drawing.Point(873, 249);
+            this.zoomOutButton.Location = new System.Drawing.Point(921, 249);
             this.zoomOutButton.Name = "zoomOutButton";
             this.zoomOutButton.Size = new System.Drawing.Size(85, 23);
             this.zoomOutButton.TabIndex = 8;
@@ -146,17 +148,28 @@
             this.zoomOutButton.UseVisualStyleBackColor = true;
             this.zoomOutButton.Click += new System.EventHandler(this.zoomOutButton_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(628, 15);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(160, 523);
+            this.textBox1.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 567);
+            this.ClientSize = new System.Drawing.Size(1032, 567);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.zoomOutButton);
             this.Controls.Add(this.zoomInButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.zoomedMap);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(394, 236);
             this.Name = "Form1";
             this.Text = "TomyMaps";
@@ -165,6 +178,7 @@
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -179,6 +193,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button zoomInButton;
         private System.Windows.Forms.Button zoomOutButton;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

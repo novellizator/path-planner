@@ -7,28 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+// lockBitmap --> pri zmene squares vypocitam celu mapu a potom posuvam
 namespace TomyMaps
 {
     public partial class Form1 : Form
     {
-        private Map map;
+        private Map map = new Map();
+
+        /// <summary>
+        /// 
+        /// </summary>
         private bool imageLoaded = false;
         private int squareSize = 3;
+        
+        private bool isMoving = false;
 
-        public void DrawZoomedMap() 
-        {
-            if (imageLoaded)
-            {
-                Canvas c = new Canvas(zoomedMap.Width, zoomedMap.Height);
-                map.Draw(c, new Point(0,0), squareSize);
-                zoomedMap.Image = c.Finish();
-            }
-        }
+        private Point movedByVector;
+        private Point TLPoint = new Point(0,0); // TopLeft point
 
         public Form1()
         {
             InitializeComponent();
-            this.map = new Map();
+        }
+
+        public void DrawZoomedMap(Point tl) 
+        {
+            if (imageLoaded)
+            {
+                Canvas c = new Canvas(zoomedMap.Width, zoomedMap.Height);
+                map.Draw(c, tl, squareSize);
+                zoomedMap.Image = c.Finish();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -57,7 +66,7 @@ namespace TomyMaps
             imageLoaded = true;
 
             // redraw a map after loading
-            DrawZoomedMap();
+            DrawZoomedMap(TLPoint);
         }
 
 
@@ -68,31 +77,47 @@ namespace TomyMaps
             zoomedMap.Image = c.Finish();
         }
 
-        private void zoomedMap_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(zoomedMap.Width.ToString());
-        }
-
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            DrawZoomedMap();
+            DrawZoomedMap(TLPoint); // maybe when resizing - make it the same from all the directions
         }
-
-        //private void Form1_Load(object sender, EventArgs e)
-        //{
-
-        //}
 
         private void zoomInButton_Click(object sender, EventArgs e)
         {
             squareSize += 1;
-            DrawZoomedMap();
+            DrawZoomedMap(TLPoint);
         }
 
         private void zoomOutButton_Click(object sender, EventArgs e)
         {
             squareSize -= 1;
-            DrawZoomedMap();
+            DrawZoomedMap(TLPoint);
+        }
+
+        private void zoomedMap_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (!isMoving)
+                {
+                    isMoving = true;
+                    movedByVector = e.Location;
+                }
+            }
+            Point newTLPoint = new Point(TLPoint.X + movedByVector.X, TLPoint.Y + movedByVector.Y);
+            // DrawZoomedMap(newTLPoint);
+            zoomedMap.Location = movedByVector;
+        }
+
+        private void zoomedMap_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isMoving)
+            {
+                TLPoint.X += movedByVector.X;
+                TLPoint.Y += movedByVector.Y;
+            }
+            isMoving = false;
+            
         }
 
 
