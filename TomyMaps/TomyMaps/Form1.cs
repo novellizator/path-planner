@@ -14,13 +14,10 @@ namespace TomyMaps
     {
         private Map map = new Map();
 
-        /// <summary>
-        /// 
-        /// </summary>
         private bool imageLoaded = false;
         private int squareSize = 3;
         
-        private bool isMoving = false;
+        private bool isDragged = false;
 
         private Point movedByVector;
         private Point TLPoint = new Point(0,0); // TopLeft point
@@ -98,26 +95,46 @@ namespace TomyMaps
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (!isMoving)
+                if (!isDragged)
                 {
-                    isMoving = true;
-                    movedByVector = e.Location;
+                    isDragged = true;
+                    movedByVector = e.Location;  
                 }
+                textBox1.Text += e.X + " ";
             }
+            
             Point newTLPoint = new Point(TLPoint.X + movedByVector.X, TLPoint.Y + movedByVector.Y);
             // DrawZoomedMap(newTLPoint);
-            zoomedMap.Location = movedByVector;
+            //zoomedMap.ImageLoc = movedByVector;
         }
 
         private void zoomedMap_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isMoving)
+            if (isDragged)
             {
                 TLPoint.X += movedByVector.X;
                 TLPoint.Y += movedByVector.Y;
             }
-            isMoving = false;
+            isDragged = false;
             
+        }
+
+        private void buttonSaveSelection_Click(object sender, EventArgs e)
+        {
+            //textBox1.Text = "width: " + pictureBox1.Size.Width + "height: " + pictureBox1.Size.Height;
+
+            this.Size = new Size(this.Size.Width + 300, this.Size.Height); // resizujem len main window
+
+
+
+            //pictureBox1.Size = new Size(pictureBox1.Size.Width+50, pictureBox1.Size.Height);
+            //pictureBox1.Anchor = AnchorStyles.Right;
+            
+
+            //textBox1.Text += "+width: " + pictureBox1.Size.Width + "+height: " + pictureBox1.Size.Height; 
+            //pictureBox1.Invalidate();
+
+        
         }
 
 
