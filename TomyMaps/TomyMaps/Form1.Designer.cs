@@ -57,6 +57,9 @@
             // 
             // zoomedMap
             // 
+            this.zoomedMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.zoomedMap.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.zoomedMap.Location = new System.Drawing.Point(16, 15);
             this.zoomedMap.Margin = new System.Windows.Forms.Padding(4);
@@ -116,8 +119,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.SystemColors.GrayText;
             this.pictureBox1.Location = new System.Drawing.Point(839, 15);
             this.pictureBox1.Name = "pictureBox1";
@@ -172,6 +174,7 @@
             this.MinimumSize = new System.Drawing.Size(394, 236);
             this.Name = "Form1";
             this.Text = "TomyMaps";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.zoomedMap)).EndInit();
             this.panel1.ResumeLayout(false);

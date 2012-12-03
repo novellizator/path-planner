@@ -19,7 +19,7 @@ namespace TomyMaps
         
         private bool isDragged = false;
 
-        private Point movedByVector;
+        private Point startDragLocation;
         private Point TLPoint = new Point(0,0); // TopLeft point
 
         public Form1()
@@ -31,9 +31,7 @@ namespace TomyMaps
         {
             if (imageLoaded)
             {
-                Canvas c = new Canvas(zoomedMap.Width, zoomedMap.Height);
-                map.Draw(c, tl, squareSize);
-                zoomedMap.Image = c.Finish();
+                zoomedMap.Image = map.DrawSelection(zoomedMap.Size, tl);
             }
         }
 
@@ -63,31 +61,51 @@ namespace TomyMaps
             imageLoaded = true;
 
             // redraw a map after loading
+     
             DrawZoomedMap(TLPoint);
+
         }
 
-
+        // "proceed" button
         private void button2_Click(object sender, EventArgs e)
         {
-            Canvas c = new Canvas(zoomedMap.Width, zoomedMap.Height);
-            map.Draw(c);
-            zoomedMap.Image = c.Finish();
+            //int sqS = 10;
+            //Canvas c = new Canvas(map.Width * 10, map.Height * 10);
+            //map.Draw(ref c, new Point(0, 0), sqS);
+            //c.Finish().Save("D:/mapa.bmp", System.Drawing.Imaging.ImageFormat.Bmp );
+            // map.PrecomputeMapPortion(3);
+            // map.cachedBitmap.Save("D:/mapa.bmp", System.Drawing.Imaging.ImageFormat.Bmp );
+            //DrawZoomedMap(TLPoint);
+            //Point newTLPoint = new Point(TLPoint.X + 50, TLPoint.Y + 50);
+            //TLPoint = newTLPoint;
+            textBox1.Text += TLPoint.X + " and " + TLPoint.Y;
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            DrawZoomedMap(TLPoint); // maybe when resizing - make it the same from all the directions
+            // DrawZoomedMap(TLPoint); // feature to implement: when resizing - make it the same in all directions
+            textBox1.Text += "formpaint" + TLPoint.X;
         }
 
         private void zoomInButton_Click(object sender, EventArgs e)
         {
+            if (squareSize == 10)
+            {
+                return;
+            }
             squareSize += 1;
+            map.setSquareSize(squareSize);
             DrawZoomedMap(TLPoint);
         }
 
         private void zoomOutButton_Click(object sender, EventArgs e)
         {
+            if (squareSize == 1)
+            {
+                return;
+            }
             squareSize -= 1;
+            map.setSquareSize(squareSize);
             DrawZoomedMap(TLPoint);
         }
 
@@ -98,22 +116,68 @@ namespace TomyMaps
                 if (!isDragged)
                 {
                     isDragged = true;
-                    movedByVector = e.Location;  
+                    startDragLocation = e.Location;  
                 }
-                textBox1.Text += e.X + " ";
+                
+                int dx = startDragLocation.X - e.X;
+                int dy = startDragLocation.Y - e.Y;
+                
+                int newX, newY; 
+                // cannot access these points in the real map (out of bound in either side)
+                if (TLPoint.X + dx < 0 )
+                {
+                    newX = 0;
+                }
+                else
+                {
+                    newX = TLPoint.X + dx;
+                }
+ 
+                if (TLPoint.Y + dy < 0 )
+                {
+                    newY = 0;
+                }
+                else
+                {
+                    newY = TLPoint.Y + dy;
+                }
+ 
+
+                textBox1.Text += dx + "; ";
+                Point newTLPoint = new Point(newX, newY);
+                DrawZoomedMap(newTLPoint);
+                //zoomedMap.ImageLoc = startDragLocation;
+
+
             }
-            
-            Point newTLPoint = new Point(TLPoint.X + movedByVector.X, TLPoint.Y + movedByVector.Y);
-            // DrawZoomedMap(newTLPoint);
-            //zoomedMap.ImageLoc = movedByVector;
         }
 
         private void zoomedMap_MouseUp(object sender, MouseEventArgs e)
         {
             if (isDragged)
             {
-                TLPoint.X += movedByVector.X;
-                TLPoint.Y += movedByVector.Y;
+
+                int dx = startDragLocation.X - e.X;
+                int dy = startDragLocation.Y - e.Y;
+
+                TLPoint.X += dx;
+                TLPoint.Y += dy;
+
+                if (TLPoint.X < 0)
+                {
+                    TLPoint.X = 0;
+                }
+                if (TLPoint.Y < 0)
+                {
+                    TLPoint.Y = 0;
+                }
+
+                // ked som uz za obrazom - tlpoint+zoomedimageWidth > "cachedimage??.width" -- i mean the width of the whole big map. 
+                // heigth detto
+                if (true)
+                {
+                    
+                }
             }
             isDragged = false;
             
@@ -135,6 +199,11 @@ namespace TomyMaps
             //pictureBox1.Invalidate();
 
         
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
 

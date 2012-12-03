@@ -23,9 +23,10 @@ namespace TomyMaps
     /// </summary>
     class Map
     {
-        //change later on to private 
-        public string[] map;
+        private string[] map;
+        public Bitmap cachedBitmap = null;
 
+        // width/height of a map in characters (basic resolution)
         private int width;
         private int height;
 
@@ -40,6 +41,12 @@ namespace TomyMaps
             get {return height;}
             set { return; }
         }
+
+        public void setSquareSize(int size)
+        {
+            PrecomputeMapPortion(size);
+        }
+
         public void Load(string filename)
         {
             StreamReader sr = new StreamReader(filename);
@@ -75,9 +82,8 @@ namespace TomyMaps
             sr.Close(); // so that I can edit the text file after loading it 
         }
 
-        public void Draw(Canvas c, Point p, int squareSize)
+        public void Draw(ref Canvas c, Point p, int squareSize)
         {
-
             c.SetPenWidth(1);
 
             c.SetColor(Color.Yellow);
@@ -117,10 +123,47 @@ namespace TomyMaps
 
         }
 
-
-        public void Draw(Canvas c)
+        public void Draw(ref Canvas c)
         {
-            Draw(c, new Point(0, 0), 3);
+            Draw(ref c, new Point(0, 0), 3);
+        }
+
+
+        /// <summary>
+        /// Creates a bitmap (at least a large so that it fits in the zoomedMap picturebox. (In alpha version it is the whole map - up to 76MB)
+        /// Of which we later draw only a selection.
+        /// </summary>
+        public void PrecomputeMapPortion(int squareSize)
+        {
+            Canvas c = new Canvas(width * squareSize, height * squareSize);
+            Draw(ref c, new Point(0, 0), squareSize);
+            cachedBitmap = c.Finish();
+            // System.Windows.Forms.MessageBox.Show("prepomputed portion");
+
+        }
+
+        public Bitmap DrawSelection(Size zoomedMapSize, Point TLPoint)
+        {
+            if (cachedBitmap == null)
+            {
+                // throw new Exception("no cached bitmap");
+                PrecomputeMapPortion(1);
+            }
+
+        
+            //System.Windows.Forms.MessageBox.Show("-" + TLPoint.X+" "+ TLPoint.Y+" "+ zoomedMapSize.Width+" "+ zoomedMapSize.Height);
+            Rectangle selectionRect = new Rectangle(TLPoint.X, TLPoint.Y,
+                Math.Min(zoomedMapSize.Width, cachedBitmap.Width) - TLPoint.X,
+                Math.Min(zoomedMapSize.Height, cachedBitmap.Height) - TLPoint.Y);
+
+            // Rectangle selectionRect = new Rectangle(200, 200, 500, 500);
+            System.Drawing.Imaging.PixelFormat format = cachedBitmap.PixelFormat;
+
+            return cachedBitmap.Clone(selectionRect, format);
+
+            // cachedBitmap.Save("D:/cach.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+
+            //return cachedBitmap;
         }
     }
 }
