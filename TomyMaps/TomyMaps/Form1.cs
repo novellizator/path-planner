@@ -31,6 +31,8 @@ namespace TomyMaps
         {
             if (imageLoaded)
             {
+                // zoomedMap.Image may not be passed as an out or ref parameter blahblahbla...
+                //map.DrawSelection(out zoomedMap.Image, zoomedMap.Size, tl);
                 zoomedMap.Image = map.DrawSelection(zoomedMap.Size, tl);
             }
         }
@@ -146,7 +148,7 @@ namespace TomyMaps
                 textBox1.Text += dx + "; ";
                 Point newTLPoint = new Point(newX, newY);
                 DrawZoomedMap(newTLPoint);
-                //zoomedMap.ImageLoc = startDragLocation;
+                
 
 
             }

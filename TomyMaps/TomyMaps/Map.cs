@@ -159,11 +159,11 @@ namespace TomyMaps
             // Rectangle selectionRect = new Rectangle(200, 200, 500, 500);
             System.Drawing.Imaging.PixelFormat format = cachedBitmap.PixelFormat;
 
-            return cachedBitmap.Clone(selectionRect, format);
+           return cachedBitmap.Clone(selectionRect, format);
 
             // cachedBitmap.Save("D:/cach.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
 
-            //return cachedBitmap;
+        
         }
     }
 }
