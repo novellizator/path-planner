@@ -30,7 +30,6 @@ namespace TomyMaps
         private int width;
         private int height;
 
-        
         public int Width
         {
             get { return width; }

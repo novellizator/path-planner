@@ -81,12 +81,13 @@ namespace TomyMaps
             //Point newTLPoint = new Point(TLPoint.X + 50, TLPoint.Y + 50);
             //TLPoint = newTLPoint;
             textBox1.Text += TLPoint.X + " and " + TLPoint.Y;
+            textBox1.Text = "";
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             // DrawZoomedMap(TLPoint); // feature to implement: when resizing - make it the same in all directions
-            textBox1.Text += "formpaint" + TLPoint.X;
+            textBox1.Text += "formpaintqqq" + TLPoint.X;
         }
 
         private void zoomInButton_Click(object sender, EventArgs e)
@@ -143,9 +144,9 @@ namespace TomyMaps
                 {
                     newY = TLPoint.Y + dy;
                 }
- 
 
-                textBox1.Text += dx + "; ";
+
+                textBox1.Text = dx + ";";
                 Point newTLPoint = new Point(newX, newY);
                 DrawZoomedMap(newTLPoint);
                 
@@ -205,10 +206,13 @@ namespace TomyMaps
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            //tst(ref pictureBox1.Image);
         }
 
-
+        private void tst(ref Image i)
+        {
+            
+        }
      
 
     }
