@@ -15,7 +15,7 @@ namespace TomyMaps
         private Map map = new Map();
 
         private bool imageLoaded = false;
-        private int squareSize = 3;
+        private int squareSize = 1;
         
         private bool isDragged = false;
 
@@ -31,8 +31,6 @@ namespace TomyMaps
         {
             if (imageLoaded)
             {
-                // zoomedMap.Image may not be passed as an out or ref parameter blahblahbla...
-                //map.DrawSelection(out zoomedMap.Image, zoomedMap.Size, tl);
                 zoomedMap.Image = map.DrawSelection(zoomedMap.Size, tl);
             }
         }
@@ -63,7 +61,8 @@ namespace TomyMaps
             imageLoaded = true;
 
             // redraw a map after loading
-     
+            map.SquareSize = squareSize;
+            map.WindowSize = zoomedMap.ClientSize;
             DrawZoomedMap(TLPoint);
 
         }
@@ -87,7 +86,7 @@ namespace TomyMaps
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             // DrawZoomedMap(TLPoint); // feature to implement: when resizing - make it the same in all directions
-            textBox1.Text += "formpaintqqq" + TLPoint.X;
+            //textBox1.Text += "formpaintqqq" + TLPoint.X;
         }
 
         private void zoomInButton_Click(object sender, EventArgs e)
@@ -97,18 +96,23 @@ namespace TomyMaps
                 return;
             }
             squareSize += 1;
-            map.setSquareSize(squareSize);
+            map.SquareSize = squareSize ;
             DrawZoomedMap(TLPoint);
         }
 
         private void zoomOutButton_Click(object sender, EventArgs e)
         {
-            if (squareSize == 1)
-            {
-                return;
-            }
-            squareSize -= 1;
-            map.setSquareSize(squareSize);
+            //textBox1.Text += squareSize;
+            //if (squareSize <= 1)
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    squareSize -= 1;
+            //}
+
+            map.SquareSize -= 1;
             DrawZoomedMap(TLPoint);
         }
 
@@ -212,6 +216,12 @@ namespace TomyMaps
         private void tst(ref Image i)
         {
             
+        }
+
+        // update the info in the map object, whenever the zoomedMap is resized
+        private void zoomedMap_SizeChanged(object sender, EventArgs e)
+        {
+            map.WindowSize = zoomedMap.ClientSize;
         }
      
 

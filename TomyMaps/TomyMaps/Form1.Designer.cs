@@ -67,6 +67,7 @@
             this.zoomedMap.Size = new System.Drawing.Size(574, 523);
             this.zoomedMap.TabIndex = 1;
             this.zoomedMap.TabStop = false;
+            this.zoomedMap.SizeChanged += new System.EventHandler(this.zoomedMap_SizeChanged);
             this.zoomedMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.zoomedMap_MouseMove);
             this.zoomedMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.zoomedMap_MouseUp);
             // 

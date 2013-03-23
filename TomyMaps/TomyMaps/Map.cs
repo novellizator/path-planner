@@ -10,7 +10,7 @@ namespace TomyMaps
 {
     class Helpers
     {
-        public static void Swap<T>(ref T a, ref T b)
+        public static void Swap<T>(T a, T b)
         {
             T tmp = a;
             a = b;
@@ -19,32 +19,37 @@ namespace TomyMaps
     }
     /// <summary>
     /// This class takes care of the map algebraic representation 
-    /// and about drawing it on the canvas it using graphic library
+    /// and about drawing it on the canvas using graphic library.
+    /// It takes arguments like desired squareSize, algebraic representation of the map, and resolution of the field.
+    /// Returns map image...
     /// </summary>
     class Map
     {
-        private string[] map;
-        public Bitmap cachedBitmap = null;
+        private string[] map; // the most important data structure holds the whole character map
+
+        public Size WindowSize // size of the Window where the image is outputted
+        {
+            get;
+            set;
+        }
+
+        public int SquareSize // == ZoomSize
+        {
+            get;
+            set{
+                if (value > 10 || value <1)
+	            {
+		            return;
+            	}
+            }
+        }
+
+        // maybe redundant...
+        private Bitmap cachedBitmap = null;
 
         // width/height of a map in characters (basic resolution)
-        private int width;
-        private int height;
-
-        public int Width
-        {
-            get { return width; }
-            set { return; }
-        }
-        public int Height
-        {
-            get {return height;}
-            set { return; }
-        }
-
-        public void setSquareSize(int size)
-        {
-            PrecomputeMapPortion(size);
-        }
+        private int charWidth;
+        private int charHeight;
 
         public void Load(string filename)
         {
@@ -63,22 +68,24 @@ namespace TomyMaps
             string[] sline2 = l2.Split();
 
             // assuming I first read the height
-            this.height = int.Parse(sline1[1]);
-            this.width = int.Parse(sline2[1]);
+            this.charHeight = int.Parse(sline1[1]);
+            this.charWidth = int.Parse(sline2[1]);
 
             if (sline1[0] == "width")
             {
-                Helpers.Swap(ref this.width, ref this.height);
+                Helpers.Swap(charWidth, charHeight);
             }
-            line = sr.ReadLine(); // "map"
 
-            this.map = new string[height];
-            for (int i = 0; i < this.height; i++)
+
+            line = sr.ReadLine(); // reads the word "map"
+
+            this.map = new string[this.charHeight];
+            for (int i = 0; i < this.charHeight; i++)
             {
                 this.map[i] = sr.ReadLine();
             }
 
-            sr.Close(); // so that I can edit the text file after loading it 
+            sr.Close(); // so that I can edit the text file right after loading it 
         }
 
         public void Draw(ref Canvas c, Point p, int squareSize)
@@ -87,8 +94,8 @@ namespace TomyMaps
 
             c.SetColor(Color.Yellow);
 
-            int iTo = Math.Min(c.Height / squareSize, this.height);
-            int jTo = Math.Min(c.Width / squareSize, this.width);
+            int iTo = Math.Min(c.Height / squareSize, this.charHeight);
+            int jTo = Math.Min(c.Width / squareSize, this.charWidth);
 
             for (int i = 0; i < iTo; i++) // pocet riadkov // nepojde presne lebo riadok != pixel!!!!
             {
@@ -117,6 +124,7 @@ namespace TomyMaps
                     }
                     c.SetColor(col);
                     c.gr.FillRectangle(c.currBrush, squareSize * j, squareSize * i, squareSize, squareSize);
+                  
                 }
             }
 
@@ -132,10 +140,10 @@ namespace TomyMaps
         /// Creates a bitmap (at least a large so that it fits in the zoomedMap picturebox. (In alpha version it is the whole map - up to 76MB)
         /// Of which we later draw only a selection.
         /// </summary>
-        public void PrecomputeMapPortion(int squareSize)
+        private void PrecomputeMapPortion()
         {
-            Canvas c = new Canvas(width * squareSize, height * squareSize);
-            Draw(ref c, new Point(0, 0), squareSize);
+            Canvas c = new Canvas(charWidth * SquareSize, charHeight * SquareSize);
+            Draw(ref c, new Point(0, 0), SquareSize);
             cachedBitmap = c.Finish();
             // System.Windows.Forms.MessageBox.Show("prepomputed portion");
 
@@ -146,7 +154,7 @@ namespace TomyMaps
             if (cachedBitmap == null)
             {
                 // throw new Exception("no cached bitmap");
-                PrecomputeMapPortion(1);
+                PrecomputeMapPortion();
             }
 
         
