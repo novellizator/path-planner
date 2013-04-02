@@ -1,4 +1,6 @@
-﻿using System;
+﻿// http://social.msdn.microsoft.com/Forums/en-US/csharpgeneral/thread/30a461c4-ada3-48f1-9f0e-854064604d47/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -106,6 +108,7 @@ namespace TomyMaps
             DrawZoomedMap(TLPoint);
         }
 
+        private int dxy = 0;
         private void zoomedMap_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -138,11 +141,20 @@ namespace TomyMaps
                 {
                     newY = TLPoint.Y + dy;
                 }
+                //dxy = dx + dy;
+                //if (dxy < 5)
+                //{
+                //    return;
+                //}
+                //else
+                //{
+                    textBox1.Text = dx + ";";
+                    Point newTLPoint = new Point(newX, newY);
+                    DrawZoomedMap(newTLPoint);
 
 
-                textBox1.Text = dx + ";";
-                Point newTLPoint = new Point(newX, newY);
-                DrawZoomedMap(newTLPoint);
+                //}
+                
 
 
 

@@ -243,7 +243,7 @@ namespace TomyMaps
             //cachedBitmap.Save("D:/map"+(it++)+".bmp");
             // System.Windows.Forms.MessageBox.Show("width "+ width + " height " + height);
         }
-
+        private int drawIterator = 0;
         public Bitmap DrawSelection(Point TLP, System.Windows.Forms.Control c = null)
         {
             TLPoint = TLP;
@@ -276,6 +276,14 @@ namespace TomyMaps
 
             // Rectangle selectionRect = new Rectangle(200, 200, 500, 500);
             System.Drawing.Imaging.PixelFormat format = cachedBitmap.PixelFormat;
+
+            //if (++drawIterator == 50)
+            //{
+            //    GC.Collect();
+            //    GC.WaitForPendingFinalizers();
+            //    drawIterator -= 50;
+            //}
+            
 
             return cachedBitmap.Clone(selectionRect, format);
 
