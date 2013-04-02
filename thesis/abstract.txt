@@ -1,0 +1,12 @@
+Abstrakt:
+
+
+H¾adanie najkratšej cesty je jednım z elementárnych problémov teórie grafov.
+Dôleitos tohto problému je zrejmá, najmä keï si uvedomíme jeho všestranné vyuitie, napríklad v 
+umelej inteligencii, v poèítaèovych hrách a podobne. Nanešastie riešenia a algoritmy vyuívané v komerènıch hrách 
+sú komerèné a teda obecne nie známe.
+Na nájdenie najkratšej cesty v obecnıch grafoch vyuívame Dijkstrov algoritmus, prípadne jeho nadstavby.
+Cie¾om práce je h¾adanie cesty v špeciálnych grafoch - tzv. hernıch mapách. V nich majú vrcholy narozdiel od obecnıch grafov obmedzenú aritu,
+a taktie máme nejakı èas na predspracovanie mapy a vytvorenie si pomocnıch dátovıch štruktúr. 
+
+Poèas práce sme prišli na zaujímavé zefektívnenie algoritmov [snad na nieco prijdem :))]a dúfame v jeho rozšírenie do hernej sféry.
