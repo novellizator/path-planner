@@ -68,6 +68,7 @@
             this.zoomedMap.TabIndex = 1;
             this.zoomedMap.TabStop = false;
             this.zoomedMap.SizeChanged += new System.EventHandler(this.zoomedMap_SizeChanged);
+            this.zoomedMap.Click += new System.EventHandler(this.zoomedMap_Click);
             this.zoomedMap.MouseMove += new System.Windows.Forms.MouseEventHandler(this.zoomedMap_MouseMove);
             this.zoomedMap.MouseUp += new System.Windows.Forms.MouseEventHandler(this.zoomedMap_MouseUp);
             // 
@@ -159,6 +160,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(160, 523);
             this.textBox1.TabIndex = 9;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // Form1
             // 
