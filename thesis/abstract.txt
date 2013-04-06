@@ -8,5 +8,5 @@ sú komerèné a teda obecne nie známe.
 Na nájdenie najkratšej cesty v obecných grafoch využívame Dijkstrov algoritmus, prípadne jeho nadstavby.
 Cie¾om práce je h¾adanie cesty v špeciálnych grafoch - tzv. herných mapách. V nich majú vrcholy narozdiel od obecných grafov obmedzenú aritu,
 a taktiež máme nejaký èas na predspracovanie mapy a vytvorenie si pomocných dátových štruktúr. 
-
+V práci sme naimplementovali vlastný algoritmus a porovnali ho s doterajšímy známymy.
 Poèas práce sme prišli na zaujímavé zefektívnenie algoritmov [snad na nieco prijdem :))]a dúfame v jeho rozšírenie do hernej sféry.
