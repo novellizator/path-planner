@@ -8,21 +8,52 @@ Budú sa týkať obecnej teórie a úlohu so všetkými jej špecifikami si ozre
 \end{define}
 
 \begin{define}
-{\sl Ohodnotený graf (G, w)} je graf s spolu s reálnou funkciou
+{\sl Ohodnotený graf (G, w)} je graf s spolu s reálnou funkciou (tzv. ohodnotením)
 $w: E(G) \to \R$, kde $w$ je funkcia, ktorá každej hrane priradí
 reálne číslo, takzvanú \emph{cenu}, alebo \emph{váhu} hrany.
 \end{define}
 
 
-Teraz keď už vieme, čo je to graf, skúsme si zadefinovať najkratšiu cestu.
+Teraz keď už vieme, čo je to graf, skúsme si zadefinovať najkratšiu cestu. Začnime najprv obecne cestou.
 
 \begin{define}
-{\sl Ohodnotený graf (G, f)} je graf s spolu s reálnou funkciou
-$f: E(G) \to \R$, kde $f$ je funkcia, ktorá každej hrane priradí
-reálne číslo, takzvanú \emph{cenu}, alebo \emph{váhu} hrany.
+{\sl Cesta P z vrcholu $v_0$ do vrcholu $v_n$ v grafe G } je postupnosť $P = (v_{0},e_{1},v_{1},\dots, e_{n}, v_{n})$,
+pre ktorú platí $e_{i} = \{v_{i-i},v_{i}\}$ a taktiež
+$v_{i} \ne v_{j}$ pre každé $i \ne j$.
+\end{define}
+
+Všimnime si, že v ceste nenavštívime žiaden vrchol dvakrát a teda cesta neobsahuje kružnice.
+
+\begin{define}
+{\sl Cena cesty P z vrcholu $v_0$ do vrcholu $v_n$ v ohodnotenom grafe (G, w) } je súčet cien hrán, ktoré sa na ceste nachádzajú.
+\end{define}
+
+\begin{define}
+{\sl Najkratšia cesta P z vrcholu $v_0$ do vrcholu $v_n$
+v ohodnotenom grafe (G, w)} 
+je cesta s najnižsou cenou.
 \end{define}
 
 
 
-\section{Název druhé podkapitoly v první kapitole}
 
+
+\section{Herná mapa}
+
+Po zavedení kľúčových pojmov sa dostávame k samotnému zadaniu úlohy. 
+Ako sme už spomínali, problém budeme riešit na tzv. herných mapách. V čom sa herná mapa od obecného grafu odlišuje?
+
+Ide v podstate o graf dosť monotónny a obmedzený. Vizuálne si ju môžme predstaviť ako graf v ktorom sú vrcholy rozostúpené v tvare mriežky a hrana
+je stále medzi dvojicami susedných vrcholov vo všetkých ôsmych smeroch. Cena vodorovnej alebo zvislej hrany je $1$ a cena šikmej hrany je $\sqrt{2}$.
+V práci budeme ale miesto iracionálneho čísla $\sqrt{2}$ použivať konštantu 1.4142, nakoľko táto konštatna sa používa aj v samotnej súťaži.
+FIXME??: Rozdiel medzi takto zavedenou konštantou a skutočnou hodnotou odmocniny z dvoch pri mapách zavedených v súťaži je zanedbateľný.
+
+Skúsme si teraz nadefinovať hernú mapu formálne.
+
+\begin{define}
+{\sl Herná mapa m*n} je ohodnotený graf v ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
+s~jednoduchými hranami $j$ v~tvare $\{v_{a,b}, v_{a,b+1}\}, \{v_{a,b}, v_{a+1,b}\}$, kde $w(j) = 1$ 
+a šikmými hranami $ s $ v~tvare $\{v_{a,b}, v_{a+1,b+1}\}, \{v_{a,b}, v_{a+1,b+1}\}$, kde $ w(s) = 1.4142 $.
+\end{define}
+
+FIXME?? pridat obrazok
