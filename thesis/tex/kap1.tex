@@ -41,19 +41,59 @@ je cesta s najnižsou cenou.
 \section{Herná mapa}
 
 Po zavedení kľúčových pojmov sa dostávame k samotnému zadaniu úlohy. 
-Ako sme už spomínali, problém budeme riešit na tzv. herných mapách. V čom sa herná mapa od obecného grafu odlišuje?
+Ako sme už spomínali, problém budeme riešit na tzv. herných mapách. Čo je herná mapa a v čom sa od obecného grafu odlišuje?
 
-Ide v podstate o graf dosť monotónny a obmedzený. Vizuálne si ju môžme predstaviť ako graf v ktorom sú vrcholy rozostúpené v tvare mriežky a hrana
+Zjednodušene povedané, je to mapa s ktorou sa stretávame v najrôznejších hrách, ako je Warcraft, Startcraft, Dragon Age
+a~podobne.
+
+Ide v podstate o špeciálny a dosť ombedzený typ grafu. Vizuálne si ju môžme predstaviť ako graf v ktorom sú vrcholy rozostúpené v tvare mriežky a hrana
 je stále medzi dvojicami susedných vrcholov vo všetkých ôsmych smeroch. Cena vodorovnej alebo zvislej hrany je $1$ a cena šikmej hrany je $\sqrt{2}$.
-V práci budeme ale miesto iracionálneho čísla $\sqrt{2}$ použivať konštantu 1.4142, nakoľko táto konštatna sa používa aj v samotnej súťaži.
-FIXME??: Rozdiel medzi takto zavedenou konštantou a skutočnou hodnotou odmocniny z dvoch pri mapách zavedených v súťaži je zanedbateľný.
+
 
 Skúsme si teraz nadefinovať hernú mapu formálne.
 
 \begin{define}
-{\sl Herná mapa m*n} je ohodnotený graf v ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
+{\sl Herná mapa rozmeru m*n} je ohodnotený graf v ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
 s~jednoduchými hranami $j$ v~tvare $\{v_{a,b}, v_{a,b+1}\}, \{v_{a,b}, v_{a+1,b}\}$, kde $w(j) = 1$ 
 a šikmými hranami $ s $ v~tvare $\{v_{a,b}, v_{a+1,b+1}\}, \{v_{a,b}, v_{a+1,b+1}\}$, kde $ w(s) = 1.4142 $.
 \end{define}
 
-FIXME?? pridat obrazok
+??FIXME?? pridat obrazok
+
+
+\section{GPPC: Grid-Based Path Planning Competition}
+Algoritmus navrhnutý a naprogramovaný v tejto práci bol zaradený do súťaže \textbf{GPPC}, ktorá sa koná približne 2 krát ročne.
+
+\subsection{Špecifiká súťaže, limity}
+
+Herné mapy budú mať rozmery maximálne $2048 \times 2048$.
+Súťaž bude rozdelená do dvoch fáz --- fázy predspracovania mapy(pre-processing)
+a fázy testovania. Na predspracovanie mapy bude vyhradený čas
+maximálne 30 minút a program si svoje dáta uloží na disk do súboru o veľkosti maximálne 50MB.
+A potom vo fáze testovania budé dostávať požiadavky na nájdenie najkratšej cesty.
+
+Úlohou súťaže je naimplementovať tieto tri funkcie.
+
+\lstset{language=C++}          % Set your language (you can change the language for each code-block optionally)
+
+\begin{lstlisting} %[frame=single]  % Start your code-block
+
+void PreprocessMap(std::vector &bits, int width, int height,
+                   const char *filename);
+                   
+void *PrepareForSearch(std::vector &bits, int width, int height,
+                       const char *filename);
+bool GetPath(void *data, xyLoc s, xyLoc g, std::vector &path);
+\end{lstlisting}
+
+\subsection{Kritériá súťaže, hodnotenie programov}
+Programy sa nebudú porovnávať v jednej metrike a podľa jedného
+kritéria, nakoľko sa programy dalo zoptimalizovať podľa viacerých kritérií. Metriky sú nasledovné:
+
+\begin{itemize}
+\item Celkový čas na~nájdenie cesty.
+\item Čas na nájdenie prvých 20 tich krokov.
+\item Dĺžka cesty (zohľadnená suboptimalita).
+\item Maximálny čas vrátenia hociktorej časti cesty.
+\end{itemize}
+
