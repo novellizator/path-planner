@@ -1,0 +1,24 @@
+\chapter{Nový algoritmus: NovellA*}
+
+\section{Zlepšenie výkonu v niektorých prípadoch}
+Nie všetky cesty sú také kľukaté. V niektorých prípadoch
+počiatočný a koncový bod ležia blízko pri sebe a nemá zmysel a cesta sa nájde 
+veľmi jednoducho - ako "kvazieuklidovská" vzdialenost.
+
+??TODO: prepisat
+Pre tento prípad sa pokúsime rozložiť mapu na obdĺžniky
+(prípadne konvexné obdĺžniky, kde nenasledujú za sebou dve \dots).
+
+V tomto pripade nam to zaberie cca 5 mb na ulozenie mapy,...
+
+
+Vyššie popísaný algoritmus sa nám oplatí použivať v obecných prípadoch.
+V špeciálnych prípadoch totiž vieme použiť niečo efektívnejšie.
+
+Predstavme si, že máme obdĺžnikovú mapu bez nepriechodných oblastí. V takomto prípade vôbec nepotrebujeme
+prechádzať graf 
+celý, ale intuitívne vidíme, že nám stačí ísť šikmo a potom rovno.
+
+Túto vec použ
+\subsection{Navigácia}
+
