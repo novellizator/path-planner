@@ -22,3 +22,42 @@ celý, ale intuitívne vidíme, že nám stačí ísť šikmo a potom rovno.
 Túto vec použ
 \subsection{Navigácia}
 
+
+Nie všetky cesty sú ale také kľukaté. V mnohých prípadoch, napríklad keď medzi počiatočným a koncovým bodom neleží žiadna prekážka, 
+sú cesty veľmi priamočiare. To sa pokúsime využiť na zlepšenie výkonu algoritmu v~niektorých prípadoch. 
+Predstavme si, že máme obdlžníkovú mapu bez prekážoch a hľadáme najkratšiu cestu medzi bodmi $s=(x_s,y_s), t=(x_t,y_t)$.
+V tomto prípade vieme nájsť najkratšiu cestu veľmi jednoducho.
+Algoritmus:
+vstup: \\
+$s=(x_s,y_s), t=(x_t,y_t)$ \\
+vystup:\\
+path \dots usporiadaná množina súradníc po ktorých vedie cesta\\
+beh algoritmu:\\
+
+
+\lstset{language=Python}          
+\begin{lstlisting} %[frame=single]  
+
+path = (xs, ys)
+
+# skopirujem súradnice zdrojového vrcholu
+(x1, y2) = (xs, ys) 
+while (x1, y1) <> (x2, y2):
+	if y1 < y2:
+		++y1
+	else:
+		--y1
+
+	if x1 < x2:
+		++x1
+	else:
+		--x1
+	path.append((x1,y1))
+\end{lstlisting}
+
+Teda, jednoducho povedané: keď sa počiatočný a koncový bod líšia v jednej súradnici, tak sa posúvame priamočiaro,
+keď sa líšia v oboch, tak sa posúvame šikmo.
+
+Pokiaľ si zadefinujeme $dx := \abs{x_t - x_s}$ a $dy := \abs{y_t - y_s}$, tak počet vrcholov,
+ktorými cesta prechádza vieme zhora odhadnúť, ako $\max(dx, dy)$. Jej vzdialenosť vieme zistiť v čase  $\BigO{\max(dx, dy)}$
+Na zistenie vzdialenosti v každom kroku nám stači konštantná pamäť.
