@@ -5,7 +5,7 @@ Nie všetky cesty sú také kľukaté. V niektorých prípadoch
 počiatočný a koncový bod ležia blízko pri sebe a nemá zmysel a cesta sa nájde 
 veľmi jednoducho - ako "kvazieuklidovská" vzdialenost.
 
-??TODO: prepisat
+TODO??: prepisat
 Pre tento prípad sa pokúsime rozložiť mapu na obdĺžniky
 (prípadne konvexné obdĺžniky, kde nenasledujú za sebou dve \dots).
 
@@ -61,3 +61,19 @@ keď sa líšia v oboch, tak sa posúvame šikmo.
 Pokiaľ si zadefinujeme $dx := \abs{x_t - x_s}$ a $dy := \abs{y_t - y_s}$, tak počet vrcholov,
 ktorými cesta prechádza vieme zhora odhadnúť, ako $\max(dx, dy)$. Jej vzdialenosť vieme zistiť v čase  $\BigO{\max(dx, dy)}$
 Na zistenie vzdialenosti v každom kroku nám stači konštantná pamäť.
+
+TODO?? Poznamka, ze nepotrebujem na to obdlzniky, mozem robit aj komplikovanejsie utvary, ale by to sa blbo hladalo... ledaze...
+
+Skúsme to teda nejak využiť. Pokiaľ vieme, že počiatočný aj koncový bod ležia v jednom obdĺžniku, tak máme problém vyriešený. 
+Jediným problémom ostalo takéto obdĺžniky nájsť. 
+
+
+ASK?? alebo radsej neutralne napiast, hladanie obdlznikov?
+\section{Hľadáme obdĺžniky}
+Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl čistej hernej mapy}.
+
+\begin{define}
+{\sl Herná podmapa je čistá} 
+pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
+\end{define}
+
