@@ -1,28 +1,6 @@
 \chapter{Nový algoritmus: NovellA*}
 
 \section{Zlepšenie výkonu v niektorých prípadoch}
-Nie všetky cesty sú také kľukaté. V niektorých prípadoch
-počiatočný a koncový bod ležia blízko pri sebe a nemá zmysel a cesta sa nájde 
-veľmi jednoducho - ako "kvazieuklidovská" vzdialenost.
-
-TODO??: prepisat
-Pre tento prípad sa pokúsime rozložiť mapu na obdĺžniky
-(prípadne konvexné obdĺžniky, kde nenasledujú za sebou dve \dots).
-
-V tomto pripade nam to zaberie cca 5 mb na ulozenie mapy,...
-
-
-Vyššie popísaný algoritmus sa nám oplatí použivať v obecných prípadoch.
-V špeciálnych prípadoch totiž vieme použiť niečo efektívnejšie.
-
-Predstavme si, že máme obdĺžnikovú mapu bez nepriechodných oblastí. V takomto prípade vôbec nepotrebujeme
-prechádzať graf 
-celý, ale intuitívne vidíme, že nám stačí ísť šikmo a potom rovno.
-
-Túto vec použ
-\subsection{Navigácia}
-
-
 Nie všetky cesty sú ale také kľukaté. V mnohých prípadoch, napríklad keď medzi počiatočným a koncovým bodom neleží žiadna prekážka, 
 sú cesty veľmi priamočiare. To sa pokúsime využiť na zlepšenie výkonu algoritmu v~niektorých prípadoch. 
 Predstavme si, že máme obdlžníkovú mapu bez prekážoch a hľadáme najkratšiu cestu medzi bodmi $s=(x_s,y_s), t=(x_t,y_t)$.
@@ -70,6 +48,7 @@ Jediným problémom ostalo takéto obdĺžniky nájsť.
 
 ASK?? alebo radsej neutralne napiast, hladanie obdlznikov?
 \section{Hľadáme obdĺžniky}
+
 Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl čistej hernej mapy}.
 
 \begin{define}
@@ -77,3 +56,5 @@ Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl čistej hernej mapy}.
 pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
 \end{define}
 
+Naformulujme si teda problém exaktne. Chceme na vstupnej mape nájsť obdĺžniky, aby spolu mali čo najväčší obsah a aby ich bolo čo najmenej.
+ASK?? teda staci mi spravit obdlzniky 1x1 a potmo ich spajat...to je ako vsetko?
