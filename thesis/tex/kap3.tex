@@ -18,8 +18,9 @@ beh algoritmu:\\
 
 path = (xs, ys)
 
-# skopirujem súradnice zdrojového vrcholu
-(x1, y2) = (xs, ys) 
+TODO?? nejde diakritika??
+# skopirujem suradnice pociatocneho vrcholu 
+(x1, y1) = (xs, ys) 
 while (x1, y1) <> (x2, y2):
 	if y1 < y2:
 		++y1
@@ -36,7 +37,12 @@ while (x1, y1) <> (x2, y2):
 Teda, jednoducho povedané: keď sa počiatočný a koncový bod líšia v jednej súradnici, tak sa posúvame priamočiaro,
 keď sa líšia v oboch, tak sa posúvame šikmo.
 
-Pokiaľ si zadefinujeme $dx := \abs{x_t - x_s}$ a $dy := \abs{y_t - y_s}$, tak počet vrcholov,
+
+Pokiaľ si zadefinujeme 
+$ dx := |x_t - x_s|$ 
+a
+$ dy :=|y_t - y_s| $
+ , tak počet vrcholov,
 ktorými cesta prechádza vieme zhora odhadnúť, ako $\max(dx, dy)$. Jej vzdialenosť vieme zistiť v čase  $\BigO{\max(dx, dy)}$
 Na zistenie vzdialenosti v každom kroku nám stači konštantná pamäť.
 
