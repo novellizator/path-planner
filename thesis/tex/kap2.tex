@@ -1,6 +1,31 @@
 \chapter{Dosiaľ známe algoritmy}
-Na vyhľadávanie v grafe poznáme mnoho algoritmov, ktoré vieme rozdeliť do troch skupín.
-\section{jjjj}
+Na hľadanie najkratších ciest v grafe poznáme mnoho algoritmov, ktoré vieme rozdeliť do troch skupín.
+
+
+\begin{itemize}
+\item Point To Point Shortest Path - hľadáme najkratšiu cestu medzi dvoma zadanými bodmi
+\item Single Source Shortest Path - pre daný vrchol {\sl v} hľadáme najkratšiu cestu do všetkých vrcholov grafu.
+\item All Pairs Shortest Path - skúmame najkratšiu cestu medzi všetkými dvojicami vrcholov.
+\end{itemize}
+
+Napriek tomu, že sú tieto problémy na obecných grafoch NP-ťažké, na herných mapách, kde majú všetky vrcholy kladnú cenu, vieme nájsť riešenie v polynomiálnom čase.
+V práci sa ďalej budeme zaoberať riešením prvého problému (Point to Point Shortest Path).
+
+V tejto kapitole si následne popíšeme algoritmy, ktoré sú použiteľné na všetkých grafoch 
+s nezápornými dĺžkami hrán.
+
+\section{Dijkstrov algoritmus}
+Medzi základné algoritmy patrí Dijkstrov algoritmus, ktorý je asymptoticky optimálny (TODO?? for sure?).
+
+Pri hľadaní cesty z vrcholu {\sl s} do vrcholu {\sl t} prechádzame postupne vrcholy zo stúpajúcou vzdialenosťou od {\sl s}, až dokým sa nedostaneme k cieľovému vrcholu {\sl t}.
+Graficky si beh algoritmu môžme predstaviť ako kruh so stredom v bode {\sl s} so zväčšujúcim sa polomerom. Algoritmus napísaný v pseudokóde je nasledovný:
+
+\begin{lstlisting}
+d(s) <- 0
+d(*) <- $\infty$
+
+
+\end{lstlisting}
 
 
 

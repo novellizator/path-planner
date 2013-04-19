@@ -10,7 +10,7 @@ Budú sa týkať obecnej teórie a úlohu so všetkými jej špecifikami si ozre
 \begin{define}
 {\sl Ohodnotený graf (G, w)} je graf s spolu s reálnou funkciou (tzv. ohodnotením)
 $w: E(G) \to \R$, kde $w$ je funkcia, ktorá každej hrane priradí
-reálne číslo, takzvanú \emph{cenu}, alebo \emph{váhu} hrany.
+reálne číslo, takzvanú \emph{cenu}, alebo \emph{dĺžku} hrany.
 \end{define}
 
 
@@ -28,6 +28,8 @@ $v_{i} \ne v_{j}$ pre každé $i \ne j$.
 
 
 Všimnime si, že v ceste nenavštívime žiaden vrchol dvakrát a teda cesta neobsahuje kružnice.
+
+TODO?? dlzka hrany - cena cesty - zadefinuj funkciu d(u, v)
 
 \begin{define}
 {\sl Cena cesty P z vrcholu $v_0$ do vrcholu $v_n$ v ohodnotenom grafe (G, w) } je súčet cien hrán, ktoré sa na ceste nachádzajú.
@@ -51,7 +53,7 @@ Ako sme už spomínali, problém budeme riešit na tzv. herných mapách. Čo je
 Zjednodušene povedané, je to mapa s ktorou sa stretávame v najrôznejších hrách, ako je Warcraft, Startcraft, Dragon Age
 a~podobne.
 
-Ide v podstate o špeciálny a dosť ombedzený typ grafu. Vizuálne si ju môžme predstaviť ako graf v ktorom sú vrcholy rozostúpené v tvare mriežky a hrana
+Ide v podstate o špeciálny a dosť obmedzený typ grafu. Vizuálne si ju môžme predstaviť ako graf v ktorom sú vrcholy rozostúpené v tvare mriežky a hrana
 je stále medzi dvojicami susedných vrcholov vo všetkých ôsmych smeroch. Cena vodorovnej alebo zvislej hrany je $1$ a cena šikmej hrany je $\sqrt{2}$.
 
 
