@@ -46,10 +46,9 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(9, 21);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(7, 17);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Load File";
             this.button1.UseVisualStyleBackColor = true;
@@ -57,14 +56,13 @@
             // 
             // zoomedMap
             // 
-            this.zoomedMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.zoomedMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.zoomedMap.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.zoomedMap.Location = new System.Drawing.Point(16, 15);
-            this.zoomedMap.Margin = new System.Windows.Forms.Padding(4);
+            this.zoomedMap.Location = new System.Drawing.Point(12, 12);
             this.zoomedMap.Name = "zoomedMap";
-            this.zoomedMap.Size = new System.Drawing.Size(574, 523);
+            this.zoomedMap.Size = new System.Drawing.Size(430, 425);
             this.zoomedMap.TabIndex = 1;
             this.zoomedMap.TabStop = false;
             this.zoomedMap.SizeChanged += new System.EventHandler(this.zoomedMap_SizeChanged);
@@ -75,10 +73,9 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(9, 87);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(7, 71);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 28);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
             this.button2.Text = "Proceed";
             this.button2.UseVisualStyleBackColor = true;
@@ -87,10 +84,9 @@
             // buttonSaveWhole
             // 
             this.buttonSaveWhole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveWhole.Location = new System.Drawing.Point(9, 139);
-            this.buttonSaveWhole.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSaveWhole.Location = new System.Drawing.Point(7, 113);
             this.buttonSaveWhole.Name = "buttonSaveWhole";
-            this.buttonSaveWhole.Size = new System.Drawing.Size(100, 28);
+            this.buttonSaveWhole.Size = new System.Drawing.Size(75, 23);
             this.buttonSaveWhole.TabIndex = 3;
             this.buttonSaveWhole.Text = "Save Image";
             this.buttonSaveWhole.UseVisualStyleBackColor = true;
@@ -98,10 +94,9 @@
             // buttonSaveSelection
             // 
             this.buttonSaveSelection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveSelection.Location = new System.Drawing.Point(9, 187);
-            this.buttonSaveSelection.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSaveSelection.Location = new System.Drawing.Point(7, 152);
             this.buttonSaveSelection.Name = "buttonSaveSelection";
-            this.buttonSaveSelection.Size = new System.Drawing.Size(100, 28);
+            this.buttonSaveSelection.Size = new System.Drawing.Size(75, 23);
             this.buttonSaveSelection.TabIndex = 4;
             this.buttonSaveSelection.Text = "Save Selection";
             this.buttonSaveSelection.UseVisualStyleBackColor = true;
@@ -114,27 +109,30 @@
             this.panel1.Controls.Add(this.buttonSaveSelection);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.buttonSaveWhole);
-            this.panel1.Location = new System.Drawing.Point(896, 300);
+            this.panel1.Location = new System.Drawing.Point(714, 244);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(127, 238);
+            this.panel1.Size = new System.Drawing.Size(95, 193);
             this.panel1.TabIndex = 5;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.SystemColors.GrayText;
-            this.pictureBox1.Location = new System.Drawing.Point(839, 15);
+            this.pictureBox1.Location = new System.Drawing.Point(671, 12);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(202, 209);
+            this.pictureBox1.Size = new System.Drawing.Size(152, 170);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
             // zoomInButton
             // 
             this.zoomInButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.zoomInButton.Location = new System.Drawing.Point(873, 249);
+            this.zoomInButton.Location = new System.Drawing.Point(697, 202);
+            this.zoomInButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.zoomInButton.Name = "zoomInButton";
-            this.zoomInButton.Size = new System.Drawing.Size(75, 23);
+            this.zoomInButton.Size = new System.Drawing.Size(56, 19);
             this.zoomInButton.TabIndex = 7;
             this.zoomInButton.Text = "+Zoom In";
             this.zoomInButton.UseVisualStyleBackColor = true;
@@ -143,9 +141,10 @@
             // zoomOutButton
             // 
             this.zoomOutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.zoomOutButton.Location = new System.Drawing.Point(954, 249);
+            this.zoomOutButton.Location = new System.Drawing.Point(758, 202);
+            this.zoomOutButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.zoomOutButton.Name = "zoomOutButton";
-            this.zoomOutButton.Size = new System.Drawing.Size(85, 23);
+            this.zoomOutButton.Size = new System.Drawing.Size(64, 19);
             this.zoomOutButton.TabIndex = 8;
             this.zoomOutButton.Text = "-Zoom Out";
             this.zoomOutButton.UseVisualStyleBackColor = true;
@@ -153,28 +152,28 @@
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(661, 15);
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(447, 12);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(160, 523);
+            this.textBox1.Size = new System.Drawing.Size(212, 425);
             this.textBox1.TabIndex = 9;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1065, 567);
+            this.ClientSize = new System.Drawing.Size(841, 461);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.zoomOutButton);
             this.Controls.Add(this.zoomInButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.zoomedMap);
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(394, 236);
+            this.MinimumSize = new System.Drawing.Size(298, 197);
             this.Name = "Form1";
             this.Text = "TomyMaps";
             this.Load += new System.EventHandler(this.Form1_Load);

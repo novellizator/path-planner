@@ -29,6 +29,8 @@ namespace TomyMaps
         public Form1()
         {
             InitializeComponent();
+        
+
         }
 
         public void DrawZoomedMap(Point tl)
@@ -49,29 +51,33 @@ namespace TomyMaps
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
+            //OpenFileDialog ofd = new OpenFileDialog();
 
-            ofd.Title = "Open Image File";
-            ofd.Filter = ".map|*.map" +
-                "|All types|*.*";
+            //ofd.Title = "Open Image File";
+            //ofd.Filter = ".map|*.map" +
+            //    "|All types|*.*";
 
-            ofd.FilterIndex = 0;
-            ofd.FileName = "";
-            if (ofd.ShowDialog() != DialogResult.OK)
-                return;
+            //ofd.FilterIndex = 0;
+            //ofd.FileName = "";
+            //if (ofd.ShowDialog() != DialogResult.OK)
+            //    return;
 
-            try
-            {
-                map.Load(ofd.FileName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
+            //try
+            //{
+            //    map.Load(ofd.FileName);
+            //    textBox1.Text = ofd.FileName;
+            //    MessageBox.Show(ofd.FileName);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    return;
+            //}
+
 
             imageLoaded = true;
-
+            //TEST
+            map.Load("J:\\BIG\\bakalarka\\path-planner\\TomyMaps\\battleground.map");
             // redraw a map after loading
             map.SquareSize = DefaultSquareSize;
             map.WindowSize = zoomedMap.ClientSize;

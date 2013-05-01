@@ -42,6 +42,9 @@ namespace TomyMaps
                 {
                     return;
                 }
+
+                // FIXME: later on....
+                PrecomputeCachedBitmap();
                 //Size maxPossibleImageSize = new Size(map[0].Length * SquareSize, map.Length * SquareSize);
                 //// precomputing is not possible (at the end of a real bitmap)
 
@@ -61,7 +64,7 @@ namespace TomyMaps
         }
 
         // TODO: change the topleft point accordingly
-        private int _SquareSize;
+        private int _SquareSize = 1;
         public int SquareSize // == ZoomSize
         {
             get
@@ -79,7 +82,7 @@ namespace TomyMaps
                     _SquareSize = value;
 
                     // The map has already been loaded with everything and consecvently 
-                    // a cachedBitmap has been created. The problem in the past was, that I can;t precupmpute the bitmap when windowsize=0
+                    // a cachedBitmap has been created. The problem in the past was, that I cannot precompute the bitmap when windowsize=0
                     if (cachedBitmap != null && WindowSize.Width > 0)
                     {
                         PrecomputeCachedBitmap();
@@ -108,8 +111,14 @@ namespace TomyMaps
         private Point cachedBitmapTLPoint = new Point(0, 0);
 
         // width/height of a map in characters (basic resolution)
-        private int charWidth;
-        private int charHeight;
+        private int charWidth = 0;
+        private int charHeight = 0;
+
+        private Size getMapPixelSize()
+        {
+            System.Diagnostics.Debug.Assert(charWidth > 0 && charHeight  > 0);
+            return new Size(charWidth * SquareSize, charHeight * SquareSize);
+        }
 
         public void Load(string filename)
         {
@@ -154,7 +163,7 @@ namespace TomyMaps
         /// </summary>
         /// <param name="c">Canvas</param>
         /// <param name="p">Top-Left point</param>
-        private void Draw(Canvas c, Point TLPoint)
+        private void DrawCachedBitmap(Canvas c, Point TLPoint)
         {
             c.SetPenWidth(1);
             c.SetColor(Color.Yellow);
@@ -162,7 +171,7 @@ namespace TomyMaps
             int chWidth = c.Width / SquareSize;
             int chHeight = c.Height / SquareSize;
 
-
+            // topleft point of cachedBitmap in chars...
             int baseWidth = cachedBitmapTLPoint.X / SquareSize;
             int baseHeight = cachedBitmapTLPoint.Y / SquareSize;
             // int iTo = Math.Min(c.Height / SquareSize, this.charHeight);
@@ -215,34 +224,41 @@ namespace TomyMaps
         {
             return new Point(charX * SquareSize, charY * SquareSize);
         }
+
+        private int floorToSquareSize(int size)
+        {
+            return size / SquareSize * SquareSize;
+        }
+        private Size floorToSquareSize(Size s)
+        {
+            return new Size(floorToSquareSize(s.Width), floorToSquareSize(s.Height));
+        }
+
         /// <summary>
         /// Creates a canvas (computes the Canvas Size and lets the this.Draw draw on the canvas) and the cachedBitmap. also the cachedBitmapTLPoint
         /// makes a canvas x*y so that the visible bitmap starts on [x/2, y/2]. The CachedbitmapSize is 2x times 2y.
         /// </summary>
-        private int it = 19;
+        private int it = 1;
         private void PrecomputeCachedBitmap()
         {
-            // floored to the previous multiple of (sq)uareSize
-            Size sqflooredWindowSize = new Size(WindowSize.Width / SquareSize * SquareSize, WindowSize.Height / SquareSize * SquareSize);
-            Size halfsqflooredWindowSize = new Size(sqflooredWindowSize.Width / 2, sqflooredWindowSize.Height / 2);
+            cachedBitmapTLPoint = new Point(Math.Max(0, floorToSquareSize(TLPoint.X - WindowSize.Width / 2)),
+                Math.Max(0, floorToSquareSize(TLPoint.Y - WindowSize.Width / 2)));
 
-            cachedBitmapTLPoint = new Point(Math.Max(0, TLPoint.X - halfsqflooredWindowSize.Width),
-                Math.Max(0, TLPoint.Y - halfsqflooredWindowSize.Height));
-
-            // (in pixels) floored according to the multiple of SquareSize
-            int width = Math.Min(WindowSize.Width * 2, charWidth * SquareSize - cachedBitmapTLPoint.X);
-            int height = Math.Min(WindowSize.Height * 2, charHeight * SquareSize - cachedBitmapTLPoint.Y);
+            // (in pixels) floored according to the multiple of SquareSize - hopefully correct...
+            int width = Math.Min(WindowSize.Width * 2, getMapPixelSize().Width - cachedBitmapTLPoint.X);
+            int height = Math.Min(WindowSize.Height * 2, getMapPixelSize().Height - cachedBitmapTLPoint.Y);
 
             Canvas c = new Canvas(width, height);
 
 
-            Draw(c, TLPoint);
+            DrawCachedBitmap(c, TLPoint);
             cachedBitmap = c.Finish();
 
             // works like charm :)
-            //cachedBitmap.Save("D:/map"+(it++)+".bmp");
-            // System.Windows.Forms.MessageBox.Show("width "+ width + " height " + height);
+            cachedBitmap.Save("D:/Temp/map"+(it++)+".png");
+            //System.Windows.Forms.MessageBox.Show("New cache bitmap. width "+ width + " height " + height);
         }
+
         private int drawIterator = 0;
         public Bitmap DrawSelection(Point TLP, System.Windows.Forms.Control c = null)
         {
@@ -255,7 +271,9 @@ namespace TomyMaps
 
                 // cachedBitmap needs to be counted (to fill the whole window) and
                 (((TLPoint.X + WindowSize.Width) > (cachedBitmapTLPoint.X + cachedBitmap.Width)) ||
-                 ((TLPoint.Y + WindowSize.Height) > (cachedBitmapTLPoint.Y + cachedBitmap.Height))) &&
+                 ((TLPoint.Y + WindowSize.Height) > (cachedBitmapTLPoint.Y + cachedBitmap.Height))) 
+                 
+                 &&
                 // CAN actually be counted - I'm not an the edge of the map
                 ((charWidth - (cachedBitmapTLPoint.X + cachedBitmap.Width) / SquareSize > 0) ||
                  (charHeight - (cachedBitmapTLPoint.Y + cachedBitmap.Height) / SquareSize > 0)
@@ -270,7 +288,10 @@ namespace TomyMaps
             //    Math.Min(WindowSize.Width, cachedBitmap.Width) - TLPoint.X,
             //    Math.Min(WindowSize.Height, cachedBitmap.Height) - TLPoint.Y);
 
-            Rectangle selectionRect = new Rectangle(TLPoint.X, TLPoint.Y, cachedBitmapTLPoint.X + cachedBitmap.Width - TLPoint.X, cachedBitmapTLPoint.Y + cachedBitmap.Height - TLPoint.Y);
+            //int selectionRectWidth = Math.Min(getMapPixelSize().Width - cachedBitmapTLPoint.X, cachedBitmapTLPoint.X);
+
+            Rectangle selectionRect = new Rectangle(TLPoint.X - cachedBitmapTLPoint.X, TLPoint.Y-cachedBitmapTLPoint.Y,
+                cachedBitmapTLPoint.X + cachedBitmap.Width - TLPoint.X, cachedBitmapTLPoint.Y + cachedBitmap.Height - TLPoint.Y);
             if (c != null)
                 c.Text = "(rect) t:" + selectionRect.Top + " l: " + selectionRect.Left + " w: " + selectionRect.Width + " h: " + selectionRect.Height;
 
