@@ -174,8 +174,6 @@ namespace TomyMaps
             // topleft point of cachedBitmap in chars...
             int baseWidth = cachedBitmapTLPoint.X / SquareSize;
             int baseHeight = cachedBitmapTLPoint.Y / SquareSize;
-            // int iTo = Math.Min(c.Height / SquareSize, this.charHeight);
-            // int jTo = Math.Min(c.Width / SquareSize, this.charWidth);
 
             for (int i = 0; i < chHeight; i++) // pocet riadkov // nepojde presne lebo riadok != pixel!!!!
             {
@@ -235,7 +233,7 @@ namespace TomyMaps
         }
 
         /// <summary>
-        /// Creates a canvas (computes the Canvas Size and lets the this.Draw draw on the canvas) and the cachedBitmap. also the cachedBitmapTLPoint
+        /// Creates a canvas (computes the Canvas Size and lets the this.DrawCachedBitmap draw on the canvas) and the cachedBitmap. also the cachedBitmapTLPoint
         /// makes a canvas x*y so that the visible bitmap starts on [x/2, y/2]. The CachedbitmapSize is 2x times 2y.
         /// </summary>
         private int it = 1;
@@ -259,7 +257,7 @@ namespace TomyMaps
             //System.Windows.Forms.MessageBox.Show("New cache bitmap. width "+ width + " height " + height);
         }
 
-        private int drawIterator = 0;
+        // FIXME for going back in the picture...
         public Bitmap DrawSelection(Point TLP, System.Windows.Forms.Control c = null)
         {
             TLPoint = TLP;
@@ -275,27 +273,24 @@ namespace TomyMaps
                  
                  &&
                 // CAN actually be counted - I'm not an the edge of the map
-                ((charWidth - (cachedBitmapTLPoint.X + cachedBitmap.Width) / SquareSize > 0) ||
-                 (charHeight - (cachedBitmapTLPoint.Y + cachedBitmap.Height) / SquareSize > 0)
-                ))
+                (
+                    (charWidth - (cachedBitmapTLPoint.X + cachedBitmap.Width) / SquareSize > 0) ||
+                    (charHeight - (cachedBitmapTLPoint.Y + cachedBitmap.Height) / SquareSize > 0))
+                )
             {
-                //System.Windows.Forms.MessageBox.Show("precomputed by means of DrawSelection");
                 PrecomputeCachedBitmap();
             }
 
-            //System.Windows.Forms.MessageBox.Show("-" + TLPoint.X+" "+ TLPoint.Y+" "+ zoomedMapSize.Width+" "+ zoomedMapSize.Height);
-            //Rectangle selectionRect = new Rectangle(TLPoint.X, TLPoint.Y,
-            //    Math.Min(WindowSize.Width, cachedBitmap.Width) - TLPoint.X,
-            //    Math.Min(WindowSize.Height, cachedBitmap.Height) - TLPoint.Y);
+            int selectionRectX = TLPoint.X - cachedBitmapTLPoint.X;
+            int selectionRectY = TLPoint.Y - cachedBitmapTLPoint.Y;
+            int selectionRectWidth = Math.Min(WindowSize.Width, cachedBitmapTLPoint.X + cachedBitmap.Width - TLPoint.X);
+            int selectionRectHeight = Math.Min(WindowSize.Height, cachedBitmapTLPoint.Y + cachedBitmap.Height - TLPoint.Y);
 
-            //int selectionRectWidth = Math.Min(getMapPixelSize().Width - cachedBitmapTLPoint.X, cachedBitmapTLPoint.X);
+            Rectangle selectionRect = new Rectangle(selectionRectX, selectionRectY, selectionRectWidth, selectionRectHeight);
 
-            Rectangle selectionRect = new Rectangle(TLPoint.X - cachedBitmapTLPoint.X, TLPoint.Y-cachedBitmapTLPoint.Y,
-                cachedBitmapTLPoint.X + cachedBitmap.Width - TLPoint.X, cachedBitmapTLPoint.Y + cachedBitmap.Height - TLPoint.Y);
             if (c != null)
                 c.Text = "(rect) t:" + selectionRect.Top + " l: " + selectionRect.Left + " w: " + selectionRect.Width + " h: " + selectionRect.Height;
 
-            // Rectangle selectionRect = new Rectangle(200, 200, 500, 500);
             System.Drawing.Imaging.PixelFormat format = cachedBitmap.PixelFormat;
 
             //if (++drawIterator == 50)
@@ -307,10 +302,6 @@ namespace TomyMaps
             
 
             return cachedBitmap.Clone(selectionRect, format);
-
-            // cachedBitmap.Save("D:/cach.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
-
-
         }
     }
 }
