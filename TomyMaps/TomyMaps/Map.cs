@@ -253,7 +253,7 @@ namespace TomyMaps
             cachedBitmap = c.Finish();
 
             // works like charm :)
-            cachedBitmap.Save("D:/Temp/map"+(it++)+".png");
+            //cachedBitmap.Save("D:/Temp/map"+(it++)+".png");
             //System.Windows.Forms.MessageBox.Show("New cache bitmap. width "+ width + " height " + height);
         }
 
