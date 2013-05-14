@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using System.IO;
 
+using System.Windows.Forms;
 using System.Drawing;
 namespace TomyMaps
 {
@@ -166,7 +166,7 @@ namespace TomyMaps
         /// </summary>
         /// <param name="c">Canvas</param>
         /// <param name="p">Top-Left point</param>
-        private void DrawCachedBitmap(Canvas c, Point TLPoint)
+        private void DrawCachedBitmap(Canvas c)
         {
             c.SetPenWidth(1);
             c.SetColor(Color.Yellow);
@@ -252,7 +252,7 @@ namespace TomyMaps
             Canvas c = new Canvas(width, height);
 
 
-            DrawCachedBitmap(c, TLPoint);
+            DrawCachedBitmap(c);
             cachedBitmap = c.Finish();
 
             // I use Math.Max because sometimes the cachedImage is much smaller than the windowsize
@@ -267,6 +267,12 @@ namespace TomyMaps
         // FIXME for going back in the picture...
         public void DrawSelection(Graphics g=null, System.Windows.Forms.Control c = null)
         {
+
+            Random r = new Random();
+            if (r.Next(20) == 0)
+            {
+                PrecomputeCachedBitmap();
+            }
             // check if you can select the rectangle from the cachedBitmap
             // if you cannot, then precompute the cachedImage
             if (cachedBitmap == null || // no cached bitmap made so far OR
@@ -286,6 +292,7 @@ namespace TomyMaps
                 PrecomputeCachedBitmap();
             }
 
+
             int selectionRectX = TLPoint.X - cachedBitmapTLPoint.X;
             int selectionRectY = TLPoint.Y - cachedBitmapTLPoint.Y;
             int selectionRectWidth = Math.Min(WindowSize.Width, cachedBitmapTLPoint.X + cachedBitmap.Width - TLPoint.X);
@@ -294,8 +301,10 @@ namespace TomyMaps
             Rectangle selectionRect = new Rectangle(selectionRectX, selectionRectY, selectionRectWidth, selectionRectHeight);
 
             if (c != null)
-                c.Text = "(rect) t:" + selectionRect.Top + " l: " + selectionRect.Left + " w: " + selectionRect.Width + " h: " + selectionRect.Height;
-           
+            {
+                c.Text = "" + selectionRect;
+                c.Text += " " + TLPoint.X;
+            }
 
             System.Drawing.Imaging.PixelFormat format = cachedBitmap.PixelFormat;
 
