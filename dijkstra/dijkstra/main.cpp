@@ -282,9 +282,10 @@ int main()
 
 
 	LoadMap(m.map, map, width, height);
-
-	vector<Node_info_t> outputMap = 
-		dijkstra(linearize(m.yfrom,m.xfrom), linearize(m.yto,m.xto));
+	
+	vector<Node_info_t> outputMap;
+	for (int i=0; i!= 300; ++i)
+		outputMap = dijkstra(linearize(m.yfrom,m.xfrom), linearize(m.yto,m.xto));
 
 	cout << outputMap[linearize(m.yto,m.xto)].distance << endl;
 
