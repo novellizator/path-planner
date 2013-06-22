@@ -3,354 +3,52 @@
 #include <cstdlib>
 #include <queue>
 #include <iostream>
-#include "Entry.h"
 #include <algorithm> // reverse() 
+#include <vector>
+
+#include "Entry.h"
+#include "globals.h"
+#include "NSquare.h"
+#include "BucketQueue.h"
 
 using namespace std;
 
-typedef double dist_t;
+
+// extern variable defined here
 int verticesScanned = 0;
 int width, height;
-const dist_t tangent = 1.4142;
-const dist_t straight = 1.0;
-const dist_t maxDistance = 999999.0;
-const int TOTAL_LANDMARKS = 6;
 
 vector<bool> map;
 vector<int> NSquares[2]; // novella's squares (colorized map, int=color)
 
 
-// used in the heap
-struct Node_t
-{
-	Node_t(int c = 0, dist_t d = 0.0, dist_t sd = 0.0): coords(c), distance(d), supposedDistance(sd)
-	{
-	}
-	
-    int coords;
-    dist_t distance;
-	dist_t supposedDistance;
+// check out all the neighbors && push them
+// starting with the one up clockwise
+const pair<int, int> neighbors[] = { // [y, x]
+	make_pair(-1, 0),
+	make_pair(-1, 1),
+	make_pair(0, 1),
+	make_pair(1, 1),
+	make_pair(1, 0),
+	make_pair(1, -1),
+	make_pair(0, -1),
+	make_pair(-1, -1),
 };
 
-struct Node_info_t
-{
-	Node_info_t(): distance(maxDistance), precursorCoords(0), isClosed(false)
-	{
-	}
-	dist_t distance;
-	int precursorCoords;
-	bool isClosed;
+const dist_t neighborDistances[] = {
+	straight,
+	tangent,
+	straight,
+	tangent,
+	straight,
+	tangent,
+	straight,
+	tangent
 };
-
-
-int linearize(const xyLoc& coords)
-{
-    return coords.y * width + coords.x;
-}
-
-
-xyLoc linearToCoords(int linear)
-{
-	xyLoc coords;
-	coords.x = linear % width;
-	coords.y = linear / width;
-	return coords;
-}
-
-bool ValidateLoc(const xyLoc& loc)
-{
-	if (loc.y <= -1 || loc.y >= height ||
-		loc.x <= -1 || loc.x >= width)
-	{
-		return false;
-	}
-
-	int locCoords = linearize(loc);
-	if(map[locCoords] == false) 
-	{
-		return false;
-	}
-
-	return true;
-}
-
-
-
-
-// ------- START OF NSquare algorithm
-void HorizontallyColorize(vector<int>& coloredMap, int vertex, int color)
-{
-	xyLoc startCoords = linearToCoords(vertex);
-
-	// start with the first row
-	xyLoc vertexC = linearToCoords(vertex);
-	while (ValidateLoc(vertexC)) 
-	{
-		if (map[vertex] == 1 && coloredMap[vertex] == 0)
-		{
-			coloredMap[vertex] = color;
-
-			++vertexC.x;
-			vertex = linearize(vertexC);
-		}
-		else break;
-	}
-	xyLoc endCoords = linearToCoords(vertex); // one coord AFTER the last valid coord
-
-	xyLoc vertexIter = startCoords;
-	++vertexIter.y;
-	while(ValidateLoc(vertexIter))
-	{
-		// check whole line
-		bool validLine = true;
-		for (int i = startCoords.x; i < endCoords.x; ++i)
-		{
-			vertexIter.x = i;
-			int v = linearize(vertexIter);
-			if (map[v] == 0 || coloredMap[v] != 0)
-			{
-				validLine = false;
-				break;
-			}
-		}
-
-		if (validLine)
-		{
-			for (int i = startCoords.x; i < endCoords.x; ++i)
-			{
-				vertexIter.x = i;
-				int v = linearize(vertexIter);
-				coloredMap[v] = color;
-			}
-		}
-		++vertexIter.y;
-	}
-}
-
-
-void VerticallyColorize(vector<int>& coloredMap, int vertex, int color)
-{
-	xyLoc startCoords = linearToCoords(vertex);
-
-	// start with the first col
-	xyLoc vertexC = linearToCoords(vertex);
-	while (ValidateLoc(vertexC)) 
-	{
-		if (map[vertex] == 1 && coloredMap[vertex] == 0)
-		{
-			coloredMap[vertex] = color;
-
-			++vertexC.y;
-			vertex = linearize(vertexC);
-		}
-		else break;
-	}
-	xyLoc endCoords = linearToCoords(vertex); // one coord AFTER the last valid coord
-
-	xyLoc vertexIter = startCoords;
-	++vertexIter.x;
-	while(ValidateLoc(vertexIter))
-	{
-		// check whole line
-		bool validLine = true;
-		for (int i = startCoords.y; i < endCoords.y; ++i)
-		{
-			vertexIter.y = i;
-			int v = linearize(vertexIter);
-			if (map[v] == 0 || coloredMap[v] != 0)
-			{
-				validLine = false;
-				break;
-			}
-		}
-
-		if (validLine)
-		{
-			for (int i = startCoords.y; i < endCoords.y; ++i)
-			{
-				vertexIter.y = i;
-				int v = linearize(vertexIter);
-				coloredMap[v] = color;
-			}
-		}
-		++vertexIter.x;
-	}
-}
-
-// Novella's decomposition ;-)
-vector<int> Colorize(int type)
-{
-	vector<int> coloredMap(width * height, 0);
-	int color = 1;
-	for (int i=0; i < width*height; ++i)
-	{
-		if (map[i] == 1 && coloredMap[i] == 0)
-		{
-			if (type == 0)
-			{
-				VerticallyColorize(coloredMap, i, color);
-			}
-			else 
-			{
-				HorizontallyColorize(coloredMap, i, color);
-			}
-			++color;
-		}
-	}
-
-	return coloredMap;
-}
-
-
-// -1 -> different squares, otherwise return which NSquare
-int inSameNSquare(const xyLoc& s, const xyLoc& g)
-{
-	int linS = linearize(s);
-	int linG = linearize(g);
-
-	for (int i = 0; i < 2; ++i)
-	{
-		if (NSquares[i][linS] == NSquares[i][linG])
-			return i;
-	}
-	return -1;
-}
-	
-void NSquarePath(vector<xyLoc>& path, xyLoc s, const xyLoc& g)
-{
-	path.push_back(s);
-
-	while ((s.x - g.x != 0) || (s.y - g.y != 0))
-	{
-		if (s.x < g.x) ++s.x;
-		if (s.x > g.x) --s.x;
-
-		if (s.y < g.y) ++s.y;
-		if (s.y > g.y) --s.y;
-
-		path.push_back(s);
-	}
-}
-// ------- END OF NSquare algorithm
-
-
-
 
 
 
 // ---- START OF DIJKSTRA
-// special data structure that makes the heap linear
-// does not work with landmarks... - when I make this work - it will be awesome!
-class BucketQueue
-{
-public:
-	BucketQueue():size(0), baseDistance(1), currentIndex(0)
-	{
-		for (int i = 0; i != 3; ++i)
-		{
-			baseElements[i] = new vector<Node_t>();
-			baseIndexes[i] = 0;
-		}
-	}
-
-
-	bool empty()
-	{
-		return size == 0;
-	}
-
-
-	void push(const Node_t & element)
-	{
-		++size;
-		if (element.distance > baseDistance + 1.999)
-		{
-			pushOrInsert(2, element);
-		}
-		else if(element.distance > baseDistance + 0.999)
-		{
-			pushOrInsert(1, element);
-		}
-		else
-		{
-			pushOrInsert(0, element);
-		}
-	}
-
-
-	Node_t & top()
-	{
-		//if (empty())
-		//	throw std::exception("empty queue!!!");
-
-		return (*baseElements[0])[currentIndex]; // FIXME? in the beginnign there must me at least one element here baseElements[0]
-	}
-
-
-	// pops the element and sets currentIndex to valid value
-	void pop()
-	{
-		//if (empty())
-		//	throw std::exception("empty!!!");
-
-		--size;
-
-		++currentIndex; // move to the next thing
-
-		// check if correct
-		for (int i=0; i<3; ++i)
-			if (currentIndex == baseIndexes[0])
-			{
-				// baseIndexes[0] = 0;
-				currentIndex = 0;
-				++baseDistance;
-
-				vector<Node_t>* tmpVecPtr = baseElements[0];
-
-				for (int oldBase = 1; oldBase <= 2; ++oldBase)
-				{
-					baseElements[oldBase - 1] = baseElements[oldBase];
-					baseIndexes[oldBase - 1] = baseIndexes[oldBase];
-				}
-				baseElements[2] = tmpVecPtr;
-				baseIndexes[2] = 0;
-			}
-			else
-				break;
-
-
-	}
-
-private:
-	int size;
-	int baseDistance;
-
-	int currentIndex;
-	// <baseDistance, baseDistance+1), 
-	// <baseDistance+1, baseDistance+2),
-	// <baseDistance2, baseDistance+2.41)
-	vector<Node_t>* baseElements[3];
-	unsigned int baseIndexes[3]; // index in the baseElementsx vector to which the element is to be pushed
-
-	
-	
-
-	// arrayIndex \element {0, 1, 2}
-	void pushOrInsert(int arrayIndex, const Node_t& element)
-	{
-		// should I push back?
-		if (baseIndexes[arrayIndex] >= baseElements[arrayIndex]->size())
-		{
-			baseElements[arrayIndex]->push_back(element);
-		}
-		else
-		{
-			(*baseElements[arrayIndex])[baseIndexes[arrayIndex]] = element;
-		}
-		++baseIndexes[arrayIndex];
-	}
-};
-
 bool Dijkstra(xyLoc s, std::vector<Node_info_t>& outputMap)
 {
 	int from = linearize(s);
@@ -365,30 +63,6 @@ bool Dijkstra(xyLoc s, std::vector<Node_info_t>& outputMap)
 	outputMap[from].precursorCoords = 0;
 
 	const int neighborsCount = 8;
-
-	// check out all the neighbors && push them
-	// starting with the one up clockwise
-	pair<int, int> neighbors[] = { // [y, x]
-		make_pair(-1, 0),
-		make_pair(-1, 1),
-		make_pair(0, 1),
-		make_pair(1, 1),
-		make_pair(1, 0),
-		make_pair(1, -1),
-		make_pair(0, -1),
-		make_pair(-1, -1),
-	};
-
-	dist_t neighborDistances[] = {
-		straight,
-		tangent,
-		straight,
-		tangent,
-		straight,
-		tangent,
-		straight,
-		tangent
-	};
 
     while(!Q.empty()) 
     {
@@ -522,27 +196,6 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 
 	// check out all the neighbors && push them
 	// starting with the one up clockwise
-	pair<int, int> neighbors[] = { // [y, x]
-		make_pair(-1, 0),
-		make_pair(-1, 1),
-		make_pair(0, 1),
-		make_pair(1, 1),
-		make_pair(1, 0),
-		make_pair(1, -1),
-		make_pair(0, -1),
-		make_pair(-1, -1),
-	};
-
-	dist_t neighborDistances[] = {
-		straight,
-		tangent,
-		straight,
-		tangent,
-		straight,
-		tangent,
-		straight,
-		tangent
-	};
 
     while(!Q.empty()) 
     {
@@ -751,99 +404,101 @@ const char *GetName()
 }
 
 
-//void LoadMap(const char *fname, std::vector<bool> &map, int &width, int &height)
-//{
-//	FILE *f;
-//	f = fopen(fname, "r");
-//	if (f)
-//    {
-//		fscanf(f, "type octile\nheight %d\nwidth %d\nmap\n", &height, &width);
-//		map.resize(height*width);
-//		for (int y = 0; y < height; y++)
-//		{
-//			for (int x = 0; x < width; x++)
-//			{
-//				char c;
-//				do {
-//					fscanf(f, "%c", &c);
-//				} while (isspace(c));
-//				map[y*width+x] = (c == '.' || c == 'G' || c == 'S');
-//			}
-//		}
-//		fclose(f);
-//    }
-//}
-//
-//template<class T>
-//void printMap(const T& m)
-//{
-//	for (int i=0; i != width*height; ++i)
-//	{
-//		cout << m[i];
-//		if (i %width == width-1 && i != 0)
-//		{
-//			cout << endl;
-//		}
-//	}
-//	cout << endl;
-//}
-//
-//struct HelpMap {
-//	HelpMap(const char *m, int a, int b, int c, int d): map(m), xfrom(a), yfrom(b),xto(c), yto(d)
-//	{
-//	}
-//	const char * map;
-//	int xfrom;
-//	int yfrom;
-//	int xto;
-//	int yto;
-//};
-//HelpMap m("mapa.map", 1,1,7,1);
-////HelpMap m("Aftershock.map", 163,428,170,427);
-////HelpMap m("Aftershock.map", 1,130,9,113); //20.3136
-////HelpMap m("Aftershock.map", 442,8,503,495); //726.247
-////HelpMap m("Aftershock.map", 490, 264, 488, 260); //4.82843
-//int main()
-//{
-//	LoadMap(m.map, map, width, height);
-//
-//	vector<Node_info_t> outputMap;
-//	PreprocessMap(map, width, height, "foofile");
-//	void * reference = PrepareForSearch(map, width, height, "foofile");
-//
-//	vector<xyLoc> thePath;
-//	for(int i=0; i != 1; ++i)
-//	{
-//		xyLoc s, g;
-//		s.x = m.xfrom;
-//		s.y = m.yfrom;
-//		g.x = m.xto;
-//		g.y = m.yto;
-//
-//		bool done = GetPath(reference, s, g, thePath);
-//	}
-//
-//	cout << "velkost thePath (ideal length=726.247)" << thePath.size() << endl;
-//	for (int i=0; i != thePath.size(); ++i)
-//	{
-//		//cout << "x=" <<thePath[i].x<<" y="<<thePath[i].y << endl;
-//	}
-//
-//
-//	printMap(map);
-//
-//
-//	cout << "colorized graph" << endl;
-//	//vector<int> colorizedGraph = Colorize(1);
-//	printMap(NSquares[0]);
-//
-//	cout << "colorized graph - 2 " << endl;
-//	//colorizedGraph = Colorize(0);
-//	printMap(NSquares[1]);
-//	
-//
-//	system("pause");
-//    return 0;
-//}
+
+
+void LoadMap(const char *fname, std::vector<bool> &map, int &width, int &height)
+{
+	FILE *f;
+	f = fopen(fname, "r");
+	if (f)
+    {
+		fscanf(f, "type octile\nheight %d\nwidth %d\nmap\n", &height, &width);
+		map.resize(height*width);
+		for (int y = 0; y < height; y++)
+		{
+			for (int x = 0; x < width; x++)
+			{
+				char c;
+				do {
+					fscanf(f, "%c", &c);
+				} while (isspace(c));
+				map[y*width+x] = (c == '.' || c == 'G' || c == 'S');
+			}
+		}
+		fclose(f);
+    }
+}
+
+template<class T>
+void printMap(const T& m)
+{
+	for (int i=0; i != width*height; ++i)
+	{
+		cout << m[i];
+		if (i %width == width-1 && i != 0)
+		{
+			cout << endl;
+		}
+	}
+	cout << endl;
+}
+
+struct HelpMap {
+	HelpMap(const char *m, int a, int b, int c, int d): map(m), xfrom(a), yfrom(b),xto(c), yto(d)
+	{
+	}
+	const char * map;
+	int xfrom;
+	int yfrom;
+	int xto;
+	int yto;
+};
+HelpMap m("mapa.map", 1,1,7,1);
+//HelpMap m("Aftershock.map", 163,428,170,427);
+//HelpMap m("Aftershock.map", 1,130,9,113); //20.3136
+//HelpMap m("Aftershock.map", 442,8,503,495); //726.247
+//HelpMap m("Aftershock.map", 490, 264, 488, 260); //4.82843
+int main()
+{
+	LoadMap(m.map, map, width, height);
+
+	vector<Node_info_t> outputMap;
+	PreprocessMap(map, width, height, "foofile");
+	void * reference = PrepareForSearch(map, width, height, "foofile");
+
+	vector<xyLoc> thePath;
+	for(int i=0; i != 1; ++i)
+	{
+		xyLoc s, g;
+		s.x = m.xfrom;
+		s.y = m.yfrom;
+		g.x = m.xto;
+		g.y = m.yto;
+
+		bool done = GetPath(reference, s, g, thePath);
+	}
+
+	cout << "velkost thePath (ideal length=726.247)" << thePath.size() << endl;
+	for (int i=0; i != thePath.size(); ++i)
+	{
+		//cout << "x=" <<thePath[i].x<<" y="<<thePath[i].y << endl;
+	}
+
+
+	printMap(map);
+
+
+	cout << "colorized graph" << endl;
+	//vector<int> colorizedGraph = Colorize(1);
+	printMap(NSquares[0]);
+
+	cout << "colorized graph - 2 " << endl;
+	//colorizedGraph = Colorize(0);
+	printMap(NSquares[1]);
+	
+
+	system("pause");
+    return 0;
+}
 
 

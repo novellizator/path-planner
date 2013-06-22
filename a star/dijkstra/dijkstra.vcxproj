@@ -60,10 +60,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BucketQueue.cpp" />
     <ClCompile Include="Entry.cpp" />
+    <ClCompile Include="globals.cpp" />
+    <ClCompile Include="NSquare.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BucketQueue.h" />
     <ClInclude Include="Entry.h" />
+    <ClInclude Include="globals.h" />
+    <ClInclude Include="NSquare.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
