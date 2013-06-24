@@ -9,16 +9,21 @@
 typedef double dist_t;
 
 
-// constants
+// constants - unchangable ones
 const dist_t tangent = 1.4142;
 const dist_t straight = 1.0;
 const dist_t maxDistance = 999999.0;
+
+
+// user-set
 const int TOTAL_LANDMARKS = 6;
+// do not forget that 0 is considered color - doesn't matter because all paths given in requests are valid
+const int SMALLEST_COLORIZED_RECTANGLE = 4; // naturally, the smallest possible value is 2; FIXME all others (not found ones) will have the same value???
 
 
 extern int width, height;
 extern std::vector<bool> map;
-extern std::vector<int> NSquares[2]; // novella's squares (colorized map, int=color)
+extern std::vector<int> colorizedMap; // novella's squares (colorized map, int=color)
 
 
 extern int verticesScanned;
@@ -47,8 +52,13 @@ struct Node_info_t
 	bool isClosed;
 };
 
+// FIXME speed-up tip: inline
 extern int linearize(const xyLoc& coords);
-extern xyLoc linearToCoords(int linear);
+extern int linearize(int y, int x);
+extern xyLoc coordinatize(int linear);
+
+
+
 extern bool ValidateLoc(const xyLoc& loc);
 
 #endif

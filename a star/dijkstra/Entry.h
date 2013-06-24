@@ -5,8 +5,14 @@
 #include <vector>
 
 struct xyLoc {
-  int16_t x;
-  int16_t y;
+	xyLoc()
+	{}
+
+	xyLoc(int16_t xx, int16_t  yy): x(xx), y(yy)
+	{}
+
+	int16_t x;
+	int16_t y;
 };
 
 void PreprocessMap(std::vector<bool> &bits, int width, int height, const char *filename);

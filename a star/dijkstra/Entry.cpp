@@ -8,7 +8,7 @@
 
 #include "Entry.h"
 #include "globals.h"
-#include "NSquare.h"
+#include "colorize.h"
 #include "BucketQueue.h"
 
 using namespace std;
@@ -18,12 +18,13 @@ using namespace std;
 int verticesScanned = 0;
 int width, height;
 
-vector<bool> map;
-vector<int> NSquares[2]; // novella's squares (colorized map, int=color)
+vector<bool> map; 
+vector<int> colorizedMap; // integer - signifies the color of a square
 
 
-// check out all the neighbors && push them
-// starting with the one up clockwise
+// neighbors 
+// starting with the one upwards, going clockwise
+const int neighborsCount = 8;
 const pair<int, int> neighbors[] = { // [y, x]
 	make_pair(-1, 0),
 	make_pair(-1, 1),
@@ -47,7 +48,6 @@ const dist_t neighborDistances[] = {
 };
 
 
-
 // ---- START OF DIJKSTRA
 bool Dijkstra(xyLoc s, std::vector<Node_info_t>& outputMap)
 {
@@ -62,7 +62,7 @@ bool Dijkstra(xyLoc s, std::vector<Node_info_t>& outputMap)
 	outputMap[from].distance = 0.0;
 	outputMap[from].precursorCoords = 0;
 
-	const int neighborsCount = 8;
+
 
     while(!Q.empty()) 
     {
@@ -76,7 +76,7 @@ bool Dijkstra(xyLoc s, std::vector<Node_info_t>& outputMap)
 		for (int i = 0; i < neighborsCount; ++i)
 		{
 
-			xyLoc vc = linearToCoords(vertex.coords);
+			xyLoc vc = coordinatize(vertex.coords);
 
 			xyLoc neighborC;
 			neighborC.x = vc.x + neighbors[i].first;
@@ -176,9 +176,9 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 	int from = linearize(s);
 	int to = linearize(g);
 
-	if (inSameNSquare(s, g) > -1)
+	if (isSameColor(s, g))
 	{
-		NSquarePath(path, s, g);
+		setSameColorPath(path, s, g);
 		return true;
 	}
 
@@ -191,11 +191,6 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
     Q.push(fromV);
 	outputMap[from].distance = 0.0;
 	outputMap[from].precursorCoords = 0;
-
-	const int neighborsCount = 8;
-
-	// check out all the neighbors && push them
-	// starting with the one up clockwise
 
     while(!Q.empty()) 
     {
@@ -212,7 +207,7 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 		// check all the neighbors
 		for (int i = 0; i < neighborsCount; ++i)
 		{
-			xyLoc vc = linearToCoords(vertex.coords);
+			xyLoc vc = coordinatize(vertex.coords);
 
 			//cout << "vertex x="<<vc.x<<"y="<<vc.y << endl;
 			xyLoc neighborC;
@@ -262,8 +257,8 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
     }
 
 
-    //cout << "qqvzidalenost " << outputMap[to].distance << endl;
-	if (outputMap[to].isClosed == true)
+	// construct the path
+	if (outputMap[to].isClosed == true) // makes sure I found the path
 	{
 		//cout << "pocet skenovanych vrcholov " << verticesScanned << endl;
 		//cout << "je to zavrety vrchol!" << endl;
@@ -271,8 +266,7 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 		int v = to;
 		while (true)
 		{
-			//cout << "iterujem, som na " << v << endl;
-			xyLoc loc = linearToCoords(v);
+			xyLoc loc = coordinatize(v);
 			path.push_back(loc);
 
 			if (outputMap[v].precursorCoords != 0)
@@ -294,26 +288,20 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 //-------- END OF A*
 
 
-void readVector(vector<int> * vectors, const char* filename)
+void readVector(vector<int>& colorizedMap, const char* filename)
 {
 	FILE * file = fopen(filename, "r");
 	for (int i = 0; i != width*height; ++i)
 	{
 		int num;
 		fscanf(file, "%d", &num);
-		vectors[0].push_back(num); 
+		colorizedMap.push_back(num); 
 	}
 
-	for (int i = 0; i != width*height; ++i)
-	{
-		int num;
-		fscanf(file, "%d", &num);
-		vectors[1].push_back(num); 
-	}
 	fclose(file);
 
 }
-void printVector(const vector<int> & v, const char* filename)
+void writeVector(const vector<int> & v, const char* filename)
 {
 	FILE * file = fopen(filename, "a");
 	for (int i = 0; i < v.size(); ++i)
@@ -329,8 +317,8 @@ void PreprocessMap(std::vector<bool> &bits, int w, int h, const char *filename)
 	width = w;
 	height = h;
 
-	printVector(Colorize(0), filename);
-	printVector(Colorize(1), filename);
+	// colorize() does all the work
+	writeVector(colorize(), filename);
 }
 
 
@@ -340,7 +328,7 @@ void *PrepareForSearch(std::vector<bool> &bits, int w, int h, const char *filena
 	width = w;
 	height = h;
 
-	readVector(NSquares, filename);
+	readVector(colorizedMap, filename);
 
 
 	// I did some quick dijkstra in this function since it really takes VERY little time (just some milliseconds)
@@ -371,7 +359,7 @@ void *PrepareForSearch(std::vector<bool> &bits, int w, int h, const char *filena
 	vector<Node_info_t>* landmarkOutputBitmaps = new vector<Node_info_t>[TOTAL_LANDMARKS];
 	for (int i=0; i != TOTAL_LANDMARKS; ++i)
 	{
-		Dijkstra(linearToCoords(landmarks[i]), landmarkOutputBitmaps[i]);
+		Dijkstra(coordinatize(landmarks[i]), landmarkOutputBitmaps[i]);
 
 		if (i < TOTAL_LANDMARKS/2) 
 		{
@@ -434,13 +422,27 @@ void printMap(const T& m)
 {
 	for (int i=0; i != width*height; ++i)
 	{
-		cout << m[i];
+		cout << m[i] <<"\t";
 		if (i %width == width-1 && i != 0)
 		{
 			cout << endl;
 		}
 	}
 	cout << endl;
+}
+
+vector<bool> push(const char * str)
+{
+    vector<bool> ret;
+    while (*str != '\0')
+    {
+        if (*str == '0') 
+            ret.push_back(false);
+        else
+            ret.push_back(true);
+        ++str;
+    }
+    return ret;
 }
 
 struct HelpMap {
@@ -453,13 +455,14 @@ struct HelpMap {
 	int xto;
 	int yto;
 };
-HelpMap m("mapa.map", 1,1,7,1);
+//HelpMap m("mapa.map", 1,1,7,1);
 //HelpMap m("Aftershock.map", 163,428,170,427);
-//HelpMap m("Aftershock.map", 1,130,9,113); //20.3136
+HelpMap m("Aftershock.map", 1,130,9,113); //20.3136
 //HelpMap m("Aftershock.map", 442,8,503,495); //726.247
 //HelpMap m("Aftershock.map", 490, 264, 488, 260); //4.82843
 int main()
 {
+	freopen( "D:/vystup.txt", "w", stdout );
 	LoadMap(m.map, map, width, height);
 
 	vector<Node_info_t> outputMap;
@@ -490,11 +493,7 @@ int main()
 
 	cout << "colorized graph" << endl;
 	//vector<int> colorizedGraph = Colorize(1);
-	printMap(NSquares[0]);
-
-	cout << "colorized graph - 2 " << endl;
-	//colorizedGraph = Colorize(0);
-	printMap(NSquares[1]);
+	printMap(colorizedMap);
 	
 
 	system("pause");
