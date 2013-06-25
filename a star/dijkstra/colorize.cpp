@@ -10,8 +10,19 @@ using namespace std;
 const int DEFAULT_COLOR = 0;
 
 
-struct number {
-    int up; int left; int sequenceSize; 
+struct dataAboutRectangle {
+	dataAboutRectangle(int l = 0, int s = 0): left(l), sequenceSize(s) 
+	{}
+
+
+	int getArea() const
+	{
+		return left * sequenceSize;
+	}
+
+	int left;
+	int sequenceSize; 
+
 };
 struct StackStruct {
 	StackStruct(int r=-1, int v=0):row(r), val(v)
@@ -28,15 +39,7 @@ bool validLoc(const xyLoc & loc)
 	return true;
 }
 
-int getUps(const vector<number>& data, const xyLoc& loc)
-{
-	if (validLoc(loc)) 
-		return data[linearize(loc)].up; 
-	else 
-		return 0;
-}
-
-int getLefts(const vector<number>& data, const xyLoc& loc)
+int getLefts(const vector<dataAboutRectangle>& data, const xyLoc& loc)
 {
 	if (validLoc(loc)) 
 		return data[linearize(loc)].left; 
@@ -45,10 +48,10 @@ int getLefts(const vector<number>& data, const xyLoc& loc)
 }
 
 
-void findRectangle()
+
+pair<int, dataAboutRectangle> findLargestRectangle()
 {
-	vector<number> data(map.size(), number());
-    vector<int> sums(map.size(), 0);
+	vector<dataAboutRectangle> data(map.size(), dataAboutRectangle());
 
 	// fill the data vector
     for(int i = 0; i != map.size(); ++i)
@@ -56,22 +59,16 @@ void findRectangle()
         if (map[i] == 0)
         {
             data[i].left = 0;
-            data[i].up = 0;
-            
         } else
         {
             xyLoc loc = coordinatize(i);
+			xyLoc leftLoc = loc;
+			--leftLoc.x;
 
-            xyLoc upLoc = loc;
-            --upLoc.y;
-
-            data[i].up = getUps(data, upLoc) + 1;
-
-            --loc.x;
-            data[i].left = getLefts(data, loc) + 1;
-            ++loc.x;
+            data[i].left = getLefts(data, leftLoc) + 1;
         }
 	}
+
 
 	for (int c = 0; c < width; ++c)
 	{
@@ -109,31 +106,51 @@ void findRectangle()
 	}
 
 	// sums bude hovorit v pravom hornom rohu, kde zacina obdlznik
+	vector<int> sums(map.size(), 0);
+	int maxSum = 0;
+	int maxI=0;
+	// vector<int> sums(map.size(), 0);
 	for (int i = 0; i != map.size(); ++i)
 	{
-		int x = (i % width) - data[i].left + 1;
-		int y = i / width;
-		xyLoc c; c.x = x; c.y = y;
-		sums[i] = data[i].sequenceSize * data[i].left;
+		//int x = (i % width) - data[i].left + 1;
+		//int y = i / width;
+		//xyLoc c; c.x = x; c.y = y;
+		//sums[i] = data[i].getArea();
+		int sum = data[i].getArea();
+		if (sum > maxSum)
+		{
+			maxSum = sum;
+			maxI = i;
+		}
 	}
-	// cout << "vysledny vektor:" << endl;
-	// printVec(sums);
+
+
+	pair<int, dataAboutRectangle> ret;
+	ret.first = maxI;
+	ret.second = data[maxI];
+
+	return ret;
+}
+void colorizeRectangle(const pair<int, dataAboutRectangle>& rectangle, int color)
+{
+	int vertex = rectangle.first;
+	// ... TODO
 }
 
-// type ignored
+
 vector<int> colorize() 
 {
-	// default color is 0
 	vector<int> colorizedMap(width * height, DEFAULT_COLOR);
 
-	//while (colorizeLargestRectangle(colorizedMap, color) > SMALLEST_COLORIZED_RECTANGLE)
-		
-	
+	int color = DEFAULT_COLOR + 1;
+	pair<int, dataAboutRectangle> largestRectangle = findLargestRectangle();
+	while (largestRectangle.second.getArea() >= SMALLEST_COLORIZED_RECTANGLE)
+	{
+		colorizeRectangle(largestRectangle, color++);
+	}
 
 	return colorizedMap;
-
 }
-
 
 
 //int main()

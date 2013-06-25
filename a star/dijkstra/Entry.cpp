@@ -322,39 +322,25 @@ void PreprocessMap(std::vector<bool> &bits, int w, int h, const char *filename)
 }
 
 
-void *PrepareForSearch(std::vector<bool> &bits, int w, int h, const char *filename)
+int getRandomValidVertex()
 {
-	map = bits;
-	width = w;
-	height = h;
+	int randomVertex = rand() % (width * height);
 
-	readVector(colorizedMap, filename);
+	while (!map[randomVertex])
+	{
+		randomVertex = (randomVertex+1) % (width * height);
+	}
+	return randomVertex;
+}
 
-
-	// I did some quick dijkstra in this function since it really takes VERY little time (just some milliseconds)
-	// if this should be a reason for disqualification, I do apologize and I will reprogram in into the PreprocessMap...
-	// this whole function calls dijkstra 6times on the map
-	
-	// pick TOTAL_LANDMARKS/2 random points
-
-	int pos = 0;
+vector<Node_info_t>* pickLandmarks()
+{
 	int landmarks[TOTAL_LANDMARKS];
 
-	int randomVertex;
 	for(int i = 0; i < TOTAL_LANDMARKS/2; ++i)
 	{
-		randomVertex = (rand() % (width * height));
-		//cout << randomVertex << endl;
-
-		while (!map[randomVertex])
-		{
-			randomVertex = (randomVertex+1) % (width*height);
-		}
-		landmarks[pos++] = randomVertex;
-		// cout << "nas pokus " << p << endl;
+		landmarks[i] = getRandomValidVertex();
 	}
-
-	// cout << "zbyvalo pokusov" << attempts << endl;
 
 	vector<Node_info_t>* landmarkOutputBitmaps = new vector<Node_info_t>[TOTAL_LANDMARKS];
 	for (int i=0; i != TOTAL_LANDMARKS; ++i)
@@ -366,9 +352,8 @@ void *PrepareForSearch(std::vector<bool> &bits, int w, int h, const char *filena
 			// find most distant points
 			int mostDistantVertex = 0;
 			dist_t mostDistantDistance = 0;
-			for (int tmp=0; tmp!= TOTAL_LANDMARKS; ++tmp)
-				//cout << "size "<<landmarkOutputBitmaps[i].size() << endl;
-			for (unsigned int j=0; j != landmarkOutputBitmaps[i].size(); ++j)
+
+			for (size_t j=0; j != landmarkOutputBitmaps[i].size(); ++j)
 			{
 				//cout <<"dist"<<landmarkOutputBitmaps[i][j].distance << 
 				//	"j"<<j<<	endl;
@@ -382,6 +367,27 @@ void *PrepareForSearch(std::vector<bool> &bits, int w, int h, const char *filena
 			landmarks[TOTAL_LANDMARKS/2 + i] = mostDistantVertex;
 		}
 	}
+
+	return landmarkOutputBitmaps;
+}
+
+
+void * PrepareForSearch(std::vector<bool> &bits, int w, int h, const char *filename)
+{
+	map = bits;
+	width = w;
+	height = h;
+
+	readVector(colorizedMap, filename);
+
+
+	// I did some quick dijkstra in this function since it really takes VERY little time (just some milliseconds)
+	// if this should be a reason for disqualification, I do apologize and I will reprogram in into the PreprocessMap...
+	// this whole function calls dijkstra 6times on the map
+	vector<Node_info_t>* landmarkOutputBitmaps = pickLandmarks();
+	// pick TOTAL_LANDMARKS/2 random points
+
+
 
 	return landmarkOutputBitmaps;
 }
@@ -457,12 +463,12 @@ struct HelpMap {
 };
 //HelpMap m("mapa.map", 1,1,7,1);
 //HelpMap m("Aftershock.map", 163,428,170,427);
-HelpMap m("Aftershock.map", 1,130,9,113); //20.3136
-//HelpMap m("Aftershock.map", 442,8,503,495); //726.247
+//HelpMap m("Aftershock.map", 1,130,9,113); //20.3136
+HelpMap m("Aftershock.map", 442,8,503,495); //726.247
 //HelpMap m("Aftershock.map", 490, 264, 488, 260); //4.82843
 int main()
 {
-	freopen( "D:/vystup.txt", "w", stdout );
+	//freopen( "D:/vystup.txt", "w", stdout );
 	LoadMap(m.map, map, width, height);
 
 	vector<Node_info_t> outputMap;
@@ -488,12 +494,12 @@ int main()
 	}
 
 
-	printMap(map);
+	//printMap(map);
 
 
-	cout << "colorized graph" << endl;
+	//cout << "colorized graph" << endl;
 	//vector<int> colorizedGraph = Colorize(1);
-	printMap(colorizedMap);
+	//printMap(colorizedMap);
 	
 
 	system("pause");
