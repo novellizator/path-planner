@@ -23,8 +23,9 @@ const int SMALLEST_COLORIZED_RECTANGLE = 4; // naturally, the smallest possible 
 
 extern int width, height;
 extern std::vector<bool> map;
-extern std::vector<int> colorizedMap; // novella's squares (colorized map, int=color)
+//extern std::vector<int> colorizedMap; // novella's squares (colorized map, int=color)
 
+// extern Colorizator col;
 
 extern int verticesScanned;
 

@@ -19,8 +19,8 @@ int verticesScanned = 0;
 int width, height;
 
 vector<bool> map; 
-vector<int> colorizedMap; // integer - signifies the color of a square
-
+//vector<int> colorizedMap; // integer - signifies the color of a square
+Colorizator colorizator;
 
 // neighbors 
 // starting with the one upwards, going clockwise
@@ -176,9 +176,9 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 	int from = linearize(s);
 	int to = linearize(g);
 
-	if (isSameColor(s, g))
+	if (colorizator.isSameColor(s, g))
 	{
-		setSameColorPath(path, s, g);
+		colorizator.setSameColorPath(path, s, g);
 		return true;
 	}
 
@@ -317,8 +317,10 @@ void PreprocessMap(std::vector<bool> &bits, int w, int h, const char *filename)
 	width = w;
 	height = h;
 
-	// colorize() does all the work
-	writeVector(colorize(), filename);
+	Colorizator col;
+	col.colorize();
+
+	writeVector(col.getColorizedMap(), filename);
 }
 
 
@@ -378,8 +380,9 @@ void * PrepareForSearch(std::vector<bool> &bits, int w, int h, const char *filen
 	width = w;
 	height = h;
 
+	vector<int> colorizedMap;
 	readVector(colorizedMap, filename);
-
+	colorizator.setColorizedMap(colorizedMap);
 
 	// I did some quick dijkstra in this function since it really takes VERY little time (just some milliseconds)
 	// if this should be a reason for disqualification, I do apologize and I will reprogram in into the PreprocessMap...
@@ -471,27 +474,33 @@ int main()
 	//freopen( "D:/vystup.txt", "w", stdout );
 	LoadMap(m.map, map, width, height);
 
-	vector<Node_info_t> outputMap;
-	PreprocessMap(map, width, height, "foofile");
-	void * reference = PrepareForSearch(map, width, height, "foofile");
+	Colorizator col;
+	col.colorize();
+	vector<int> cMap = col.getColorizedMap();
+	printMap(cMap);
 
-	vector<xyLoc> thePath;
-	for(int i=0; i != 1; ++i)
-	{
-		xyLoc s, g;
-		s.x = m.xfrom;
-		s.y = m.yfrom;
-		g.x = m.xto;
-		g.y = m.yto;
+	////vector<Node_info_t> outputMap;
+	////PreprocessMap(map, width, height, "foofile");
+	////void * reference = PrepareForSearch(map, width, height, "foofile");
 
-		bool done = GetPath(reference, s, g, thePath);
-	}
+	////vector<xyLoc> thePath;
+	////for(int i=0; i != 1; ++i)
+	////{
+	////	xyLoc s, g;
+	////	s.x = m.xfrom;
+	////	s.y = m.yfrom;
+	////	g.x = m.xto;
+	////	g.y = m.yto;
 
-	cout << "velkost thePath (ideal length=726.247)" << thePath.size() << endl;
-	for (int i=0; i != thePath.size(); ++i)
-	{
-		//cout << "x=" <<thePath[i].x<<" y="<<thePath[i].y << endl;
-	}
+	////	bool done = GetPath(reference, s, g, thePath);
+	////}
+
+
+	////cout << "velkost thePath (ideal length=726.247)" << thePath.size() << endl;
+	////for (int i=0; i != thePath.size(); ++i)
+	////{
+	////	//cout << "x=" <<thePath[i].x<<" y="<<thePath[i].y << endl;
+	////}
 
 
 	//printMap(map);
