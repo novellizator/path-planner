@@ -471,7 +471,7 @@ HelpMap m("Aftershock.map", 442,8,503,495); //726.247
 //HelpMap m("Aftershock.map", 490, 264, 488, 260); //4.82843
 int main()
 {
-	//freopen( "D:/vystup.txt", "w", stdout );
+	freopen( "D:/vystup.txt", "w", stdout );
 	LoadMap(m.map, map, width, height);
 
 	Colorizator col;

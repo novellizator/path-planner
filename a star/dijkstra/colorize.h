@@ -8,7 +8,8 @@ using std::stack;
 using std::pair;
 using std::vector;
 
-struct dataAboutRectangle {
+struct dataAboutRectangle 
+{
 	dataAboutRectangle(int l = 0, int s = 0): left(l), sequenceSize(s) 
 	{}
 
@@ -22,6 +23,8 @@ struct dataAboutRectangle {
 	int sequenceSize; 
 
 };
+
+
 struct StackStruct {
 	StackStruct(int r=-1, int v=0):row(r), val(v)
 	{}
@@ -29,6 +32,7 @@ struct StackStruct {
 	int row;
 	int val;
 };
+
 
 class Colorizator
 {
@@ -39,16 +43,19 @@ public:
 
 	vector<int> colorize() 
 	{
+		float debug_area = 0;
 		int color = DEFAULT_COLOR + 1;
 		pair<int, dataAboutRectangle> largestRectangle = findLargestRectangle();
 		while (largestRectangle.second.getArea() >= SMALLEST_COLORIZED_RECTANGLE)
 		{
 			colorizeRectangle(largestRectangle, color++);
 			largestRectangle = findLargestRectangle();
-			std::cout << "farba " << color << "obsah" <<
-				largestRectangle.second.getArea() << std::endl;
+			//std::cout << "farba " << color << "obsah" <<
+			//	largestRectangle.second.getArea() << std::endl;
+			debug_area += largestRectangle.second.getArea();
 		}
 
+		//std::cout << "podiel je" << width*height/debug_area << std::endl;
 		return colorizedMap;
 	}
 
@@ -91,7 +98,7 @@ public:
 		}
 	}
 private:
-	static const int DEFAULT_COLOR = 0;
+	static const int DEFAULT_COLOR = 9;
 	vector<int> colorizedMap;
 
 	bool validLoc(const xyLoc & loc) const

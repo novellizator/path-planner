@@ -18,7 +18,7 @@ const dist_t maxDistance = 999999.0;
 // user-set
 const int TOTAL_LANDMARKS = 6;
 // do not forget that 0 is considered color - doesn't matter because all paths given in requests are valid
-const int SMALLEST_COLORIZED_RECTANGLE = 4; // naturally, the smallest possible value is 2; FIXME all others (not found ones) will have the same value???
+const int SMALLEST_COLORIZED_RECTANGLE = 500; // naturally, the smallest possible value is 2; FIXME all others (not found ones) will have the same value???
 
 
 extern int width, height;
