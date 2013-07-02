@@ -64,61 +64,62 @@ pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
 \end{define}
 
 \subsection{Proporcie obdĺžnikov}
-Dôležitou otázkou je, aké proporcie obdĺžnikov hľadáme.
-Predstavme si tieto dva prípady. Nech sme mapu dekomponovali na dva obdĺžniky, ktorých celkový obsah je 10.
-V prvom prípade je obsah prvého 9 a druhého 1, v druhom prípade sú obsahy 6 a 4. 
-Chceme maximalizovať pravdepodobnosť toho, že pri voľbe dvoch náhodných bodov budú obe v rovnakom obdĺžniku.
+Dôležitou otázkou je, na akých vlastnostiach obdĺžnikov záleží.
+Majme na mape nájdené dva obdĺžniky, ktorých celkový obsah je 10.
+Predstavme si tieto dva prípady. V prvom prípade je obsah prvého 9 a druhého 1, v druhom prípade sú obsahy 6 a 4. 
+Chceme maximalizovať pravdepodobnosť toho, aby pri voľbe dvoch náhodných bodov boli obe v rovnakom obdĺžniku.
 
 Úlohu vieme zobecniť na klasickú pravdepodobnostno-optimalizačnú úlohu.
-Majme k ekvivalenčných tried na množine s n prvkami. Ako zvoliť ekvivalenčné triedy, aby pri voľbe dvoch náhodných prvkov 
-bola pravdepodobnosť toho, že oba prvky budú v tej istej ekvivalenčnej triede čo najvyššia?
+Majme {\sl k} ekvivalenčných tried na množine s {\sl n} prvkami. Ako zvoliť ekvivalenčné triedy tak, 
+aby pri voľbe dvoch náhodných prvkov bola pravdepodobnosť toho, 
+že oba prvky budú v tej istej ekvivalenčnej triede čo najvyššia?
 (Poznámka: ekvivalenčnú triedu predstavuje obdĺžnik a množinu predstavuje množina vrcholov grafu.)
-Alternatívny pohľad poskytuje pozerať sa na úlohu, ako na farbenie guličiek čo najmenej farbami.
+Alternatívne sa môžeme na úlohu pozerať ako na problém farbenia guličiek čo najmenším počtom farieb.
 
 Zapíšme túto úlohu formálne.
-Množinu prvkov nazvime $Prv$, označme ekvivalenčné triedy $ek_1 \dots ek_k$, množinu týchto ekvivalenčných tried označme ako $Ek$, veľkost 
-triedy $ek_i$ označme $k_i$ a zaveďme si funkciu $f \colon Prv \to Ek$ ktorá roztriedi prvky do ekvivalenčných tried.
+Majme $n$-prvkovú množinu $Prv = \{x_1,\ldots,x_n\}$, $k$-prvkovú množinu ekvivalenčných tried $Ek = \{ek_1,\ldots, ek_k\}$, veľkosť 
+triedy $\|ek_i\|$ označme $k_i$ a zaveďme funkciu $f \colon Prv \to Ek$ ktorá roztriedi prvky do ekvivalenčných tried.
 
 Označme výberový priestor $\Omega = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b \}$
-Udalosťou $A_i$ nazveme jav, v~ktorom oba prvky patria do tej istej ekvivalenčnej triedy $i$,
-teda $A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = i \}$
-Jav $A = \bigcup_{i \in Ek} A_i$ teda nastáva práve vtedy,
+Udalosťou $A_i$ nazveme jav, v~ktorom oba prvky patria do tej istej ekvivalenčnej triedy $ek_i$,
+teda $A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = ek_i \}$
+Jav $A = \bigcup_{i=1}^{k} A_i$ teda nastáva práve vtedy,
  keď oba vybrané prvky patria do rovnakej triedy.
 
-Úlohou je teda rozvrhnúť vytvoriť funkciu $f$ tak, aby pravdepodobnosť $P[A]$ bola čo najvyššia. 
+Úlohou je teda navrhnúť funkciu $f$ tak, aby pravdepodobnosť $P[A]$ bola čo najvyššia. 
 Keďže udalosti $A_i$ sú nezlučiteľné, môžme písať 
 $P[A] = P[\bigcup_{i \in Ek} A_i] = \sum_{i \in Ek}P[A_i]$.
 
 Ak si pravdepodobnosť každého javu rozpíšeme, dostaneme 
-$\sum_{i \in Ek}P[A_i] = \sum_{i = 1}^{|Ek|} \frac{{{k_i} \choose {2}}}{{{|Prv|} \choose {2}}}$.
+$\sum_{i \in Ek}P[A_i] = \sum_{i = 1}^{k} \frac{{{k_i} \choose {2}}}{{{|Prv|} \choose {2}}}$.
 
 
 nakoľko chceme nejak rozvrhnúť prvky v triedach $ek_i$, a menovateľ je len
 konštanta, môžme ho vynechať.
 
 Maximalizujeme teda hodnotu výrazu 
-$\sum_{i = 1}^{|Ek|} {{k_i} \choose {2}} = \sum_{i = 1}^{|Ek|} {\frac{k_i!}{(k_i -2 )!2!}} = \sum_{i = 1}^{|Ek|}{\frac{k_i (k_i-1)}{2}}$.
+$\sum_{i = 1}^{k} {{k_i} \choose {2}} = \sum_{i = 1}^{k} {\frac{k_i!}{(k_i -2 )!2!}} = \sum_{i = 1}^{k}{\frac{k_i (k_i-1)}{2}}$.
 Po vyškrtnutí konštanty a roznásobení sme dostali nasledujúcu optimalizačnú úlohu:
-maximalizovať $\sum_{i = 1}^{|Ek|} {k_i^2 - k_i}$ za podmienok $\sum_{k=1}^{|Ek|}k_i = n$,
+maximalizovať $\sum_{i = 1}^{k} {k_i^2 - k_i}$ za podmienok $\sum_{k=1}^{k}k_i = n$,
 kde $k_i \in \N_0$.
 
 Sumu si vieme rozpísať ako 
-$\sum_{i = 1}^{|Ek|} {k_i^2 - k_i} = \sum_{i = 1}^{|Ek|} {k_i^2} + \sum_{i = 1}^{|Ek|}{-k_i}$
+$\sum_{i = 1}^{k} {k_i^2 - k_i} = \sum_{i = 1}^{k} {k_i^2} + \sum_{i = 1}^{k}{-k_i}$
 druhá suma sa nasčíta $-n$, čo je konštanta, takže nám stačí maximalizovať 
-$\sum_{i = 1}^{|Ek|} {k_i^2}$.
+$\sum_{i = 1}^{k} {k_i^2}$.
 
 Teraz nám už len zostáva použiť nerovnosť
-$(a+b)^2 \geq a^2 + b^2$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie.
-Ekvivalenčné triedy musia teda byť čo najväčšie a problém sa redukuje na problém hľadania
+$(a+b)^2 \geq a^2 + b^2$ ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie.
+Ekvivalenčné triedy musia teda byť čo najväčšie a problém sa transformuje na problém hľadania
 obdĺžnikov s najväčším možným obsahom.
 V programe tento problém rieši trieda Colorizator.
 
 
-\subsection{Nájdenie najväčšieho obdĺžnika}
-Alebo ináč - nájdenie najväčšej čistej podmapy je problém, ktorý vieme algoritmicky vyriešiť v lineárnom čase v závislosti od počtu vrcholov.
-TODO?? mozno prepisem na problem najdenia najvacsej podmatice. + hovorit o tom ako o farbeni mriezky
+\subsection{Nájdenie najväčšej jednotkovej podmatice}
+Ako sme si v úvode povedali, mriežkovú mapu vieme reprezentovať ako maticu a teda
+problém môžeme ekvivalentne zapísať ako problém hľadania najväčšej jednotkovej podmatice.
+Tento problém má riešenie v čase lineárnom od počtu vrcholov a teda nájdenie $k$ najväčších
+jednotkových matíc trvá $\BigO{k*n}$, kde n je počet vrcholov matice.
 
-TODO??popis algoritmus
-
-
-
+Popis algoritmu: 
+V prvom prechode si u každého prvku 
