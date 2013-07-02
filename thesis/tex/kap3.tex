@@ -55,12 +55,55 @@ Jediným problémom ostalo takéto obdĺžniky nájsť.
 ASK?? alebo radsej neutralne napiast, hladanie obdlznikov?
 \section{Hľadáme obdĺžniky}
 
-Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl čistej hernej mapy}.
+Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl čistej mriežkovej mapy}. Intuitívne ju môžme vnímať ako mriežkovú
+mapu bez prekážok.
 
 \begin{define}
-{\sl Herná podmapa je čistá} 
+{\sl Mriežková podmapa je čistá} 
 pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
 \end{define}
 
-Naformulujme si teda problém exaktne. Chceme na vstupnej mape nájsť obdĺžniky, aby spolu mali čo najväčší obsah a aby ich bolo čo najmenej.
-ASK?? teda staci mi spravit obdlzniky 1x1 a potmo ich spajat...to je ako vsetko?
+\subsection{Proporcie obdĺžnikov}
+Dôležitou otázkou je, aké proporcie obdĺžnikov hľadáme.
+Predstavme si tieto dva prípady. Nech sme mapu dekomponovali na dva obdĺžniky, ktorých celkový obsah je 10.
+V prvom prípade je obsah prvého 9 a druhého 1, v druhom prípade sú obsahy 6 a 4. 
+Chceme maximalizovať pravdepodobnosť toho, že pri voľbe dvoch náhodných bodov budú obe v rovnakom obdĺžniku.
+
+Úlohu vieme zobecniť na klasickú pravdepodobnostno-optimalizačnú úlohu.
+Majme k ekvivalenčných tried na množine s n prvkami. Ako zvoliť ekvivalenčné triedy, aby pri voľbe dvoch náhodných prvkov 
+bola pravdepodobnosť toho, že oba prvky budú v tej istej ekvivalenčnej triede čo najvyššia?
+(Poznámka: ekvivalenčnú triedu predstavuje obdĺžnik a množinu predstavuje množina vrcholov grafu.)
+Alternatívny pohľad poskytuje pozerať sa na úlohu, ako na farbenie guličiek čo najmenej farbami.
+
+Zapíšme túto úlohu formálne.
+Množinu prvkov nazvime $Prv$, označme ekvivalenčné triedy $ek_1 \dots ek_k$, množinu týchto ekvivalenčných tried označme ako $Ek$, veľkost 
+triedy $ek_i$ označme $k_i$ a zaveďme si funkciu $f \colon Prv \to Ek$ ktorá roztriedi prvky do ekvivalenčných tried.
+
+Označme výberový priestor $\Omega = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b \}$
+Udalosťou $A_i$ nazveme jav, v~ktorom oba prvky patria do tej istej ekvivalenčnej triedy $i$,
+teda $A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = i \}$
+Jav $A = \bigcup_{i \in Ek} A_i$ teda nastáva práve vtedy,
+ keď oba vybrané prvky patria do rovnakej triedy.
+
+Úlohou je teda rozvrhnúť vytvoriť funkciu $f$ tak, aby pravdepodobnosť $P[A]$ bola čo najvyššia. 
+Keďže udalosti $A_i$ sú nezlučiteľné, môžme písať 
+$P[A] = P[\bigcup_{i \in Ek} A_i] = \sum_{i \in Ek}P[A_i]$.
+
+Ak si pravdepodobnosť každého javu rozpíšeme, dostaneme 
+$\sum_{i \in Ek}P[A_i] = \sum_{i = 1}^{|Ek|} \frac{{{k_i} \choose {2}}}{{{|Prv|} \choose {2}}}$.
+
+
+nakoľko chceme nejak rozvrhnúť prvky v triedach $ek_i$, a menovateľ je len
+konštanta, môžme ho vynechať.
+
+Maximalizujeme teda hodnotu výrazu 
+$\sum_{i = 1}^{|Ek|} {{k_i} \choose {2}} = \sum_{i = 1}^{|Ek|} {\frac{k_i!}{(k_i -2 )!2!}} = \sum_{i = 1}^{|Ek|}{\frac{k_i (k_i-1)}{2}}$.
+Po vyškrtnutí konštanty a roznásobení sme dostali nasledujúcu optimalizačnú úlohu:
+maximalizovať $\sum_{i = 1}^{|Ek|} {k_i^2 - k_i}$ za podmienok $\sum_{k=1}^{|Ek|}k_i = n$,
+kde $k_i \in \N_0$.
+
+Sumu si vieme rozpísať ako 
+$\sum_{i = 1}^{|Ek|} {k_i^2 - k_i} = \sum_{i = 1}^{|Ek|} {k_i^2} + \sum_{i = 1}^{|Ek|}{-k_i}$
+druhá suma sa nasčíta $-n$, čo je konštanta, takže nám stačí maximalizovať 
+$\sum_{i = 1}^{|Ek|} {k_i^2}$.
+

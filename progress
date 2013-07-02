@@ -10,3 +10,13 @@ rekapitulace Dijkstru
 A*
 HPA* (clanok)
 transit nodes (clanok)
+
+
+zvysok... nerobil so poznamky...
+
+18-21.4.2013
+ cital som clanky o point-to-point shortest path with preprocessing
+nacal som kapitolu o znamych algoritmoch, ale docela osm ju splznil.
+Potrebujem pekne rozpisat, co pozname - (bidirectional)dijkstra, a* - popisat heuristiku, potencialy - ich vztah k lower boundom.
+A sposoby ratania lower boundov - cez euklidovsku vzdialenost, ale aj cez landmarks - landmark selection - pripadne reaches. 
+Musim precitat este 2 clanky od golberga tykajuce sa prave landmarkov a reaches. V maji chcem zacat imlementova
