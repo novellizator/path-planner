@@ -70,7 +70,8 @@ namespace TomyMaps
 
             imageLoaded = true;
             //TEST
-            map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
+            //map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
+            map.Load("D:/github-gppc/path-planner/newTomyMaps/battleground.map");
             // redraw a map after loading
             map.SquareSize = DefaultSquareSize;
             map.WindowSize = mapView1.ClientSize;

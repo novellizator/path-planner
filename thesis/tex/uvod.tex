@@ -1,19 +1,32 @@
 \chapter*{Úvod}
 \addcontentsline{toc}{chapter}{Úvod}
 
-\section{Motivácia}
-Hľadanie najkratšej cesty je jedným z elementárnych problémov teórie grafov.
-Dôležitosť tohto problému je zrejmá, najmä keď si uvedomíme jeho všestranné využitie, napríklad v 
-umelej inteligencii, v počítačovych hrách a podobne. Nanešťastie riešenia a algoritmy využívané v komerčných hrách 
-sú closed-source a teda obecne nie známe.
+Slávna Eulerova úloha siedmych kaliningradských mostov sa považuje za prvú prácu, 
+ktorá zaviedla teóriu grafov. Úlohou je prejsť to týchto siedmych mostoch tak, aby sme po každom šlo práve raz.
+Od tej doby sa využitie teórie grafov značne
+rozšírilo a v dnešnej dobe patrí medzi významné
+a rozpracované teórie. V modernej dobe jedným z jej 
+najdôležitejších problémov je hľadanie najkratšej cesty. Najčastejšie sa s nimi stretávame pri 
+GPS navigacii.
+Medzi najvýznamnešie práce považujeme práce od Dijkstru a Floyd-Warshalla.
 
-\section{Stručný popis práce, ciele}
-Na nájdenie najkratšej cesty v obecných grafoch využívame Dijkstrov algoritmus, prípadne jeho nadstavby, ktoré si následne rozoberieme.
+S narastajúcim fenoménom počítačových hier 
+a umelej inteligencie sa do povedomia dostal špeciálny typ grafu --
+mriežkový graf, využívaný ako herná mapa.
+V hrách trebalo často nájsť cestu pre počítačom
+ovládanú postavičku z miesta A do miesta B.
+Nakoľko je ale väčšina hier komerčná, algoritmy
+využívané v hrách boli a sú taktiež komerčne.
+Dôsledkom toho nie sú publikované a porovnané rôzne prístupy a algoritmy
+na vyhľadávanie v mriežkových mapách. A keď už aj sú, tak práce používajú rôzne mapy
+na bechmarking a teda neexistuje žiadna globálna porovnávacia štúdia týchto prístupov.
+Tento problém sa snažil vyriešiť GPPC - Grid-Based Path Planning Competition - teda súťaž, ktorá porovnáva rôzne algoritmy na veľkej množine máp
+použitých v známych počítačových hrách.
 
-Cieľom práce je hľadanie cesty v špeciálnych grafoch - tzv. herných mapách. 
-Zadanie tohto problému sa od všeobecneho hľadania najkratšej cesty v obecných grafov líši v dvoch veciach.
-Jednak grafy herných máp predstavujú akúsi mriežku - a teda arita vrcholov je maximálne 8 a jednak pri riešení tejto úlohy máme k dispozícii čas
-na predspracovanie mapy a vytvorenie pomocných dátových štruktúr.
+Cieľom tejto práce je spraviť prehľad doterajších prístupov k tomuto problému a prispieť vlastným algoritmom
+do súťaže.
+
+
 
 
 V práci sme naimplementovali vlastný algoritmus a porovnali ho s doterajšímy známymi.

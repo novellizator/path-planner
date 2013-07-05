@@ -271,7 +271,7 @@ namespace TomyMaps
             Random r = new Random();
             if (r.Next(20) == 0)
             {
-                PrecomputeCachedBitmap();
+               // PrecomputeCachedBitmap();
             }
             // check if you can select the rectangle from the cachedBitmap
             // if you cannot, then precompute the cachedImage
