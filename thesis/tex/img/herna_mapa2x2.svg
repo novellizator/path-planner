@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="herna_mapa2x2.svg">
+   sodipodi:docname="herna_mapa2x2.eps">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -26,15 +26,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="2.12"
      inkscape:cx="235.83709"
-     inkscape:cy="917.07849"
+     inkscape:cy="860.47472"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1005"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="942"
+     inkscape:window-height="987"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -160,7 +160,7 @@
            height="20.714285"
            x="65.714287"
            y="111.6479" /></flowRegion><flowPara
-         id="flowPara3006"></flowPara></flowRoot>    <text
+         id="flowPara3006" /></flowRoot>    <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="213.57143"
@@ -233,7 +233,7 @@
            x="137.14285"
            y="87.362183"
            style="font-size:40px" /></flowRegion><flowPara
-         id="flowPara3102"></flowPara></flowRoot>    <flowRoot
+         id="flowPara3102" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot3104"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -245,31 +245,33 @@
            x="112.85714"
            y="65.219322" /></flowRegion><flowPara
          id="flowPara3110"
-         style="font-size:40px">1</flowPara></flowRoot>    <flowRoot
+         style="font-size:30px">1</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot3104-1"
-       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:30px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="translate(129.6702,105.23835)"><flowRegion
          id="flowRegion3106-5"><rect
            id="rect3108-2"
            width="100"
            height="59.285713"
            x="112.85714"
-           y="65.219322" /></flowRegion><flowPara
+           y="65.219322"
+           style="font-size:30px" /></flowRegion><flowPara
          id="flowPara3110-7"
-         style="font-size:40px">1</flowPara></flowRoot>    <flowRoot
+         style="font-size:30px">1</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot3104-6"
-       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:30.00000002px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        transform="matrix(0.99999672,-0.00256101,0.00256101,0.99999672,36.597652,202.69514)"><flowRegion
          id="flowRegion3106-1"><rect
            id="rect3108-4"
            width="100"
            height="59.285713"
            x="112.85714"
-           y="65.219322" /></flowRegion><flowPara
+           y="65.219322"
+           style="font-size:30.00000002px" /></flowRegion><flowPara
          id="flowPara3110-2"
-         style="font-size:40px">1</flowPara></flowRoot>    <flowRoot
+         style="font-size:30.00000002px">1</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot3104-3"
        style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -281,5 +283,37 @@
            x="112.85714"
            y="65.219322" /></flowRegion><flowPara
          id="flowPara3110-6"
-         style="font-size:40px">1</flowPara></flowRoot>  </g>
+         style="font-size:30px">1</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3038"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="matrix(0.67305761,0.73959008,-0.73959008,0.67305761,-12.733159,-175.91681)"><flowRegion
+         id="flowRegion3040"><rect
+           id="rect3042"
+           width="73.113213"
+           height="41.037735"
+           x="315.56604"
+           y="88.682938"
+           ry="0" /></flowRegion><flowPara
+         id="flowPara3044"><flowSpan
+           style="font-size:40px"
+           id="flowSpan3046"><flowSpan
+             style="font-size:30px"
+             id="flowSpan3048"> √2  </flowSpan></flowSpan></flowPara></flowRoot>    <flowRoot
+       transform="matrix(0.72967063,-0.68379881,0.68379881,0.72967063,-204.99279,374.88278)"
+       xml:space="preserve"
+       id="flowRoot3038-1"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+         id="flowRegion3040-7"><rect
+           id="rect3042-1"
+           width="73.113213"
+           height="41.037735"
+           x="315.56604"
+           y="88.682938"
+           ry="0" /></flowRegion><flowPara
+         id="flowPara3044-1"><flowSpan
+           style="font-size:40px"
+           id="flowSpan3046-5"><flowSpan
+             style="font-size:30px"
+             id="flowSpan3048-2"> √2  </flowSpan></flowSpan></flowPara></flowRoot>  </g>
 </svg>
