@@ -1,38 +1,49 @@
 \chapter{Nový algoritmus: NovellA*}
 
 \section{Zlepšenie výkonu v niektorých prípadoch}
-Nie všetky cesty sú ale také kľukaté. V mnohých prípadoch, napríklad keď medzi počiatočným a koncovým bodom neleží žiadna prekážka, 
-sú cesty veľmi priamočiare. To sa pokúsime využiť na zlepšenie výkonu algoritmu v~niektorých prípadoch. 
-Predstavme si, že máme obdlžníkovú mapu bez prekážoch a hľadáme najkratšiu cestu medzi bodmi $s=(x_s,y_s), t=(x_t,y_t)$.
+Nie všetky najkratšie cesty ale musia obchádzať veľa prekážok. 
+V mnohých prípadoch nemusí medzi počiatočným a koncovým bodom ležať žiadna prekážka, a teda cesty sú veľmi priamočiare. To sa pokúsime využiť na zlepšenie výkonu algoritmu.
+ 
+Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl mriežkového grafu bez prekážok}.
+
+\begin{define}
+{\sl Mriežkový graf je bez prekážok} 
+pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
+\end{define}
+
+Majme mriežkový graf bez prekážok a hľadajme najkratšiu cestu medzi bodmi $s=(x_s,y_s), t=(x_t,y_t)$.
 V tomto prípade vieme nájsť najkratšiu cestu veľmi jednoducho.
-Algoritmus:
-vstup: \\
-$s=(x_s,y_s), t=(x_t,y_t)$ \\
-vystup:\\
-path \dots usporiadaná množina súradníc po ktorých vedie cesta\\
-beh algoritmu:\\
+
+\begin{algorithm}
+\caption{Nájdi najkratšiu cestu medzi dvoma bodmi {\sl s} a {\sl t} na mriežkovom grafe bez prekážok}
+\label{alg1}
+\begin{algorithmic}[1] % number one = line numbering is on
+\REQUIRE $s=(x_s,y_s), t=(x_t,y_t)$
+\ENSURE $path$
 
 
-\lstset{language=Python}          
-\begin{lstlisting} %[frame=single]  
+\STATE path.append($(x_s, y_s)$)
+\COMMENT {pridám počiatok}
 
-path = (xs, ys)
+\WHILE {$x_s \neq x_t \vee y_s \neq y_t $}
+	\IF {$x_s \textless x_t$}
+		\STATE $x_s \leftarrow x_s + 1$
+	\ELSIF {$x_s \textgreater x_t$}
+		\STATE $x_s \leftarrow x_s - 1$
+	\ENDIF
 
-TODO?? nejde diakritika??
-# skopirujem suradnice pociatocneho vrcholu 
-(x1, y1) = (xs, ys) 
-while (x1, y1) <> (x2, y2):
-	if y1 < y2:
-		++y1
-	else:
-		--y1
+	\IF {$y_s \textless y_t$}
+		\STATE $y_s \leftarrow y_s + 1$
+	\ELSIF {$y_s \textgreater y_t$}
+		\STATE $y_s \leftarrow y_s - 1$
+	\ENDIF
+	\STATE path.append($(x_s, y_s)$)
+\ENDWHILE
 
-	if x1 < x2:
-		++x1
-	else:
-		--x1
-	path.append((x1,y1))
-\end{lstlisting}
+\end{algorithmic}
+\end{algorithm}
+
+
 
 Teda, jednoducho povedané: keď sa počiatočný a koncový bod líšia v jednej súradnici, tak sa posúvame priamočiaro,
 keď sa líšia v oboch, tak sa posúvame šikmo.
@@ -52,16 +63,8 @@ Skúsme to teda nejak využiť. Pokiaľ vieme, že počiatočný aj koncový bod
 Jediným problémom ostalo takéto obdĺžniky nájsť. 
 
 
-ASK?? alebo radsej neutralne napiast, hladanie obdlznikov?
 \section{Hľadáme obdĺžniky}
 
-Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl čistej mriežkovej mapy}. Intuitívne ju môžme vnímať ako mriežkovú
-mapu bez prekážok.
-
-\begin{define}
-{\sl Mriežková podmapa je čistá} 
-pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
-\end{define}
 
 \subsection{Proporcie obdĺžnikov}
 Dôležitou otázkou je, na akých vlastnostiach obdĺžnikov záleží.

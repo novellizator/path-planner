@@ -45,6 +45,10 @@ escapeinside={\%*}{*)}          % if you want to add a comment within your code
 }
 
 
-\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
-
- 
+%\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{algorithm}
+\usepackage{algorithmic} % http://ftp.cvut.cz/tex-archive/macros/latex/contrib/algorithms/algorithms.pdf
+\floatname{algorithm}{Algoritmus}
+\renewcommand{\algorithmicrequire}{\textbf{Vstup:}}
+\renewcommand{\algorithmicensure}{\textbf{Výstup:}}
+\renewcommand{\algorithmiccomment}[1]{\{#1\}}

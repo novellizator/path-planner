@@ -17,19 +17,44 @@ s nezápornými dĺžkami hrán.
 \section{Dijkstrov algoritmus}
 Medzi základné algoritmy patrí Dijkstrov algoritmus, ktorý je asymptoticky optimálny (TODO?? for sure?).
 
-Pri hľadaní cesty z vrcholu {\sl s} do vrcholu {\sl t} prechádzame postupne vrcholy zo stúpajúcou vzdialenosťou od {\sl s}, až dokým sa nedostaneme k cieľovému vrcholu {\sl t}.
-Graficky si beh algoritmu môžme predstaviť ako kruh so stredom v bode {\sl s} so zväčšujúcim sa polomerom. Algoritmus napísaný v pseudokóde je nasledovný:
-
-\begin{lstlisting}
-d(s) <- 0
-d(*) <- $\infty$
+Pri hľadaní cesty z vrcholu $s$ do vrcholu $t$ prechádzame postupne vrcholy zo stúpajúcou vzdialenosťou od $s$, až dokým sa nedostaneme k cieľovému vrcholu $t$.
+Vizuálne si beh algoritmu môžme predstaviť ako kruh so stredom v bode $s$ so zväčšujúcim sa polomerom. Algoritmus napísaný v pseudokóde je nasledovný:
 
 
-\end{lstlisting}
+\begin{algorithm}
+\caption{Dijkstra: Nájdi najkratšiu cestu medzi dvoma bodmi {\sl s} a {\sl t}}
+\label{alg:dijkstra}
+\begin{algorithmic}[1] % number one = line numbering is on
+\REQUIRE $s=(x_s,y_s), t=(x_t,y_t)$
+\ENSURE $path$
 
+
+\STATE path.append($(x_s, y_s)$)
+\COMMENT {pridám počiatok}
+
+\WHILE {$x_s \neq x_t \vee y_s \neq y_t $}
+	\IF {$x_s \textless x_t$}
+		\STATE $x_s \leftarrow x_s + 1$
+	\ELSIF {$x_s \textgreater x_t$}
+		\STATE $x_s \leftarrow x_s - 1$
+	\ENDIF
+
+	\IF {$y_s \textless y_t$}
+		\STATE $y_s \leftarrow y_s + 1$
+	\ELSIF {$y_s \textgreater y_t$}
+		\STATE $y_s \leftarrow y_s - 1$
+	\ENDIF
+	\STATE path.append($(x_s, y_s)$)
+\ENDWHILE
+
+\end{algorithmic}
+\end{algorithm}
 
 
 
 \section{Lineárny Dijkstrov algoritmus}
 Môž
 
+
+\section{A*}
+dalsi algoritmus do zbierky je a* \cite{astar72}.
