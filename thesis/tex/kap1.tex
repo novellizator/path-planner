@@ -64,16 +64,36 @@ je stále medzi dvojicami susedných vrcholov vo všetkých ôsmych smeroch. Cen
 Zadefinujme si teraz mriežkový graf formálne.
 
 \begin{define}
-{\sl Mriežkový graf rozmerou m*n} je ohodnotený graf v ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
+{\sl Mriežkový graf rozmerov m*n} je ohodnotený graf v ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
 s~jednoduchými hranami $j$ v~tvare $\{v_{a,b}, v_{a,b+1}\}, \{v_{a,b}, v_{a+1,b}\}$, kde $w(j) = 1$ 
-a šikmými hranami $ s $ v~tvare $\{v_{a,b}, v_{a+1,b+1}\}, \{v_{a,b}, v_{a+1,b+1}\}$, kde $ w(s) = \sqrt{2}$.
+a šikmými hranami $ s $ v~tvare 
+$\{v_{a,b}, v_{a+1,b+1}\}$, $\{v_{a,b}, v_{a+1,b+1}\}$, kde $ w(s) = \sqrt{2}$.
 \end{define}
 
+FIXME?? pridat obrazky
+
 \begin{note}
-	Mriežkový graf sa dá reprezentovať ako matica m*n nad telesom $\Z_2$, kde jednotky predstavujú vrcholy.
+	Mriežkový graf sa dá reprezentovať ako matica m*n nad telesom $\Z_2$, kde jednotky predstavujú vrcholy. Príklad maticovej reprezentácie grafu rozmerov 4x5 je na obrázku
+	\ref{fig:maticova_reprezentacia}.
 \end{note}
 
-FIXME?? pridat obrazok
+
+
+\begin{figure}[h]
+\caption{Maticová reprezentácia mriežkového grafu}
+\label{fig:maticova_reprezentacia}
+\[
+G =
+  \begin{bmatrix}
+    0 & 0 & 1 & 1 & 1 & 1\\
+	0 & 0 & 1 & 1 & 1 & 0\\
+	0 & 0 & 0 & 1 & 1 & 1\\
+	0 & 0 & 0 & 0 & 0 & 0\\
+  \end{bmatrix}
+\]
+\end{figure}
+
+
 
 
 \section{GPPC: Grid-Based Path Planning Competition}
