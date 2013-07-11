@@ -14,7 +14,7 @@
    id="svg2985"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="priehradky_naplnene_default_i.eps">
+   sodipodi:docname="priehradky_naplnene_default_i_d1.svg">
   <sodipodi:namedview
      inkscape:document-units="mm"
      pagecolor="#ffffff"
@@ -416,14 +416,14 @@
          style="font-size:40px"
          id="flowPara6045" /></flowRoot>    <polygon
        style="fill:#000000;stroke:none"
-       points="600,0 100,-500 -200,-500 200,-100 -600,-100 -600,100 200,100 -200,500 100,500 "
+       points="100,-500 -200,-500 200,-100 -600,-100 -600,100 200,100 -200,500 100,500 600,0 "
        id="polygon6271"
-       transform="matrix(0.04975888,0,0,0.02972882,171.85533,401.59448)" />
+       transform="matrix(0.04975888,0,0,0.02972882,165.85533,449.59448)" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot6322"
        style="font-size:17px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="translate(55.154329,0)"><flowRegion
+       transform="translate(49.154329,48)"><flowRegion
          id="flowRegion6324"><rect
            id="rect6326"
            width="84"
@@ -461,14 +461,8 @@
            height="187"
            x="628"
            y="77.094482" /></flowRegion><flowPara
-         id="flowPara6588"
-         style="font-size:30px;fill:#ff0000">element1 = (3.0, dáta)</flowPara><flowPara
-         id="flowPara6590"
-         style="font-size:30px;fill:#ff0000">element2 = (1.25, dáta)</flowPara><flowPara
          style="font-size:30px;fill:#ff0000"
-         id="flowPara6621">insert (element1)</flowPara><flowPara
-         style="font-size:30px;fill:#ff0000"
-         id="flowPara6623">insert (element2)</flowPara><flowPara
+         id="flowPara6623">pop()</flowPara><flowPara
          style="font-size:30px;fill:#ff0000"
          id="flowPara6619" /></flowRoot>    <flowRoot
        style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
@@ -483,7 +477,7 @@
            width="188"
            id="rect5735-0-2-7" /></flowRegion><flowPara
          id="flowPara5737-28-4-2"
-         style="fill:#ff0000">(3.0, dáta)</flowPara></flowRoot>    <flowRoot
+         style="fill:#000000">(3.0, dáta)</flowPara></flowRoot>    <flowRoot
        transform="translate(218.16016,314.46504)"
        style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
        id="flowRoot5731-5"
@@ -496,5 +490,5 @@
            width="188"
            id="rect5735-2" /></flowRegion><flowPara
          id="flowPara5737-1"
-         style="fill:#ff0000">(1.25, dáta)</flowPara></flowRoot>  </g>
+         style="fill:#000000">(1.25, dáta)</flowPara></flowRoot>  </g>
 </svg>
