@@ -139,8 +139,61 @@ problém môžeme ekvivalentne zapísať ako problém hľadania najväčšej jed
 Tento problém má riešenie v čase lineárnom od počtu vrcholov a teda nájdenie $k$ najväčších
 jednotkových matíc trvá $\BigO{k*n}$, kde n je počet vrcholov matice.
 
-Popis algoritmu: 
+Slovný popis algoritmu \ref{alg:largest_submatrix}: 
 V prvom prechode maticou si u každého vrcholu zapamätáme počet jedničiek naľavo od neho, vratane daneho vrcholu. 
 Tento prechod trvá lineárny čas.
 
 V druhom prechode treba prejsť zaradom všetky stĺpce zľava doprava
+
+
+
+\begin{algorithm}
+\caption{Nájdenie najväčšej jednotkovej podmatice v matici  $m$x$n$}
+\label{alg:largest_submatrix}
+\begin{algorithmic}[1] % number one = line numbering is on
+\REQUIRE matica $M$ rozmerov $m x n$ nad telesom $\Z_2$
+\ENSURE pravý dolný roh podmatice aj s jej rozmermi
+
+
+\FORALL {prvok $p$, $p \in M$}
+	\IF {$p = 0$}
+		\STATE nalavoOdPrvku(p) $\leftarrow$ 0
+	\ELSE
+		\STATE nalavoOdPrvku(p) $\leftarrow$ najdlhšia súvislá postupnosť jednotiek končiaca prvkom $p$
+	\ENDIF	
+\ENDFOR
+
+\FOR {stĺpec $s$, $s \in M$ }
+	\STATE Vytvor nový zásobník
+	\FOR {riadok $r$, $r \in M$ }
+		\STATE $p \leftarrow (s, r)$
+		
+		\WHILE {Zásobník je neprázdny}
+			\STATE vyberiem prvok $top$ z vrcholu zásobníka
+			\IF {$top$ . nalavoOdPrvku $>$ nalavoOdPrvku(p)}
+						
+				\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)
+				\STATE DlzkaSekvencie(prvokZoZasobnika) = r - prvokZoZasobnika.r
+			
+			\ELSE
+				\STATE Vložím prvok $prvokZoZasobnika$ do zásobníka
+				\STATE break
+			\ENDIF
+		\ENDWHILE
+		
+		\STATE Do zásobníka vložím dvojicu (r, nalavoOdPrvku(p))
+	\ENDFOR
+	
+	\WHILE {Zásobník je neprázdny}
+		\STATE vyberiem prvok $top$ z vrcholu zásobníka
+		\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)
+		\STATE DlzkaSekvencie(prvokZoZasobnika) = m - prvokZoZasobnika.r
+		
+	\ENDWHILE
+\ENDFOR
+
+
+
+
+\end{algorithmic}
+\end{algorithm}
