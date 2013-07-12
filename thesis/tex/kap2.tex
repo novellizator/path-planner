@@ -8,11 +8,15 @@ Na hľadanie najkratších ciest v grafe poznáme mnoho algoritmov, ktoré vieme
 \item All Pairs Shortest Path (APSP)- skúmajú najkratšiu cestu medzi všetkými dvojicami vrcholov.
 \end{itemize}
 
-Napriek tomu, že sú tieto problémy na obecných grafoch NP-ťažké, na mriežkových grafoch, kde majú všetky vrcholy kladnú cenu, vieme nájsť riešenie v polynomiálnom čase.
+Tieto problémy sú na obecných grafoch NP-ťažké.
+Napriek tomu na mriežkových grafoch (kde sú vzdialenosti medzi vrcholmi vždy kladné) existujú riešenie v polynomiálnom čase.
+
 V práci sa budeme ďalej zaoberať riešením prvého problému (Point to Point Shortest Path). 
 
 V tejto kapitole si popíšeme algoritmy, ktoré sú použiteľné na všetkých grafoch 
 s nezápornými dĺžkami hrán.
+
+TODO?? POTIAL VSETKO PREPISANE a myslim, ze clekom prijemne citatelne.
 
 \section{Dijkstrov algoritmus}
 Medzi základné algoritmy typu SSSP patrí Dijkstrov algoritmus \ref{alg:dijkstra} popísaný už v roku 1959.
@@ -99,6 +103,7 @@ Na konštrukciu lineárneho Dijkstrovho algoritmu potrebujeme priehradkovú hald
 v konštantnom čase a rovnako ako aj vložiť prvok.
 
 \begin{figure}[h]
+\centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default.eps}
 \caption{Priehradky}
 \label{fig:priehradky}
@@ -106,18 +111,21 @@ v konštantnom čase a rovnako ako aj vložiť prvok.
 
 
 \begin{figure}[h]
+\centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i.eps}
 \caption{Insert}
 \label{fig:priehradky_i}
 \end{figure}
 
 \begin{figure}[h]
+\centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i_d1.eps}
 \caption{Insert}
 \label{fig:priehradky_i_d1}
 \end{figure}
 
 \begin{figure}[h]
+\centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i_d2.eps}
 \caption{Insert}
 \label{fig:priehradky_i_d2}
