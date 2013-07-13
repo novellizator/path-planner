@@ -9,28 +9,28 @@ Na hľadanie najkratších ciest v grafe poznáme mnoho algoritmov, ktoré vieme
 \end{itemize}
 
 Tieto problémy sú na obecných grafoch NP-ťažké.
-Napriek tomu na mriežkových grafoch (kde sú vzdialenosti medzi vrcholmi vždy kladné) existujú riešenie v polynomiálnom čase.
+Napriek tomu na mriežkových grafoch (kde sú vzdialenosti medzi vrcholmi vždy kladné) existujú algoritmy v polynomiálnom čase.
 
-V práci sa budeme ďalej zaoberať riešením prvého problému (Point to Point Shortest Path). 
+V práci budeme ďalej zaoberať riešením prvého problému (Point to Point Shortest Path). 
 
-V tejto kapitole si popíšeme algoritmy, ktoré sú použiteľné na všetkých grafoch 
-s nezápornými dĺžkami hrán.
+V tejto kapitole popíšeme algoritmy, ktoré sú použiteľné na grafoch s nezápornými dĺžkami hrán. TODO?? prerob
 
 TODO?? POTIAL VSETKO PREPISANE a myslim, ze clekom prijemne citatelne.
 
 \section{Dijkstrov algoritmus}
-Medzi základné algoritmy typu SSSP patrí Dijkstrov algoritmus \ref{alg:dijkstra} popísaný už v roku 1959.
-Patrí medzi relaxačné algoritmy a jeho činnosť si vieme predstaviť ako posúvanie vlny po grafe TODO??WTf did I just write?
+Medzi základné algoritmy typu SSSP patrí Dijkstrov algoritmus \cite{dijkstra59} popísaný už v roku 1959. 
+Miernu modifikáciu pôvodného algoritmu môžeme vidieť na (Algoritmus \ref{alg:dijkstra}).  ASK?? spravil som citacie spravne?
+Patrí medzi relaxačné algoritmy a zbehne korektne na grafoch
+s nezápornými hranami.
+
+Pri hľadaní cesty z vrcholu $s$ do vrcholu $t$ prechádzame postupne vrcholy s neklesajúcou vzdialenosťou od $s$, až dokým sa nedostaneme k cieľovému vrcholu $t$.
 
 
-Pri hľadaní cesty z vrcholu $s$ do vrcholu $t$ prechádzame postupne vrcholy zo stúpajúcou vzdialenosťou od $s$, až dokým sa nedostaneme k cieľovému vrcholu $t$.
+
 Vizuálne si beh algoritmu môžme predstaviť ako kruh so stredom v bode $s$ so zväčšujúcim sa polomerom.
 
-Algoritmus je nasledovný \ref{alg:dijkstra}. 
 ?? rozlisujeme tri stavy vrcholov, co je halda blablabla
-ASK??ako odkazovat?
 
-FIXME ?? kolize H a h()
 \begin{algorithm}
 \caption{Dijkstra: nájdi najkratšiu cestu medzi dvoma bodmi $s$ a $t$}
 \label{alg:dijkstra}
@@ -77,14 +77,21 @@ V dijkstrovom algoritme uzatvárame každý dosiahnuteľný vrchol práve raz.
 ASK?? citovat dijkstru a maresa ako dokaz? 
 
 \subsection{Zložitosť}
-popis len obecne pomocou casu na ExtractMin a Insert.
+Na každý vrchol zavoláme operáciu $Insert$ maximálne $deg(v)$-krát a teda počet všetkých zavolaní tejto operácie bude rádovo $\BigO{\sum_{v}{deg(v)}} = \BigO{m}$.
+Zo štruktúry môžme vybrať maximálne toľko prvkov, koľko sme tam vložili a teda aj volania $ExtractMin$ trvajú $\BigO{m}$.
+
+Algoritmus teda zbehne v čase $\BigO{m T_i + m T_e}$, kde $T_i$ odpovedá času na vloženie prvku a $T_d$ odpovedá času na vybranie najmenšieho prvku.
+
+To znamená, že zložitosť algoritmu závisí od zložitosti operácií $Insert$ a $ExtractMin$. Na riedke grafy je obecne v praxi najvýhodnejšie použiť 
+binárnu haldu, ktorej obe operácie trvajú $\BigO{\log{n} } $ a celkový čas je teda $\BigO{m\log{n}}$
+Prehľad štruktúr aj so zložitosťami operácií $Insert$ a $ExtractMin$ sa nachádza napr. na \cite{mares07}.
+
+\subsection{Halda na mriežkovom grafe}
+Nakoľko mriežkový graf je veľmi špeciálny typ grafu,
+vieme niektoré jeho vlastnosti využiť na to, aby sme vytvorili štruktúru, ktorá zvládne obe operácie v konštantnom čase. 
 
 
-\section{Lineárny Dijkstrov algoritmus}
-Zložitosť vyššiepopísaného algoritmu \ref{alg:dijkstra}
-závisí od haldy, ktorú použijeme. Pri použití binárnej haldy bude \BigO{blablabla}.TODO??
-
-Nakoľko pre mriežkový graf platia ....??
+Na konštrukciu tejto štruktúry (viď \cite{gs97}) budeme potrebovať nasledujúcu vetu.
 
 \begin{theorem}
 Pokiaľ sme v Dijkstrovom algoritme uzavreli vrchol $u$ so vzdialenosťou $d_u$ a najkratšia hrana v grafe má dĺžku $\epsilon$, tak môžme taktiež 
@@ -97,8 +104,10 @@ $d_v \in (d, d + \epsilon)$ skrátiť nemôžu.
 \end{proof}
 
 
+Keďže dĺžka najkratšej hrany $\epsilon = 1$, tak v štruktúre budeme mať priehradky, ktorých rozsah je ostro menší ako $\epsilon$. 
 
-Keďže veľkosť najkratšej hrany $\epsilon = 1$, tak v štruktúre budeme mať priehradky, ktorých rozsah je ostro menší ako $\epsilon$.
+
+
 Na konštrukciu lineárneho Dijkstrovho algoritmu potrebujeme priehradkovú haldu. Tá vie vybrať  \uv{jeden z najmenších} prvkov.
 v konštantnom čase a rovnako ako aj vložiť prvok.
 
