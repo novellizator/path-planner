@@ -14,7 +14,7 @@ Hrana je jednoznačne určená dvojicou vrcholov.
 
 
 \begin{define}
-{\sl Ohodnotený graf (G, w)} je graf s spolu s reálnou funkciou (tzv. ohodnotením)
+{\sl Ohodnotený graf (G, w)} je graf s~spolu s~reálnou funkciou (tzv. ohodnotením)
 $w: E(G) \to \R$, kde $w$ je funkcia, ktorá každej hrane priradí
 reálne číslo takzvanú \emph{dĺžku}, alebo \emph{hodnotu}hrany.
 \end{define}
@@ -41,15 +41,15 @@ Všimnime si, že na ceste nenavštívime žiaden vrchol dvakrát a teda cesta n
 
 
 \begin{define}
-{\sl Dĺžka cesty P z vrcholu $v_0$ do vrcholu $v_n$ v ohodnotenom grafe (G, w) } je súčet dĺžok hrán, ktoré sa na ceste nachádzajú.
+{\sl Dĺžka cesty P z vrcholu $v_0$ do vrcholu $v_n$ v ohodnotenom grafe (G, w) } je súčet dĺžok hrán, ktoré sa na~ceste nachádzajú.
 \end{define}
 
 Samozrejme, medzi dvoma vrcholmi môže existovať viacero ciest.
 
 \begin{define}
 {\sl Najkratšia cesta P z vrcholu $v_0$ do vrcholu $v_n$
-v ohodnotenom grafe (G, w)} 
-je cesta z z vrcholu $v_0$ do vrcholu $v_n$ s najmenšou vzdialenosťou. 
+v~ohodnotenom grafe (G, w)} 
+je cesta z~vrcholu $v_0$ do vrcholu $v_n$ s najmenšou vzdialenosťou. 
 \end{define}
 
 
@@ -89,7 +89,7 @@ pretože má veľmi malý počet hrán (lineárny od počtu vrcholov).
 Zadefinujme si teraz mriežkový graf formálne.
 
 \begin{define}
-{\sl Mriežkový graf rozmerov $m \times n$} je ohodnotený graf s ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
+{\sl Mriežkový graf rozmerov $m \times n$} je ohodnotený graf s~ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
 s~priamymi hranami $j$ v~tvare $\{v_{a,b}, v_{a,b+1}\}, \{v_{a,b}, v_{a+1,b}\}$, kde $w(j) = 1$ 
 a šikmými hranami $ s $ v~tvare 
 $\{v_{a,b}, v_{a+1,b+1}\}$, $\{v_{a,b}, v_{a-1,b+1}\}$, kde $ w(s) = \sqrt{2}$.
@@ -102,8 +102,8 @@ $\{v_{a,b}, v_{a+1,b+1}\}$, $\{v_{a,b}, v_{a-1,b+1}\}$, kde $ w(s) = \sqrt{2}$.
 
 
 \begin{figure}[h]
-\caption{Maticová reprezentácia mriežkového grafu}
-\label{fig:maticova_reprezentacia}
+
+
 \[
 G =
   \begin{bmatrix}
@@ -113,6 +113,8 @@ G =
 	0 & 0 & 0 & 0 & 0 & 0\\
   \end{bmatrix}
 \]
+\label{fig:maticova_reprezentacia}
+\caption{Maticová reprezentácia mriežkového grafu}
 \end{figure}
 
 

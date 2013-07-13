@@ -20,7 +20,7 @@ TODO?? POTIAL VSETKO PREPISANE a myslim, ze clekom prijemne citatelne.
 \section{Dijkstrov algoritmus}
 Medzi základné algoritmy typu SSSP patrí Dijkstrov algoritmus \cite{dijkstra59} popísaný už v roku 1959. 
 Miernu modifikáciu pôvodného algoritmu môžeme vidieť na (Algoritmus \ref{alg:dijkstra}).  ASK?? spravil som citacie spravne?
-Patrí medzi relaxačné algoritmy a zbehne korektne na grafoch
+Patrí medzi relaxačné algoritmy~a zbehne korektne na grafoch
 s nezápornými hranami.
 
 Pri hľadaní cesty z vrcholu $s$ do vrcholu $t$ prechádzame postupne vrcholy s neklesajúcou vzdialenosťou od $s$, až dokým sa nedostaneme k cieľovému vrcholu $t$.
@@ -77,8 +77,8 @@ V dijkstrovom algoritme uzatvárame každý dosiahnuteľný vrchol práve raz.
 ASK?? citovat dijkstru a maresa ako dokaz? 
 
 \subsection{Zložitosť}
-Na každý vrchol zavoláme operáciu $Insert$ maximálne $deg(v)$-krát a teda počet všetkých zavolaní tejto operácie bude rádovo $\BigO{\sum_{v}{deg(v)}} = \BigO{m}$.
-Zo štruktúry môžme vybrať maximálne toľko prvkov, koľko sme tam vložili a teda aj volania $ExtractMin$ trvajú $\BigO{m}$.
+Na každý vrchol zavoláme operáciu $Insert$ maximálne $deg(v)$-krát a~teda počet všetkých zavolaní tejto operácie bude rádovo $\BigO{\sum_{v}{deg(v)}} = \BigO{m}$.
+Zo štruktúry môžme vybrať maximálne toľko prvkov, koľko sme tam vložili a~teda aj volania $ExtractMin$ trvajú $\BigO{m}$.
 
 Algoritmus teda zbehne v čase $\BigO{m T_i + m T_e}$, kde $T_i$ odpovedá času na vloženie prvku a $T_d$ odpovedá času na vybranie najmenšieho prvku.
 
@@ -88,13 +88,13 @@ Prehľad štruktúr aj so zložitosťami operácií $Insert$ a $ExtractMin$ sa n
 
 \subsection{Halda na mriežkovom grafe}
 Nakoľko mriežkový graf je veľmi špeciálny typ grafu,
-vieme niektoré jeho vlastnosti využiť na to, aby sme vytvorili štruktúru, ktorá zvládne obe operácie v konštantnom čase. 
+vieme niektoré jeho vlastnosti využiť na~to, aby sme vytvorili štruktúru, ktorá zvládne obe operácie v~konštantnom čase. 
 
 
 Na konštrukciu tejto štruktúry (viď \cite{gs97}) budeme potrebovať nasledujúcu vetu.
 
 \begin{theorem}
-Pokiaľ sme v Dijkstrovom algoritme uzavreli vrchol $u$ so vzdialenosťou $d_u$ a najkratšia hrana v grafe má dĺžku $\epsilon$, tak môžme taktiež 
+Pokiaľ sme v Dijkstrovom algoritme uzavreli vrchol $u$ so vzdialenosťou $d_u$ a~najkratšia hrana v~grafe má dĺžku $\epsilon$, tak môžme taktiež 
 uzavrieť všetky vrcholy $v$ so vzdialenosťami $d_v \in (d, d + \epsilon)$.
 \end{theorem}
 \begin{proof}
@@ -104,12 +104,19 @@ $d_v \in (d, d + \epsilon)$ skrátiť nemôžu.
 \end{proof}
 
 
-Keďže dĺžka najkratšej hrany $\epsilon = 1$, tak v štruktúre budeme mať priehradky, ktorých rozsah je ostro menší ako $\epsilon$. 
+Keďže dĺžka najkratšej hrany $\epsilon = 1$, tak v~štruktúre budeme mať priehradky, ktorých rozsah je ostro menší ako $\epsilon$. 
 
 
 
 Na konštrukciu lineárneho Dijkstrovho algoritmu potrebujeme priehradkovú haldu. Tá vie vybrať  \uv{jeden z najmenších} prvkov.
-v konštantnom čase a rovnako ako aj vložiť prvok.
+v~konštantnom čase a~rovnako ako aj vložiť prvok.
+
+TODO?? Ako ma halda vyzerat???
+Halda bude mať tri priehradky, do ktorých sa dajú uložiť 
+
+Príklad priehradkovej haldy môžme vidieť na obrázku 
+\ref{fig:priehradky}. 
+
 
 \begin{figure}[h]
 \centering
