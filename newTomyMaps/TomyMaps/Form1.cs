@@ -38,7 +38,9 @@ namespace TomyMaps
                 map.TLPoint = tl;
                 //mapView1.Invalidate();
                 //mapView1.Refresh(); // maybe
-                mapView1.DrawMap(textBox1);
+                //mapView1.DrawMap(textBox1);
+                //mapView1.MapViewGraphics = mapView1.CreateGraphics();
+                map.DrawSelection(mapView1.GetGraphics());
             }
         }
 

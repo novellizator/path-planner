@@ -12,13 +12,20 @@ namespace TomyMaps
     public partial class MapView : Control
     {
         public Map map = null;
-        private Graphics g;
+        public Graphics g;
+        public Graphics MapViewGraphics;
         public MapView()
         {
             InitializeComponent();
-
-
+            //MapViewGraphics = this.CreateGraphics();
         }
+
+
+        public Graphics GetGraphics()
+        {
+            return this.CreateGraphics();
+        }
+
         public void DrawMap(Control c)
         {
             g = this.CreateGraphics();
