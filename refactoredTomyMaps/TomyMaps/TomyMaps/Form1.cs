@@ -11,7 +11,7 @@ namespace TomyMaps
 {
     public partial class Form1 : Form
     {
-
+         
         private Map map = new Map();
         private CachedBitmap cachedBitmap = new CachedBitmap(); // todo ako uchovat referenciu??? v cachedbitmap to [potrebujem....
 
