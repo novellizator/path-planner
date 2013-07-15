@@ -44,34 +44,34 @@ namespace TomyMaps
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
 
-            //ofd.Title = "Open Image File";
-            //ofd.Filter = ".map|*.map" +
-            //    "|All types|*.*";
+            ofd.Title = "Open Image File";
+            ofd.Filter = ".map|*.map" +
+                "|All types|*.*";
 
-            //ofd.FilterIndex = 0;
-            //ofd.FileName = "";
-            //if (ofd.ShowDialog() != DialogResult.OK)
-            //    return;
+            ofd.FilterIndex = 0;
+            ofd.FileName = "";
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
 
-            //try
-            //{
-            //    map.Load(ofd.FileName);
-            //    textBox1.Text = ofd.FileName;
-            //    MessageBox.Show(ofd.FileName);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    return;
-            //}
+            try
+            {
+                map.Load(ofd.FileName);
+                textBox1.Text = ofd.FileName;
+                MessageBox.Show(ofd.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
 
 
             imageLoaded = true;
             //TEST
             //map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
-            map.Load("D:/github-gppc/path-planner/newTomyMaps/battleground.map");
+            //map.Load("D:/github-gppc/path-planner/newTomyMaps/battleground.map");
             // redraw a map after loading
             map.SquareSize = DefaultSquareSize;
             map.WindowSize = mapView1.ClientSize;

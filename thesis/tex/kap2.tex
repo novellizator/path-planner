@@ -1,9 +1,9 @@
 \chapter{Prehľad algoritmov}
-Na hľadanie najkratších ciest v grafe poznáme mnoho algoritmov, ktoré vieme rozdeliť do troch skupín.
+Na hľadanie najkratších ciest v grafe poznáme mnoho algoritmov, ktoré rozdeľujeme do týchto troch \cite{mares07} skupín: 
 
 
 \begin{itemize}
-\item Point To Point Shortest Path(P2PSP) - hľadajú najkratšiu cestu medzi dvoma zadanými bodmi
+\item Point To Point Shortest Path(P2PSP) - hľadajú najkratšiu cestu medzi dvoma zadanými bodmi.
 \item Single Source Shortest Path(SSSP) - pre daný vrchol {\sl v} hľadajú najkratšiu cestu do všetkých vrcholov grafu.
 \item All Pairs Shortest Path (APSP)- skúmajú najkratšiu cestu medzi všetkými dvojicami vrcholov.
 \end{itemize}
@@ -17,6 +17,20 @@ V tejto kapitole popíšeme algoritmy, ktoré sú použiteľné na grafoch s nez
 
 TODO?? POTIAL VSETKO PREPISANE a myslim, ze clekom prijemne citatelne.
 
+
+\section{Kritéria efektivity algoritmu}
+Na porovnanie efektivity algoritmou slúži v teoretickej informatike odhad asymptotickej složitosti \cite{asymptotic65}.
+Tento odhad je veľmi užitočný v teoretickej informatike a veľmi často algoritmus s lepšou zložitosťou je v praxi rýchlejší.
+Nie je to ale pravidlom a teda potrebujeme zaviesť ďalšie kritériá, ktoré presnejšie popíšu a porovnajú správanie algoritmov praxi.
+Kritéria, podľa ktorých budeme porovnávať efektivitu algoritmov sú teda nasledovné:
+\begin{itemize}
+	\item Asymptotická zložitosť.
+	\item Počet navštívených vrcholov.
+	\item Reálny čas behu algoritmu.
+\end{itemize}
+
+
+
 \section{Dijkstrov algoritmus}
 Medzi základné algoritmy typu SSSP patrí Dijkstrov algoritmus \cite{dijkstra59} popísaný už v roku 1959. 
 Miernu modifikáciu pôvodného algoritmu môžeme vidieť na (Algoritmus \ref{alg:dijkstra}).  ASK?? spravil som citacie spravne?
@@ -26,10 +40,7 @@ s nezápornými hranami.
 Pri hľadaní cesty z vrcholu $s$ do vrcholu $t$ prechádzame postupne vrcholy s neklesajúcou vzdialenosťou od $s$, až dokým sa nedostaneme k cieľovému vrcholu $t$.
 
 
-
-Vizuálne si beh algoritmu môžme predstaviť ako kruh so stredom v bode $s$ so zväčšujúcim sa polomerom.
-
-?? rozlisujeme tri stavy vrcholov, co je halda blablabla
+ASK?? rozlisujeme tri stavy vrcholov, co je halda blablabla mam popisat aj slovne???
 
 \begin{algorithm}
 \caption{Dijkstra: nájdi najkratšiu cestu medzi dvoma bodmi $s$ a $t$}
@@ -59,7 +70,7 @@ Vizuálne si beh algoritmu môžme predstaviť ako kruh so stredom v bode $s$ so
 	
 	\STATE // zrelaxujeme vrchol $v$
 	\FORALL {$e$, $e = (v, u)$}
-		\IF {$h(u) \textgreater h(v) + l(v, u)$}
+		\IF {$h(u) > h(v) + l(v, u)$}
 			\STATE $Insert(H, v)$
 			\STATE $stav(u) \leftarrow$ OTVORENÝ
 			\STATE $h(u) \leftarrow h(v) + l(v, u)$
@@ -74,7 +85,7 @@ Vizuálne si beh algoritmu môžme predstaviť ako kruh so stredom v bode $s$ so
 \begin{theorem}
 V dijkstrovom algoritme uzatvárame každý dosiahnuteľný vrchol práve raz.
 \end{theorem}
-ASK?? citovat dijkstru a maresa ako dokaz? 
+
 
 \subsection{Zložitosť}
 Na každý vrchol zavoláme operáciu $Insert$ maximálne $deg(v)$-krát a~teda počet všetkých zavolaní tejto operácie bude rádovo $\BigO{\sum_{v}{deg(v)}} = \BigO{m}$.
@@ -95,7 +106,7 @@ Na konštrukciu tejto štruktúry (viď \cite{gs97}) budeme potrebovať nasleduj
 
 \begin{theorem}
 Pokiaľ sme v Dijkstrovom algoritme uzavreli vrchol $u$ so vzdialenosťou $d_u$ a~najkratšia hrana v~grafe má dĺžku $\epsilon$, tak môžme taktiež 
-uzavrieť všetky vrcholy $v$ so vzdialenosťami $d_v \in (d, d + \epsilon)$.
+uzavrieť všetky vrcholy $v$ so~vzdialenosťami $d_v \in (d, d + \epsilon)$.
 \end{theorem}
 \begin{proof}
 Do haldy vieme pridávať len vrcholy so vzdialenosťami aspoň $d + \epsilon$ (kratšia hrana tam už nie je), 
@@ -104,9 +115,17 @@ $d_v \in (d, d + \epsilon)$ skrátiť nemôžu.
 \end{proof}
 
 
-Keďže dĺžka najkratšej hrany $\epsilon = 1$, tak v~štruktúre budeme mať priehradky, ktorých rozsah je ostro menší ako $\epsilon$. 
+\begin{consequence}
+Keď uzavrieme vrchol so vzdialenosťou $d_u$, môžme uzavrieť aj vrcholy vo vzdialenosťami menšími, ako $d_u + \epsilon$
+pričom poradie je nezávislé od skutočnej vzdialenosti vrcholov.
+\end{consequence}
 
+\begin{example}
+Dĺžka $\epsilon$ najkratšej hrany v mriežkovom grafe je 1. Je to dĺžka akejkoľvek vodorovnej, alebo zvislej hrany.
+Keď teda uzavrieme vrchol so vzdialenosťou $d_u$, môžme uzavrieť aj vrcholy so vzdialenosťami menšími, ako je $d_u + 1$ a to v ľubovoľnom poradí.
+\end{example}
 
+Tieto veci vie výborne využi
 
 Na konštrukciu lineárneho Dijkstrovho algoritmu potrebujeme priehradkovú haldu. Tá vie vybrať  \uv{jeden z najmenších} prvkov.
 v~konštantnom čase a~rovnako ako aj vložiť prvok.
@@ -152,3 +171,4 @@ blablabla
 
 \section{A*}
 dalsi algoritmus do zbierky je a* \cite{astar72}.
+TODO??potencialy euklid landmarks landmark selection priblem s priehradkami
