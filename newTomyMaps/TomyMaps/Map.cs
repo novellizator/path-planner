@@ -235,12 +235,105 @@ namespace TomyMaps
             return new Size(floorToSquareSize(s.Width), floorToSquareSize(s.Height));
         }
 
+		
+		
+		
+		
+		
+		        private void PrecomputeCachedBitmap()
+        {
+            cachedBitmapTLPoint = new Point(Math.Max(0, floorToSquareSize(TLPoint.X - WindowSize.Width / 2)),
+     Math.Max(0, floorToSquareSize(TLPoint.Y - WindowSize.Width / 2)));
+
+            // (in pixels) floored according to the multiple of SquareSize - hopefully correct...
+            int width = Math.Min(WindowSize.Width * 2, getMapPixelSize().Width - cachedBitmapTLPoint.X);
+            int height = Math.Min(WindowSize.Height * 2, getMapPixelSize().Height - cachedBitmapTLPoint.Y);
+            
+            cachedBitmap = new Bitmap(width, height);
+            Graphics cachedBitmapGraphics = Graphics.FromImage(cachedBitmap);
+
+
+
+
+            SolidBrush currBrush = new SolidBrush(Color.White);
+
+
+            int chWidth = width / SquareSize;
+            int chHeight = height / SquareSize;
+
+            // topleft point of cachedBitmap in chars...
+            int baseWidth = cachedBitmapTLPoint.X / SquareSize;
+            int baseHeight = cachedBitmapTLPoint.Y / SquareSize;
+
+            for (int i = 0; i < chHeight; i++) // pocet riadkov // nepojde presne lebo riadok != pixel!!!!
+            {
+                for (int j = 0; j < chWidth; j++)
+                {
+                    Color col;
+
+                    // map coordinates use topleftpoint for offset
+                    switch (map[baseHeight + i][baseWidth + j])
+                    {
+                        case 'W': // Water
+                            col = Color.Blue;
+                            break;
+                        case 'T': // Tree
+                            col = Color.Green;
+                            break;
+                        case '@': // Outside
+                            col = Color.Gray;
+                            break;
+                        case 'S': // Swamp (traversable)
+                        case '.': // default traversable area
+                            col = Color.PapayaWhip;
+                            break;
+                        default: // Error
+                            col = Color.Red;
+                            break;
+                    }
+                    currBrush.Color = col;
+                    cachedBitmapGraphics.FillRectangle(currBrush, SquareSize * j, SquareSize * i, SquareSize, SquareSize);
+
+                }
+            }
+
+            outputBitmap = new Bitmap(Math.Max(cachedBitmap.Width, WindowSize.Width), Math.Max(cachedBitmap.Height, WindowSize.Height));
+            outG= Graphics.FromImage(outputBitmap);
+
+        }
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
         /// <summary>
         /// Creates a canvas (computes the Canvas Size and lets the this.DrawCachedBitmap draw on the canvas) and the cachedBitmap. also the cachedBitmapTLPoint
         /// makes a canvas x*y so that the visible bitmap starts on [x/2, y/2]. The CachedbitmapSize is 2x times 2y.
         /// </summary>
         private int it = 1;
-        private void PrecomputeCachedBitmap()
+        private void PrecomputeCachedBitmap2()
         {
             cachedBitmapTLPoint = new Point(Math.Max(0, floorToSquareSize(TLPoint.X - WindowSize.Width / 2)),
                 Math.Max(0, floorToSquareSize(TLPoint.Y - WindowSize.Width / 2)));
@@ -289,6 +382,7 @@ namespace TomyMaps
                     (charHeight - (cachedBitmapTLPoint.Y + cachedBitmap.Height) / SquareSize > 0))
                 )
             {
+                MessageBox.Show("precomputed");
                 PrecomputeCachedBitmap();
             }
 
@@ -306,23 +400,20 @@ namespace TomyMaps
                 c.Text += " " + TLPoint.X;
             }
 
-            System.Drawing.Imaging.PixelFormat format = cachedBitmap.PixelFormat;
-
-            //if (++drawIterator == 50)
-            //{
-            //    GC.Collect();
-            //    GC.WaitForPendingFinalizers();
-            //    drawIterator -= 50;
-            //}
-      
             // draw on the outputBitmap FROM cachedBitmap
             outG.Clear(Color.Red);
             outG.DrawImageUnscaled(cachedBitmap, selectionRect);
 
             
             // draw the image from the bitmap
-            g.DrawImageUnscaled(outputBitmap,0,0);
-            //g.DrawImageUnscaled(outputBitmap, new Rectangle(50, 50, 100, 100));
+            g.DrawImageUnscaled(outputBitmap, 0, 0);
+            
+            
+            
+            //g.Clear(Color.Red);
+
+            //g.DrawImageUnscaled(cachedBitmap, selectionRect);
+           //g.DrawImageUnscaled(outputBitmap, new Rectangle(50, 50, 100, 100));
             
         }
         public void kktina(Graphics g)

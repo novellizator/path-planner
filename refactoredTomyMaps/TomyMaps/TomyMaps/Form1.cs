@@ -13,7 +13,7 @@ namespace TomyMaps
     {
 
         private Map map = new Map();
-        private CachedBitmap cachedBitmap = new CachedBitmap();
+        private CachedBitmap cachedBitmap = new CachedBitmap(); // todo ako uchovat referenciu??? v cachedbitmap to [potrebujem....
 
         private Point TLPoint = new Point(0, 0);
         private int squareSize = 1;
