@@ -106,8 +106,8 @@ vieme niektoré jeho vlastnosti využiť na~to, aby sme vytvorili štruktúru, k
 Na konštrukciu tejto štruktúry (viď \cite{gs97}) budeme potrebovať nasledujúcu vetu.
 
 \begin{theorem}
-Pokiaľ sme v Dijkstrovom algoritme uzavreli vrchol $u$ so vzdialenosťou $d_u$ a~najkratšia hrana v~grafe má dĺžku $\epsilon$, tak môžme taktiež 
-uzavrieť všetky vrcholy $v$ so~vzdialenosťami $d_v \in (d, d + \epsilon)$.
+Pokiaľ sme v Dijkstrovom algoritme uzavreli vrchol $u$ so vzdialenosťou $d(u)$ a~najkratšia hrana v~grafe má dĺžku $\epsilon$, tak môžme taktiež 
+uzavrieť všetky vrcholy $v$ so~vzdialenosťami $d(v) \in (d, d + \epsilon)$.
 \end{theorem}
 \begin{proof}
 Do haldy vieme pridávať len vrcholy so vzdialenosťami aspoň $d + \epsilon$ (kratšia hrana tam už nie je), 
@@ -203,7 +203,7 @@ Použitá heuristická funkcia má dopad na počet prehľadaných vrcholov a ted
 
 \subsection{Heuristická funkcia}
  Heuristická funkcia nemôže byť ľubovoľná a musí
-splňovať niektoré podmienky
+splňovať niektoré podmienky \cite{golberg01} \cite{goldbergharrelson05}.
 
 TODO?? potencialy blablabla
 
@@ -234,7 +234,31 @@ Viď napr.
 
 
 \paragraph{Landmarks a trojuholníková nerovnosť}
-TODO?? ladmarks su blablabla...
+Nevýhoda použitia euklidovskej heuristickej funkcie je na obecných mapách zjavná. To motivovalo vymyslieť heuristiku, ktorá lepšie odráža vzdialenosti v grafe.
+
+Jednou z týchto heuristík je počítanie dolného odhadu pomocou tzv. {\sl landmarks}. 
+
+
+Landmarks sú vybrané vrcholy v grafe, z ktorých je následne prepočítaná najkratšia vzdialenosť do všetkych ostatných
+vrcholov grafu. Kedže jeden prechod grafu vieme Dijkstrovým algoritmom s priehradkami vykonať za lineárny čas, predpočítanie $ k $ landmarkov trvá $ \BigO{kn} $, kde $n$ značí počet vrcholov grafu.
+
+
+TODO?? ako to funguje...
+
+\subparagraph{Možnosti voľby landmarkov}
+
+Pri voľbe landmarkov sú dva faktory: počet a rozmiestnenie.
+
+\begin{example}[na počte záleží]
+Pokiaľ zvolíme málo landmarkov, tak dolný odhad nebude presný.
+Pokiaľ ich zvolíme priveľa, tak prepočet vzdialenosti cez každý landmark pre každý vrchol zaberie veľa času.
+\end{example}
+
+\begin{example}[na rozmiestnení záleží]
+Pokiaľ zvolíme všetky landmarky hneď pri sebe, tak heuristika
+nám nebude vraciať dostatočne presné dolné odhady na vzdialenosť vrcholov, ktoré sú ďaleko od landmarkov.
+\end{example}
+
 
 ASK?? jak spravi dalsie hlbsie cislovanie odstavcov???
 
