@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_US
 \chapter{Prehľad algoritmov}
 Na hľadanie najkratších ciest v grafe poznáme mnoho algoritmov, ktoré rozdeľujeme do týchto troch \cite{mares07} skupín: 
 
@@ -47,14 +48,14 @@ ASK?? rozlisujeme tri stavy vrcholov, co je halda blablabla mam popisat aj slovn
 \label{alg:dijkstra}
 \begin{algorithmic}[1] % number one = line numbering is on
 \REQUIRE graf $G$
-\ENSURE hodnotiaca funkcia $h$ obsahujúca najkratšie cesty  z vrcholu $s$ do vrcholov grafu
+\ENSURE dĺžková funkcia $d$ obsahujúca najkratšie cesty  z vrcholu $s$ do vrcholov grafu
 
 
-\STATE $ h(*) \leftarrow \infty $
+\STATE $ d(*) \leftarrow \infty $
 \STATE $ stav(*) \leftarrow$ NENAVŠTÍVENÝ
 
 \COMMENT {pridám počiatok}
-\STATE $h(s) \leftarrow 0$
+\STATE $d(s) \leftarrow 0$
 \STATE $stav(s) \leftarrow $ OTVORENÝ
 \STATE Heap $H$
 \STATE $Insert(H, s)$
@@ -70,10 +71,10 @@ ASK?? rozlisujeme tri stavy vrcholov, co je halda blablabla mam popisat aj slovn
 	
 	\STATE // zrelaxujeme vrchol $v$
 	\FORALL {$e$, $e = (v, u)$}
-		\IF {$h(u) > h(v) + l(v, u)$}
+		\IF {$d(u) > d(v) + l(v, u)$}
 			\STATE $Insert(H, v)$
 			\STATE $stav(u) \leftarrow$ OTVORENÝ
-			\STATE $h(u) \leftarrow h(v) + l(v, u)$
+			\STATE $d(u) \leftarrow d(v) + l(v, u)$
 			
 		\ENDIF
 	\ENDFOR
@@ -121,20 +122,32 @@ pričom poradie je nezávislé od skutočnej vzdialenosti vrcholov.
 \end{consequence}
 
 \begin{example}
+\label{ex:length}
 Dĺžka $\epsilon$ najkratšej hrany v mriežkovom grafe je 1. Je to dĺžka akejkoľvek vodorovnej, alebo zvislej hrany.
 Keď teda uzavrieme vrchol so vzdialenosťou $d_u$, môžme uzavrieť aj vrcholy so vzdialenosťami menšími, ako je $d_u + 1$ a to v ľubovoľnom poradí.
 \end{example}
 
-Tieto veci vie výborne využi
+Tieto veci vieme výborne využiť pri konštrukcii štruktúry
+zvanej {\sl priehradková halda}. Tá, využijúc vyššieuvedenú vetu, uzatvára a pridáva vrcholy bez porušenia akejkoľvek konzistencie behu algoritmu.
 
-Na konštrukciu lineárneho Dijkstrovho algoritmu potrebujeme priehradkovú haldu. Tá vie vybrať  \uv{jeden z najmenších} prvkov.
-v~konštantnom čase a~rovnako ako aj vložiť prvok.
+ASK?? mam to supnut to kapitoly o 'mojom' algoritme?
+Totizto o priehradkovej strukture sa da docitat vsade, neni
+to moj patent, ale na druhu stranu ja som tu strukturu implenmentoval konkretne ma moj mriezkovy graf...
 
-TODO?? Ako ma halda vyzerat???
-Halda bude mať tri priehradky, do ktorých sa dajú uložiť 
 
-Príklad priehradkovej haldy môžme vidieť na obrázku 
-\ref{fig:priehradky}. 
+\subsection{Popis haldy}
+Majme haldu s tromi priehradkami, pričom rozdiel najmenšieho a najväčšieho čísla bude ostro menší, ako 1. To nám zaručí,
+že pokiaľ uzavrieme akýkoľvek vrchol v priehradke, môžme uzavrieť aj všetky ostatné vrcholy. Viď Príklad \ref{ex:length}. Pre jednoduchosť implementácie nech priehradka uchováva vrcholy so vzdialenosťami v intervale
+$[k, k+1), k\in \N$. 
+Problémom ostalo ešte sa presvedčiť, že tri priehradky sú postačujúce. Predstavme si najhorší prípad, totižto, že vyberáme vrchol z prvej priehradky
+a otvárame všetkých jeho susedov. Pokiaľ sa bude jednať o suseda priečneho, tak vieme, že jeho vzdialenosť od začiatku je menšia, ako $k+1+\sqrt{2}$
+a tento vrchol patrí to tretej priehradky.
+
+Ilustrujme si to na obrázkových príkladoch. Príklad troj priehradkovej haldy vidíme na obrázku \ref{fig:priehradky}.
+ASK?? troj--priehradkovej? 
+Halda uchováva premennú $ baza $, ktorá definuje bázu od ktorej sa ostatné intvarvaly odvíjajú, ktorá môže byť do haldy vkladaná. Okrem
+nej, uchováva tri smerníky na tri po sebe idúce priehradky priehradky a smerník na vrchol haldy, zvaný $ top $.
+
 
 
 \begin{figure}[h]
@@ -144,6 +157,8 @@ Príklad priehradkovej haldy môžme vidieť na obrázku
 \label{fig:priehradky}
 \end{figure}
 
+Pridanie dvoch prvkov je ilustrované na obrázku \ref{fig:priehradky_i}. Priehradka, do ktorej má byť prvok s danou vzdialenosťou vložený sa vypočíta podľa vzorca: $ \lfloor vzdialenostPrvku - baza +1 \rfloor $.
+
 
 \begin{figure}[h]
 \centering
@@ -152,23 +167,81 @@ Príklad priehradkovej haldy môžme vidieť na obrázku
 \label{fig:priehradky_i}
 \end{figure}
 
+
+Zmazanie prvku vidíme na obrázku \ref{fig:priehradky_i_d1}.
+Celé zmazanie spočíva v inkrementácii ukazovateľa na vrchol priehradky.
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i_d1.eps}
-\caption{Insert}
+\caption{Pop (1)}
 \label{fig:priehradky_i_d1}
 \end{figure}
+
+
+Pokiaľ sa v priehradke nachádza jediný prvok a ten chceme vybrať, tak nám inkrementácia premennej $ top $ v priehradke 
+nestačí. Musíme prehodiť priehradky. Druhú priehradku presunúť
+na miesto prvej, tretiu na miesto druhej a prvú umiestniť nakoniec. Viď obrázok \ref{fig:priehradky_i_d2}. Nakoniec musíme zvýšit bázickú vzdialenosť. Presunutie týchto priehradok sa samozrejme uskutočňuje cez prehodenie smerníkov.
+Keďže máme konštatný počet priehradok, tak aj táto operácia
+trvá konštantný čas.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i_d2.eps}
-\caption{Insert}
+\caption{Pop (2)}
 \label{fig:priehradky_i_d2}
 \end{figure}
 
-blablabla
-
 
 \section{A*}
-dalsi algoritmus do zbierky je a* \cite{astar72}.
+Ďalší algoritmus, ktorým sa budeme zaoberať je algoritmus
+A* \cite{astar72} prvykrát popísaný v roku 1968.
+
+Tento algoritmus vychádza z Dijkstrovho algoritmu a je mu veľmi podobný. Hlavný rozdiel medzi týmito algoritmami je, že
+kým Dijkstrov algoritmus vyberá z haldy vrcholy s neklesajúcou vzdialenosťou $ d(v) $ od počiatku, tak algoritmus A* vyberá prvky s neklesajúcou vzdialenosťou $ f(v) := d(s,v) + h(v,t) $, kde $ h(v, t) $ značí heuristickú funkciu, ktorá je dolným odhadom vzdialenosti od vrcholu $ v $ do cieľa $ t $. Obrátene, Dikstrov algoritmus si vieme predstaviť ako algoritmus A*, kde $ \forall v \in G: h(v, t) = 0 $.
+
+Použitá heuristická funkcia má dopad na počet prehľadaných vrcholov a teda do zásadnej miery ovplyvňuje výkon algoritmu.
+
+\subsection{Heuristická funkcia}
+ Heuristická funkcia nemôže byť ľubovoľná a musí
+splňovať niektoré podmienky
+
+TODO?? potencialy blablabla
+
+Ako sme už spomínali, voľba heuristickej funkcie je 
+kľúčová časť pri implementácii algoritmu.
+
+
+Najčastejšie možnosti voľby heuristickej funkcie sú tieto:
+
+\begin{itemize}
+\item Euklidovská vzdialenosť.
+\item Trojuholníková nerovnosť, tzv. $ landmarks $.
+\end{itemize}
+
+
+\paragraph{Euklidovská vzdialenosť}
+
+Euklidovská vzdialenosť je najjednoduchšie implementovateľná heuristická funkcia. Na väčšine jednoduchých grafov s malým počtom prekážok vracia dobré výsledky. Problém nastáva na grafoch, kde začiatok a koniec cesty sú geometricky blízko seba, hoci ich skutočná vzdialenosť je veľká.
+Viď napr. 
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{./img/antieuclid505d.jpg}
+\caption{Mapa, na ktorej euklidovská heuristika zlyhá.}
+\label{fig:antieuclid}
+\end{figure}
+
+
+\paragraph{Landmarks a trojuholníková nerovnosť}
+TODO?? ladmarks su blablabla...
+
+ASK?? jak spravi dalsie hlbsie cislovanie odstavcov???
+
+
+
+
+
+
+
 TODO??potencialy euklid landmarks landmark selection priblem s priehradkami
