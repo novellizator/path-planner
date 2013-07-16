@@ -122,9 +122,9 @@ pričom poradie je nezávislé od skutočnej vzdialenosti vrcholov.
 \end{consequence}
 
 \begin{example}
-\label{ex:length}
+\label{ex:range}
 Dĺžka $\epsilon$ najkratšej hrany v mriežkovom grafe je 1. Je to dĺžka akejkoľvek vodorovnej, alebo zvislej hrany.
-Keď teda uzavrieme vrchol so vzdialenosťou $d_u$, môžme uzavrieť aj vrcholy so vzdialenosťami menšími, ako je $d_u + 1$ a to v ľubovoľnom poradí.
+Keď teda uzavrieme vrchol so vzdialenosťou $d(u)$, môžme uzavrieť aj vrcholy so vzdialenosťami menšími, ako je $d(u) + 1$ a to v ľubovoľnom poradí.
 \end{example}
 
 Tieto veci vieme výborne využiť pri konštrukcii štruktúry
@@ -136,16 +136,18 @@ to moj patent, ale na druhu stranu ja som tu strukturu implenmentoval konkretne 
 
 
 \subsection{Popis haldy}
-Majme haldu s tromi priehradkami, pričom rozdiel najmenšieho a najväčšieho čísla bude ostro menší, ako 1. To nám zaručí,
-že pokiaľ uzavrieme akýkoľvek vrchol v priehradke, môžme uzavrieť aj všetky ostatné vrcholy. Viď Príklad \ref{ex:length}. Pre jednoduchosť implementácie nech priehradka uchováva vrcholy so vzdialenosťami v intervale
-$[k, k+1), k\in \N$. 
-Problémom ostalo ešte sa presvedčiť, že tri priehradky sú postačujúce. Predstavme si najhorší prípad, totižto, že vyberáme vrchol z prvej priehradky
-a otvárame všetkých jeho susedov. Pokiaľ sa bude jednať o suseda priečneho, tak vieme, že jeho vzdialenosť od začiatku je menšia, ako $k+1+\sqrt{2}$
-a tento vrchol patrí to tretej priehradky.
+Najprv popíšeme fungovanie haldy a graficky znázorníme jej 
+operácie. Neskôr dokážeme, že keď túto haldu použijeme v Dijkstrovom algoritme, tak nám bude vraciať korektné výsledky.
 
-Ilustrujme si to na obrázkových príkladoch. Príklad troj priehradkovej haldy vidíme na obrázku \ref{fig:priehradky}.
+Majme haldu s tromi priehradkami (nazvime ju $BucketHeap$), pričom rozsah jednej priehradky je ostro menší, ako 1.
+Prvá priehradka uchováva prvky s rozsahom vzdialeností $ [b, b+1) $, druhá $ [b+1, b+2) $ a tretia $ [b+2, b+1+\sqrt{2}) $
+pre danú bázu $ b $. Pre jednoduchšiu implementáciu $b \in \N$. Operácia $push((dist, data))$ vloží do haldy prvok so vzdialenosťou $dist$ 
+s pomocnými dátami $data$. Operácia $pop()$ vracia ľubovoľný element z prvej priehradky. 
+Pre jednoduchšiu implementáciu budeme mať na začiatku smerník na prvý prvok prvej priehradky a po vyhodení najmenšieho prvku tento smernik jednoducho inkrementujeme, kým to bude možné. Keď už v prvej priehradke nezostane žiaden prvok a zavoláme operáciu $pop()$, vykoná sa nasledujúca vec: druhú priehradku presunieme na miesto prvej, tretiu na miesto druhej a prvú dáme namiesto tretej.
+
+Ilustrujme si to na obrázkových príkladoch. Príklad troj--priehradkovej haldy vidíme na obrázku \ref{fig:priehradky}.
 ASK?? troj--priehradkovej? 
-Halda uchováva premennú $ baza $, ktorá definuje bázu od ktorej sa ostatné intvarvaly odvíjajú, ktorá môže byť do haldy vkladaná. Okrem
+Halda uchováva premennú $ baza $, ktorá definuje bázu od ktorej sa rozsahy priehradok odvíjajú. Okrem
 nej, uchováva tri smerníky na tri po sebe idúce priehradky priehradky a smerník na vrchol haldy, zvaný $ top $.
 
 
@@ -157,7 +159,7 @@ nej, uchováva tri smerníky na tri po sebe idúce priehradky priehradky a smern
 \label{fig:priehradky}
 \end{figure}
 
-Pridanie dvoch prvkov je ilustrované na obrázku \ref{fig:priehradky_i}. Priehradka, do ktorej má byť prvok s danou vzdialenosťou vložený sa vypočíta podľa vzorca: $ \lfloor vzdialenostPrvku - baza +1 \rfloor $.
+Pridanie dvoch prvkov je znázornené na obrázku \ref{fig:priehradky_i}. Priehradka, do ktorej má byť prvok s danou vzdialenosťou vložený sa vypočíta podľa vzorca: $ \lfloor vzdialenostPrvku - baza +1 \rfloor $.
 
 
 \begin{figure}[h]
@@ -169,7 +171,8 @@ Pridanie dvoch prvkov je ilustrované na obrázku \ref{fig:priehradky_i}. Priehr
 
 
 Zmazanie prvku vidíme na obrázku \ref{fig:priehradky_i_d1}.
-Celé zmazanie spočíva v inkrementácii ukazovateľa na vrchol priehradky.
+Celé zmazanie spočíva v inkrementácii ukazovateľa na vrch priehradky.
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i_d1.eps}
@@ -179,8 +182,8 @@ Celé zmazanie spočíva v inkrementácii ukazovateľa na vrchol priehradky.
 
 
 Pokiaľ sa v priehradke nachádza jediný prvok a ten chceme vybrať, tak nám inkrementácia premennej $ top $ v priehradke 
-nestačí. Musíme prehodiť priehradky. Druhú priehradku presunúť
-na miesto prvej, tretiu na miesto druhej a prvú umiestniť nakoniec. Viď obrázok \ref{fig:priehradky_i_d2}. Nakoniec musíme zvýšit bázickú vzdialenosť. Presunutie týchto priehradok sa samozrejme uskutočňuje cez prehodenie smerníkov.
+nepostačí. Musíme prehodiť priehradky. Druhú priehradku presunúť
+na miesto prvej, tretiu na miesto druhej a prvú umiestniť nakoniec. Viď obrázok \ref{fig:priehradky_i_d2}. Nakoniec musíme zvýšit bázickú vzdialenosť. Zmena poradia týchto priehradok sa samozrejme uskutočňuje cez prehodenie smerníkov.
 Keďže máme konštatný počet priehradok, tak aj táto operácia
 trvá konštantný čas.
 
@@ -190,6 +193,18 @@ trvá konštantný čas.
 \caption{Pop (2)}
 \label{fig:priehradky_i_d2}
 \end{figure}
+
+
+\begin{theorem}[korektnosť priehradkovej štruktúry]
+Dijkstrov algoritmu používajúci haldu $BucketHeap$ vráti korektné najkratšie vzdialenosti do vrcholov grafu.
+\end{theorem}
+\begin{proof}
+Rozsah každej priehradky je ostro menší, ako 1. To znamená, že podľa príkladu \ref{ex:range} operácia $pop()$ vracia prvky v poradí, ktoré
+nepokazí chod algoritmu. 
+
+Treba ešte dokázať, že tri priehradky postačujú. To je zrejmé,
+pretože keď vyberieme vrchol z prvej priehradky, tak jeho vzdialenosť je v rozsahu $[b, b+1)$. Keď prechádzame jeho susedné vrcholy, tak najdlhšia hrana je $ \sqrt{2} $ a teda vzdialenosť k najvzdialenejšiemu susednému vrcholu je ostro menšia, ako $b+1+\sqrt{2}$.
+\end{proof}
 
 
 \section{A*}
@@ -202,16 +217,10 @@ kým Dijkstrov algoritmus vyberá z haldy vrcholy s neklesajúcou vzdialenosťou
 Použitá heuristická funkcia má dopad na počet prehľadaných vrcholov a teda do zásadnej miery ovplyvňuje výkon algoritmu.
 
 \subsection{Heuristická funkcia}
- Heuristická funkcia nemôže byť ľubovoľná a musí
-splňovať niektoré podmienky \cite{golberg01} \cite{goldbergharrelson05}.
-
-TODO?? potencialy blablabla
-
-Ako sme už spomínali, voľba heuristickej funkcie je 
-kľúčová časť pri implementácii algoritmu.
+ Heuristická funkcia nemôže byť ľubovoľná. Funkcia musí predstavovať tzv. {\sl prípustný potenciál}. Podrobnejší popis sa nachádza napr. na \cite{mares07} \cite{golberg01} \cite{goldbergharrelson05}. Ďalej sa budeme venovať len funkciám, ktoré túto podmienku splňujú.
 
 
-Najčastejšie možnosti voľby heuristickej funkcie sú tieto:
+Najčastejšie heuristické funkcie sú tieto:
 
 \begin{itemize}
 \item Euklidovská vzdialenosť.
@@ -222,7 +231,7 @@ Najčastejšie možnosti voľby heuristickej funkcie sú tieto:
 \paragraph{Euklidovská vzdialenosť}
 
 Euklidovská vzdialenosť je najjednoduchšie implementovateľná heuristická funkcia. Na väčšine jednoduchých grafov s malým počtom prekážok vracia dobré výsledky. Problém nastáva na grafoch, kde začiatok a koniec cesty sú geometricky blízko seba, hoci ich skutočná vzdialenosť je veľká.
-Viď napr. 
+Príklad vidíme na obrázku \ref{fig:antieuclid}.
 
 
 \begin{figure}[h]
@@ -238,9 +247,12 @@ Nevýhoda použitia euklidovskej heuristickej funkcie je na obecných mapách zj
 
 Jednou z týchto heuristík je počítanie dolného odhadu pomocou tzv. {\sl landmarks}. 
 
-
 Landmarks sú vybrané vrcholy v grafe, z ktorých je následne prepočítaná najkratšia vzdialenosť do všetkych ostatných
-vrcholov grafu. Kedže jeden prechod grafu vieme Dijkstrovým algoritmom s priehradkami vykonať za lineárny čas, predpočítanie $ k $ landmarkov trvá $ \BigO{kn} $, kde $n$ značí počet vrcholov grafu.
+vrcholov grafu. 
+
+
+
+Kedže jeden prechod grafu vieme Dijkstrovým algoritmom s priehradkami vykonať za lineárny čas, predpočítanie $ k $ landmarkov trvá $ \BigO{kn} $, kde $n$ značí počet vrcholov grafu.
 
 
 TODO?? ako to funguje...
