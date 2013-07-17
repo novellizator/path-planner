@@ -64,6 +64,8 @@
             this.viewPortControl1.Size = new System.Drawing.Size(587, 570);
             this.viewPortControl1.TabIndex = 0;
             this.viewPortControl1.Text = "viewPortControl1";
+            this.viewPortControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPortControl1_MouseMove);
+            this.viewPortControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPortControl1_MouseUp);
             // 
             // Form1
             // 

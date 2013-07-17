@@ -126,12 +126,8 @@ namespace TomyMaps
 
             cachedBitmap.Save("D:/bitmap.bmp");
 
-            // bufferedBitmap = new Bitmap(Math.Max(cachedBitmap.Width, viewPortSize.Width), Math.Max(cachedBitmap.Height, viewPortSize.Height));
-            // bufferedBitmapGraphics = Graphics.FromImage(bufferedBitmap);
-
-
-            // uno experimento - try out later on
-            bufferedBitmap = (Bitmap)cachedBitmap.Clone();
+            bufferedBitmap = new Bitmap(Math.Max(cachedBitmap.Width, viewPortSize.Width), Math.Max(cachedBitmap.Height, viewPortSize.Height));
+            //bufferedBitmap = (Bitmap)cachedBitmap.Clone(); // bad experiment, then the rest wont be redrawn... (zoomout - leftovers)
             bufferedBitmapGraphics = Graphics.FromImage(bufferedBitmap);
 
         }

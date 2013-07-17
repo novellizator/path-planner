@@ -18,7 +18,7 @@ namespace TomyMaps
 
             cachedBitmap.setMap(map);
         }
- 
+
 
         private Map map = new Map();
         private CachedBitmap cachedBitmap = new CachedBitmap();
@@ -29,23 +29,26 @@ namespace TomyMaps
         private bool imageLoaded = false;
 
 
+        // dragging features
+        bool isDragged = false;
+        Point startDragLocation = new Point(0, 0);
 
         private void setTLPoint(Point tl)
         {
             TLPoint = tl;
         }
-        private void DrawBitmap()
+        private void DrawBitmapAt(Point TL)
         {
             if (imageLoaded)
             {
                 Graphics viewPortGraphics = viewPortControl1.GetGraphics();
-                cachedBitmap.DrawBitmapInto(viewPortGraphics, TLPoint, viewPortControl1.ClientSize, squareSize);
+                cachedBitmap.DrawBitmapInto(viewPortGraphics, TL, viewPortControl1.ClientSize, squareSize);
             }
         }
-        private void setTLAndDrawBitmap(Point tl)
+
+        private void DrawBitmap()
         {
-            setTLPoint(tl);
-            DrawBitmap();
+            DrawBitmapAt(TLPoint);
         }
 
         private void loadMap_Click(object sender, EventArgs e)
@@ -77,13 +80,69 @@ namespace TomyMaps
             map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
             //map.Load("D:/github-gppc/path-planner/newTomyMaps/battleground.map");
 
-            setTLAndDrawBitmap(new Point(0,0));
+            setTLPoint(new Point(0, 0));
+            DrawBitmapAt(TLPoint);
 
         }
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             DrawBitmap();
+        }
+
+        private void viewPortControl1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isDragged)
+            {
+                int dx = startDragLocation.X - e.X;
+                int dy = startDragLocation.Y - e.Y;
+
+                TLPoint.X += dx;
+                TLPoint.Y += dy;
+
+                if (TLPoint.X < 0)
+                {
+                    TLPoint.X = 0;
+                }
+                if (TLPoint.Y < 0)
+                {
+                    TLPoint.Y = 0;
+                }
+
+            }
+            isDragged = false;
+        }
+
+        private void viewPortControl1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (!isDragged)
+                {
+                    isDragged = true;
+                    startDragLocation = e.Location;
+                }
+
+                int dx = startDragLocation.X - e.X;
+                int dy = startDragLocation.Y - e.Y;
+
+
+                Point newTLPoint = new Point(TLPoint.X + dx, TLPoint.Y + dy);
+                
+                // cannot access these points in the real map (out of bound in either side)
+                if (newTLPoint.X < 0)
+                {
+                    newTLPoint.X = 0;
+                }
+
+                if (newTLPoint.Y < 0)
+                {
+                    newTLPoint.Y = 0;
+                }
+
+                DrawBitmapAt(newTLPoint);
+
+            }
         }
     }
 }

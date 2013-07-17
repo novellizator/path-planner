@@ -298,7 +298,8 @@ namespace TomyMaps
             }
 
             outputBitmap = new Bitmap(Math.Max(cachedBitmap.Width, WindowSize.Width), Math.Max(cachedBitmap.Height, WindowSize.Height));
-            outG= Graphics.FromImage(outputBitmap);
+            //outputBitmap = (Bitmap)cachedBitmap.Clone();
+                    outG= Graphics.FromImage(outputBitmap);
 
         }
 		

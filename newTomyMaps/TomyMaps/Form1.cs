@@ -191,7 +191,7 @@ namespace TomyMaps
 
         private void mapView1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (isDragged)
+            if (isDragged )
             {
 
                 int dx = startDragLocation.X - e.X;
