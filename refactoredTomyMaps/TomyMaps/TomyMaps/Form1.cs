@@ -144,5 +144,19 @@ namespace TomyMaps
 
             }
         }
+
+        private void zoomIn_Click(object sender, EventArgs e)
+        {
+            ++squareSize;
+            TLPoint = new Point(0, 0);
+            DrawBitmap();
+        }
+
+        private void zoomOut_Click(object sender, EventArgs e)
+        {
+            --squareSize;
+            TLPoint = new Point(0, 0);
+            DrawBitmap();
+        }
     }
 }

@@ -36,18 +36,27 @@ namespace TomyMaps
             // squareSize has changed OR no map has been loaded so far
             if (cachedBitmap == null)
             {
+                //System.Windows.Forms.MessageBox.Show("cachedBitmap == null");
                 PrecomputeBitmap(TLPoint, ViewPortSize);
             }
             if (squareSize != squareS)
             {
+                //System.Windows.Forms.MessageBox.Show("squareSize != squareS");
                 squareSize = squareS;
                 PrecomputeBitmap(TLPoint, ViewPortSize);
             }
-            
 
-            // if the area is precomputable and is not precomputed
-            if (false && false)
+            if (cachedBitmapTLPoint.X > TLPoint.X || cachedBitmapTLPoint.Y > TLPoint.Y)
             {
+                //System.Windows.Forms.MessageBox.Show("cachedBitmapTLPoint.X > TLPoint.X || cachedBitmapTLPoint.Y > TLPoint.Y");
+                PrecomputeBitmap(TLPoint, ViewPortSize);
+            }
+
+            // if the area is precomputable and is not precomputed ... unfinished, need to make it for "Y" too.
+            if (cachedBitmapTLPoint.X + ViewPortSize.Width < getMapPixelSize().Width && 
+                 cachedBitmapTLPoint.X + cachedBitmap.Width < TLPoint.X + ViewPortSize.Width)
+            {
+                //System.Windows.Forms.MessageBox.Show("cachedBitmapTLPoint.X + ViewPortSize.Width < getMapPixelSize().Width && ");
                 PrecomputeBitmap(TLPoint, ViewPortSize);
             }
 
@@ -76,7 +85,7 @@ namespace TomyMaps
             int width = Math.Min(viewPortSize.Width * 2, getMapPixelSize().Width - cachedBitmapTLPoint.X);
             int height = Math.Min(viewPortSize.Height * 2, getMapPixelSize().Height - cachedBitmapTLPoint.Y);
 
-            System.Windows.Forms.MessageBox.Show("precomputed!" + width);
+            
 
             // let's draw on the cached bitmap
             cachedBitmap = new Bitmap(width, height);
@@ -124,11 +133,13 @@ namespace TomyMaps
                 }
             }
 
-            cachedBitmap.Save("D:/bitmap.bmp");
+            //cachedBitmap.Save("D:/bitmap.bmp");
 
             bufferedBitmap = new Bitmap(Math.Max(cachedBitmap.Width, viewPortSize.Width), Math.Max(cachedBitmap.Height, viewPortSize.Height));
             //bufferedBitmap = (Bitmap)cachedBitmap.Clone(); // bad experiment, then the rest wont be redrawn... (zoomout - leftovers)
             bufferedBitmapGraphics = Graphics.FromImage(bufferedBitmap);
+
+            System.Windows.Forms.MessageBox.Show(cachedBitmapTLPoint.ToString());
 
         }
 

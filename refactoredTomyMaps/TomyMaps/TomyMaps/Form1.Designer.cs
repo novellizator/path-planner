@@ -30,6 +30,8 @@
         {
             this.loadMap = new System.Windows.Forms.Button();
             this.debugBox = new System.Windows.Forms.TextBox();
+            this.zoomIn = new System.Windows.Forms.Button();
+            this.zoomOut = new System.Windows.Forms.Button();
             this.viewPortControl1 = new TomyMaps.ViewPortControl();
             this.SuspendLayout();
             // 
@@ -53,6 +55,28 @@
             this.debugBox.Size = new System.Drawing.Size(149, 191);
             this.debugBox.TabIndex = 2;
             // 
+            // zoomIn
+            // 
+            this.zoomIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.zoomIn.Location = new System.Drawing.Point(755, 346);
+            this.zoomIn.Name = "zoomIn";
+            this.zoomIn.Size = new System.Drawing.Size(75, 23);
+            this.zoomIn.TabIndex = 3;
+            this.zoomIn.Text = "zoomIn";
+            this.zoomIn.UseVisualStyleBackColor = true;
+            this.zoomIn.Click += new System.EventHandler(this.zoomIn_Click);
+            // 
+            // zoomOut
+            // 
+            this.zoomOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.zoomOut.Location = new System.Drawing.Point(755, 406);
+            this.zoomOut.Name = "zoomOut";
+            this.zoomOut.Size = new System.Drawing.Size(75, 23);
+            this.zoomOut.TabIndex = 4;
+            this.zoomOut.Text = "zoom out";
+            this.zoomOut.UseVisualStyleBackColor = true;
+            this.zoomOut.Click += new System.EventHandler(this.zoomOut_Click);
+            // 
             // viewPortControl1
             // 
             this.viewPortControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -72,6 +96,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(902, 570);
+            this.Controls.Add(this.zoomOut);
+            this.Controls.Add(this.zoomIn);
             this.Controls.Add(this.debugBox);
             this.Controls.Add(this.loadMap);
             this.Controls.Add(this.viewPortControl1);
@@ -88,6 +114,8 @@
         private ViewPortControl viewPortControl1;
         private System.Windows.Forms.Button loadMap;
         private System.Windows.Forms.TextBox debugBox;
+        private System.Windows.Forms.Button zoomIn;
+        private System.Windows.Forms.Button zoomOut;
     }
 }
 
