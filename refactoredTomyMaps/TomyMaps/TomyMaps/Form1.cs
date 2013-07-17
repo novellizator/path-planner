@@ -53,31 +53,31 @@ namespace TomyMaps
 
         private void loadMap_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog ofd = new OpenFileDialog();
+            OpenFileDialog ofd = new OpenFileDialog();
 
-            //ofd.Title = "Open Image File";
-            //ofd.Filter = ".map|*.map" +
-            //    "|All types|*.*";
+            ofd.Title = "Open Image File";
+            ofd.Filter = ".map|*.map" +
+                "|All types|*.*";
 
-            //ofd.FilterIndex = 0;
-            //ofd.FileName = "";
-            //if (ofd.ShowDialog() != DialogResult.OK)
-            //    return;
+            ofd.FilterIndex = 0;
+            ofd.FileName = "";
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
 
-            //try
-            //{
-            //    map.Load(ofd.FileName);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    return;
-            //}
+            try
+            {
+                map.Load(ofd.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
 
 
             imageLoaded = true;
             //TEST
-            map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
+            //map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
             //map.Load("D:/github-gppc/path-planner/newTomyMaps/battleground.map");
 
             setTLPoint(new Point(0, 0));
