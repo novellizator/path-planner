@@ -1,8 +1,54 @@
-\chapter{Porovnanie NovellA* s~ostatnými algoritmami.}
+\chapter{Testovanie a výsledky}
 
-\section{Vstupné dáta}
+\section{Kritériá a popis testovania}
+\subsection{Vstupné dáta}
 Častým problémom pri vzájomnom porovnávaní algoritmov je
-nájsť tetsovaciu vyorku, ktor... \cite{sturtevant2012benchmarks}
+nájsť testovaciu vzorku, ktorá mi otestovala beh algoritmu na širokej škále grafov.
+Ako bolo v úvode spomenuté, súťaž {\sl Grid-Based Path Planning Competition} poskytuje množstvo máp rôznych typov a rozmerov,
+na ktorých sa algoritmy dajú testovať. Konkrétny popis typov máp sa nachádza v \cite{sturtevant2012benchmarks}.
+
+\subsection{Testovacie kritériá}
+Testovacie kritéria budú podobné ako testovacie kritériá v súťaži. Budú sa však mierne líšiť, pretože algoritmus nebol 
+naplánovaný tak, aby .... TODO?? (prvych 20 kroko a nezaujima, na druhu stranu ma zaujima pocet prehladanych vrcholov...)
+
+\begin{itemize}
+\item Počet prehľadaných vrcholov.
+\item Rýchlosť nájdenia cesty.
+\end{itemize}
+
+
+\subsection{Testované algoritmy}
+Testovať budeme nasledujúce algoritmy:
+\begin{itemize}
+\item Dijkstrov algoritmus nad binárnou haldou.
+\item Dijkstrov algoritmus nad priehradkovou haldou.
+\item A* používajúc rôzny počet landmarkov.
+\item A* používajú optimálny počet landmarkov a obdĺžnikovú dekompozíciu.
+\item TODO?? nieco dalsie blablabla - cudzie algoritmy.
+\end{itemize}
+
+
+\subsection{Kompilácia}
+Kód bude kompilovaný kompilátorom g++. Bude porovnaná
+rýchlosť behu programu pri kompilácii s týmito direktívami.
+\begin{itemize}
+\item -O1
+\item -O2
+\item -O3
+\item -O3 -march=native
+\end{itemize}
+ASK?? toto bude len pri jednom algoritme pri jednom grafe, nie? neni to zbytocne???
+
+\subsection{Typy map a ciest}
+TODO?? - kratke dlhe, klukate a rovne obrazok asopn 3 map
+
+
+
+
+
+(ASK?? poet prehladanych vrcholov nie je kriterium, ktore dokazem testovat na cudzich algoritmoch - musel by smo do nich zahat a pridavat tam funkciu, ktora to pocita - co mam robit? mam pocet vrcholov testovat len na mojich algoritmoch?)
+
+
 
 
 Na porovnávanie využijeme benchmark

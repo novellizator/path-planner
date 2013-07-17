@@ -19,7 +19,7 @@ V tejto kapitole popíšeme algoritmy, ktoré sú použiteľné na grafoch s nez
 TODO?? POTIAL VSETKO PREPISANE a myslim, ze clekom prijemne citatelne.
 
 
-\section{Kritéria efektivity algoritmu}
+\section{Kritériá efektivity algoritmu}
 Na porovnanie efektivity algoritmou slúži v teoretickej informatike odhad asymptotickej složitosti \cite{asymptotic65}.
 Tento odhad je veľmi užitočný v teoretickej informatike a veľmi často algoritmus s lepšou zložitosťou je v praxi rýchlejší.
 Nie je to ale pravidlom a teda potrebujeme zaviesť ďalšie kritériá, ktoré presnejšie popíšu a porovnajú správanie algoritmov praxi.
@@ -137,13 +137,13 @@ to moj patent, ale na druhu stranu ja som tu strukturu implenmentoval konkretne 
 
 \subsection{Popis haldy}
 Najprv popíšeme fungovanie haldy a graficky znázorníme jej 
-operácie. Neskôr dokážeme, že keď túto haldu použijeme v Dijkstrovom algoritme, tak nám bude vraciať korektné výsledky.
+operácie. Neskôr dokážeme, že keď túto haldu použijeme v Dijkstrovom algoritme, tak nám bude vracať korektné výsledky.
 
 Majme haldu s tromi priehradkami (nazvime ju $BucketHeap$), pričom rozsah jednej priehradky je ostro menší, ako 1.
 Prvá priehradka uchováva prvky s rozsahom vzdialeností $ [b, b+1) $, druhá $ [b+1, b+2) $ a tretia $ [b+2, b+1+\sqrt{2}) $
 pre danú bázu $ b $. Pre jednoduchšiu implementáciu $b \in \N$. Operácia $push((dist, data))$ vloží do haldy prvok so vzdialenosťou $dist$ 
 s pomocnými dátami $data$. Operácia $pop()$ vracia ľubovoľný element z prvej priehradky. 
-Pre jednoduchšiu implementáciu budeme mať na začiatku smerník na prvý prvok prvej priehradky a po vyhodení najmenšieho prvku tento smernik jednoducho inkrementujeme, kým to bude možné. Keď už v prvej priehradke nezostane žiaden prvok a zavoláme operáciu $pop()$, vykoná sa nasledujúca vec: druhú priehradku presunieme na miesto prvej, tretiu na miesto druhej a prvú dáme namiesto tretej.
+Pre jednoduchšiu implementáciu budeme mať na začiatku smerník na prvý prvok prvej priehradky a po vyhodení najmenšieho prvku tento smerník jednoducho inkrementujeme, kým to bude možné. Keď už v prvej priehradke nezostane žiaden prvok a zavoláme operáciu $pop()$, vykoná sa nasledujúca vec: druhú priehradku presunieme na miesto prvej, tretiu na miesto druhej a prvú dáme namiesto tretej.
 
 Ilustrujme si to na obrázkových príkladoch. Príklad troj--priehradkovej haldy vidíme na obrázku \ref{fig:priehradky}.
 ASK?? troj--priehradkovej? 
@@ -232,6 +232,8 @@ Najčastejšie heuristické funkcie sú tieto:
 
 Euklidovská vzdialenosť je najjednoduchšie implementovateľná heuristická funkcia. Na väčšine jednoduchých grafov s malým počtom prekážok vracia dobré výsledky. Problém nastáva na grafoch, kde začiatok a koniec cesty sú geometricky blízko seba, hoci ich skutočná vzdialenosť je veľká.
 Príklad vidíme na obrázku \ref{fig:antieuclid}.
+TODO?? pozor na blbe rozdelenie obdlznikov - ja to ratam 
+aj cez sikme hrany atd atd
 
 
 \begin{figure}[h]

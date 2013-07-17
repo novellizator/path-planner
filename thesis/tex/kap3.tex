@@ -1,25 +1,24 @@
-\chapter{Nový algoritmus: NovellA*}
+\chapter{Súťažný algoritmus}
+Súťažný algoritmus bude využívať poznatky popísané v predošlej kapitole. Navyše zavedieme koncept tzv. {\sl mriežkového grafu bez prekážok}, ktorý umožní mierne zrýchliť výkon algoritmu v mnohých prípadoch, väčšinou však pri trasách, kde počiatočný a koncový bod ležia relatívne \uv{blízko seba}.
 
-\section{Zlepšenie výkonu v niektorých prípadoch}
-Nie všetky najkratšie cesty ale musia obchádzať veľa prekážok. 
-V mnohých prípadoch nemusí medzi počiatočným a koncovým bodom ležať žiadna prekážka, a teda cesty sú veľmi priamočiare. To sa pokúsime využiť na~zlepšenie výkonu algoritmu.
- 
+
+\section{Mriežkový graf bez prekážok}
+Nie všetky najkratšie cesty musia obchádzať veľa prekážok. 
+V mnohých prípadoch neleží medzi počiatočným a koncovým bodom žiadna prekážka, a~teda cesty sú veľmi priamočiare. To sa pokúsime využiť na~zlepšenie výkonu algoritmu.
 Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl mriežkového grafu bez prekážok}.
 
 \begin{define}
 {\sl Mriežkový graf je bez prekážok} 
 pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
 \end{define}
+Kvôli lepšej prehľadnosti s stručnosti budeme mriežkový graf bez prekážok nazývať aj {\sl obdĺžnik}.
+Intuitívne, kvôli jeho vizuálnej predstave. Jeho obsahom bude počet vrcholov patriacich to tohto obdĺžniku.
 
-
-Kvôli lepšej prehľadnosti budeme mriežkový graf bez prekážok nazývať aj {\sl obdĺžnik}.
-Intuitívne, kvôli jeho vizuálnej interpretácii.
-
-Majme mriežkový graf bez prekážok a hľadajme najkratšiu cestu medzi bodmi $s=(x_s,y_s), t=(x_t,y_t)$.
-V tomto prípade vieme nájsť najkratšiu cestu veľmi jednoducho.
+Majme mriežkový graf bez~prekážok a~hľadajme najkratšiu cestu medzi bodmi $s=(x_s,y_s), t=(x_t,y_t)$.
+V~tomto prípade vieme nájsť najkratšiu cestu veľmi jednoducho.
 
 \begin{algorithm}
-\caption{Nájdi najkratšiu cestu medzi dvoma bodmi {\sl s} a {\sl t} na mriežkovom grafe bez prekážok}
+\caption{Nájdi najkratšiu cestu medzi dvoma bodmi $s$ a $t$ na mriežkovom grafe bez prekážok}
 \label{alg1}
 \begin{algorithmic}[1] % number one = line numbering is on
 \REQUIRE $s=(x_s,y_s), t=(x_t,y_t)$
@@ -49,7 +48,7 @@ V tomto prípade vieme nájsť najkratšiu cestu veľmi jednoducho.
 
 
 
-Teda, jednoducho povedané: keď sa počiatočný a koncový bod líšia v jednej súradnici, tak sa posúvame priamočiaro,
+Jednoducho povedané: keď sa počiatočný a koncový bod líšia v jednej súradnici, tak sa posúvame priamočiaro,
 keď sa líšia v oboch, tak sa posúvame šikmo.
 
 
@@ -59,12 +58,11 @@ a
 $ dy :=|y_t - y_s| $
  , tak počet vrcholov,
 ktorými cesta prechádza vieme zhora odhadnúť, ako $\max(dx, dy)$. Jej vzdialenosť vieme zistiť v čase  $\BigO{\max(dx, dy)}$
-Na zistenie vzdialenosti v každom kroku nám stači konštantná pamäť.
+Na zistenie vzdialenosti v každom kroku nám postačí konštantná pamäť.
 
-TODO?? Poznamka, ze nepotrebujem na to obdlzniky, mozem robit aj komplikovanejsie utvary, ale by to sa blbo hladalo... ledaze...
 
-Skúsme to teda nejak využiť. Pokiaľ vieme, že počiatočný aj koncový bod ležia v jednom obdĺžniku, tak máme problém vyriešený. 
-Jediným problémom ostalo takéto obdĺžniky nájsť. 
+Pokiaľ sa počiatočný a koncový bod cesty nachádza v jednom obdĺžniku, tak vieme pomocou tohto algoritmu veľmi rýchlo nájsť najkratšiu cestu.
+Jediným problémom ostalo rozdeliť mriežkový graf na tieto obdĺžniky. 
 
 
 \section{Hľadáme obdĺžniky}
@@ -73,38 +71,34 @@ Jediným problémom ostalo takéto obdĺžniky nájsť.
 \subsection{Proporcie obdĺžnikov}
 Dôležitou otázkou je, na akých vlastnostiach obdĺžnikov záleží. Uvažujme nasledujúci motivačný príklad.
 \begin{example}
-Majme na mape nájdené dva obdĺžniky, ktorých celkový obsah je 10.
-Predstavme si tieto dva prípady. V prvom prípade je obsah prvého 9 a druhého 1, v druhom prípade sú obsahy 6 a 4. 
-Chceme maximalizovať pravdepodobnosť toho, aby pri voľbe dvoch náhodných bodov boli obe v rovnakom obdĺžniku.
+Majme na mriežkovom grafe nájdené dva obdĺžniky, ktoré dovedna pokrývajú 10 vrcholov.
+Predstavme si tieto dva prípady. V prvom prípade prvý pokrýva 9 vrcholov, druhý 1. V druhom prípade obdĺžniky pokrývajú 6 vrcholov a 4 vrcholy.
+Chceme maximalizovať pravdepodobnosť toho, aby pri voľbe dvoch náhodných bodov boli obe body v rovnakom obdĺžniku.
 \end{example}
-
 
 Úlohu vieme zobecniť na klasickú pravdepodobnostno-optimalizačnú úlohu.
 
 \begin{example}
-Majme {\sl k} ekvivalenčných tried na množine s {\sl n} prvkami. Ako zvoliť ekvivalenčné triedy tak, 
+Máme $k$ ekvivalenčných tried na množine s $n$ prvkami. Ako zvoliť ekvivalenčné triedy tak, 
 aby pri voľbe dvoch náhodných prvkov bola pravdepodobnosť toho, 
 že oba prvky budú v tej istej ekvivalenčnej triede čo najvyššia?
 \end{example}
 
 \begin{note}
 Ekvivalenčnú triedu predstavuje obdĺžnik a množinu predstavuje množina vrcholov grafu.
-Alternatívne sa môžeme na úlohu pozerať ako na problém farbenia guličiek čo najmenším počtom farieb.
+Alternatívne sa môžeme na úlohu pozerať ako na problém farbenia $n$ guličiek pomocou $k$ farieb.
 \end{note}
 
-Zapíšme túto úlohu formálne.
-
-
-Majme $n$-prvkovú množinu $Prv = \{x_1,\ldots,x_n\}$, $k$-prvkovú množinu ekvivalenčných tried $Ek = \{ek_1,\ldots, ek_k\}$, veľkosť 
+Zapíšme túto úlohu formálne. Majme $n$-prvkovú množinu $Prv = \{x_1,\ldots,x_n\}$, $k$-prvkovú množinu ekvivalenčných tried $Ek = \{ek_1,\ldots, ek_k\}$, veľkosť 
 triedy $\|ek_i\|$ označme $k_i$ a zaveďme funkciu $f \colon Prv \to Ek$ ktorá roztriedi prvky do ekvivalenčných tried.
 
 Označme výberový priestor $\Omega = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b \}$
 Udalosťou $A_i$ nazveme jav, v~ktorom oba prvky patria do tej istej ekvivalenčnej triedy $ek_i$,
-teda $A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = ek_i \}$
+teda $A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = ek_i \}$.
 Jav $A = \bigcup_{i=1}^{k} A_i$ teda nastáva práve vtedy,
  keď oba vybrané prvky patria do rovnakej triedy.
 
-Úlohou je teda navrhnúť funkciu $f$ tak, aby pravdepodobnosť $P[A]$ bola čo najvyššia. 
+Úlohou je navrhnúť funkciu $f$ tak, aby pravdepodobnosť $P[A]$ bola čo najvyššia. 
 Keďže udalosti $A_i$ sú nezlučiteľné, môžme písať 
 $P[A] = P[\bigcup_{i \in Ek} A_i] = \sum_{i \in Ek}P[A_i]$.
 
@@ -112,8 +106,7 @@ Ak si pravdepodobnosť každého javu rozpíšeme, dostaneme
 $\sum_{i \in Ek}P[A_i] = \sum_{i = 1}^{k} \frac{{{k_i} \choose {2}}}{{{|Prv|} \choose {2}}}$.
 
 
-nakoľko chceme nejak rozvrhnúť prvky v triedach $ek_i$, a menovateľ je len
-konštanta, môžme ho vynechať.
+Keďže chceme nejak rozvrhnúť prvky v triedach $ek_i$, a menovateľ je konštanta, môžme ho vynechať.
 
 Maximalizujeme teda hodnotu výrazu 
 $\sum_{i = 1}^{k} {{k_i} \choose {2}} = \sum_{i = 1}^{k} {\frac{k_i!}{(k_i -2 )!2!}} = \sum_{i = 1}^{k}{\frac{k_i (k_i-1)}{2}}$.
@@ -123,27 +116,27 @@ kde $k_i \in \N_0$.
 
 Sumu si vieme rozpísať ako 
 $\sum_{i = 1}^{k} {k_i^2 - k_i} = \sum_{i = 1}^{k} {k_i^2} + \sum_{i = 1}^{k}{-k_i}$
-druhá suma sa nasčíta $-n$, čo je konštanta, takže nám stačí maximalizovať 
+druhá suma sa nasčíta na $-n$, čo je konštanta, takže nám stačí maximalizovať 
 $\sum_{i = 1}^{k} {k_i^2}$.
 
 Teraz nám už len zostáva použiť nerovnosť
 $(a+b)^2 \geq a^2 + b^2$ ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie.
-Ekvivalenčné triedy musia teda byť čo najväčšie a problém sa transformuje na problém hľadania
-obdĺžnikov s najväčším možným obsahom.
-V programe tento problém rieši trieda Colorizator.
+Ekvivalenčné triedy musia teda byť čo najväčšie a~problém sa transformuje na~problém hľadania
+obdĺžnikov s~najväčším možným obsahom.
+V~programe tento problém rieši trieda Colorizator.
 
 
 \subsection{Nájdenie najväčšej jednotkovej podmatice}
-Ako sme si v úvode povedali, mriežkovú mapu vieme reprezentovať ako maticu a teda
+Ako sme si v~úvode povedali, mriežkovú mapu vieme reprezentovať ako maticu a~teda
 problém môžeme ekvivalentne zapísať ako problém hľadania najväčšej jednotkovej podmatice.
-Tento problém má riešenie v čase lineárnom od počtu vrcholov a teda nájdenie $k$ najväčších
-jednotkových matíc trvá $\BigO{k*n}$, kde n je počet vrcholov matice.
+Tento problém má riešenie v~čase lineárnom od~počtu vrcholov a~teda nájdenie $k$ najväčších
+jednotkových matíc trvá $\BigO{k*n}$, kde $n$ je počet vrcholov matice.
 
 Slovný popis algoritmu \ref{alg:largest_submatrix}: 
-V prvom prechode maticou si u každého vrcholu zapamätáme počet jedničiek naľavo od neho, vratane daneho vrcholu. 
+V~prvom prechode maticou si u~každého vrcholu zapamätáme počet jedničiek naľavo od neho, vrátane daného vrcholu. 
 Tento prechod trvá lineárny čas.
 
-V druhom prechode treba prejsť zaradom všetky stĺpce zľava doprava
+V~druhom prechode treba prejsť zaradom všetky stĺpce zľava doprava
 
 
 
@@ -197,3 +190,7 @@ V druhom prechode treba prejsť zaradom všetky stĺpce zľava doprava
 
 \end{algorithmic}
 \end{algorithm}
+
+
+
+TODO: pridaj obrazok mapy a jej dekompozicie opdla farieb
