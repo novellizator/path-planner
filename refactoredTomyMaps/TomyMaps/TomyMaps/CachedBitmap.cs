@@ -5,68 +5,92 @@ using System.Text;
 
 using System.Drawing;
 
+
+using System.Windows.Forms; // for debug purposes only...
+
 namespace TomyMaps
 {
     // this implementation caches one bitmap only
     class CachedBitmap
     {
 
-        private int _squareSize = 1;
-        private Size _viewPortSize = new Size(1, 1);
-        private Point _tlpoint = new Point(0, 0);
-
+        private int squareSize = 1;
 
         // this is what I'm manipulating with
         private Bitmap cachedBitmap = null;
-        private Point cachedBitmapTLPoint = new Point(0, 0); // relative 
+        private Point cachedBitmapTLPoint = new Point(0, 0); // absolute 
 
+        private Map map;
+        public void setMap(Map m)
+        {
+            this.map = m;
+        }
 
-        // the cachedBitmap needs to be buffered(because of g.clear())
-        // and the just drawn...
+        // the cachedBitmap needs to be buffered(because cacheBitmapGraphics.Clear() shows for a millisecond the default background)
+        // and the just drawn from...
         private Bitmap bufferedBitmap = null;
         private Graphics bufferedBitmapGraphics = null;
 
-        public void DrawBitmapInto(Graphics g, Point TLPoint, Size ViewPortSize, int squareSize)
+        public void DrawBitmapInto(Graphics g, Point TLPoint, Size ViewPortSize, int squareS)
         {
-            if (squareSize != _squareSize)
+            // squareSize has changed OR no map has been loaded so far
+            if (cachedBitmap == null)
             {
-                PrecomputeBitmap(TLPoint);
+                PrecomputeBitmap(TLPoint, ViewPortSize);
             }
-            // if bitmap is not precomputed and is precomputable
-            if (false)
+            if (squareSize != squareS)
             {
-                PrecomputeBitmap();
+                squareSize = squareS;
+                PrecomputeBitmap(TLPoint, ViewPortSize);
+            }
+            
+
+            // if the area is precomputable and is not precomputed
+            if (false && false)
+            {
+                PrecomputeBitmap(TLPoint, ViewPortSize);
             }
 
+            //g.DrawLine(new Pen(Color.Red), new Point(0, 0), new Point(100, 100));
+            //g.DrawImageUnscaled(cachedBitmap,0,0,1000,1000);
 
+            // Draw it on the buffered bitmap
+            bufferedBitmapGraphics.Clear(Color.Red);
+            Point relativeTLPoint = new Point(cachedBitmapTLPoint.X - TLPoint.X, cachedBitmapTLPoint.Y - TLPoint.Y);
+            Rectangle rect = new Rectangle(relativeTLPoint, ViewPortSize);
+            bufferedBitmapGraphics.DrawImageUnscaled(cachedBitmap, rect);
+
+
+            g.DrawImageUnscaled(bufferedBitmap, 0, 0);
         }
 
 
 
-        private void PrecomputeBitmap(Point TLPoint)
+        private void PrecomputeBitmap(Point TLPoint, Size viewPortSize)
         {
-            cachedBitmapTLPoint = new Point(Math.Max(0, floorToSquareSize(TLPoint.X - _viewPortSize.Width / 2)),
-                Math.Max(0, floorToSquareSize(TLPoint.Y - _viewPortSize.Width / 2)));
+            
+            cachedBitmapTLPoint = new Point(Math.Max(0, floorToSquareSize(TLPoint.X - viewPortSize.Width / 2)),
+                Math.Max(0, floorToSquareSize(TLPoint.Y - viewPortSize.Height/ 2)));
 
             // (in pixels) floored according to the multiple of SquareSize - hopefully correct...
-            int width = Math.Min(_viewPortSize.Width * 2, getMapPixelSize().Width - cachedBitmapTLPoint.X);
-            int height = Math.Min(_viewPortSize.Height * 2, getMapPixelSize().Height - cachedBitmapTLPoint.Y);
-            
+            int width = Math.Min(viewPortSize.Width * 2, getMapPixelSize().Width - cachedBitmapTLPoint.X);
+            int height = Math.Min(viewPortSize.Height * 2, getMapPixelSize().Height - cachedBitmapTLPoint.Y);
+
+            System.Windows.Forms.MessageBox.Show("precomputed!" + width);
+
+            // let's draw on the cached bitmap
             cachedBitmap = new Bitmap(width, height);
             Graphics cachedBitmapGraphics = Graphics.FromImage(cachedBitmap);
-
-
-
 
             SolidBrush currBrush = new SolidBrush(Color.White);
 
 
-            int chWidth = width / _squareSize;
-            int chHeight = height / _squareSize;
+            int chWidth =  cachedBitmap.Width / squareSize;
+            int chHeight = cachedBitmap.Height / squareSize;
 
             // topleft point of cachedBitmap in chars...
-            int baseWidth = cachedBitmapTLPoint.X / _squareSize;
-            int baseHeight = cachedBitmapTLPoint.Y / _squareSize;
+            int baseWidth = cachedBitmapTLPoint.X / squareSize;
+            int baseHeight = cachedBitmapTLPoint.Y / squareSize;
 
             for (int i = 0; i < chHeight; i++) // pocet riadkov // nepojde presne lebo riadok != pixel!!!!
             {
@@ -75,7 +99,7 @@ namespace TomyMaps
                     Color col;
 
                     // map coordinates use topleftpoint for offset
-                    switch (map[baseHeight + i][baseWidth + j])
+                    switch (map.getRawMap()[baseHeight + i][baseWidth + j])
                     {
                         case 'W': // Water
                             col = Color.Blue;
@@ -95,12 +119,19 @@ namespace TomyMaps
                             break;
                     }
                     currBrush.Color = col;
-                    cachedBitmapGraphics.FillRectangle(currBrush, _squareSize * j, _squareSize * i, _squareSize, _squareSize);
+                    cachedBitmapGraphics.FillRectangle(currBrush, squareSize * j, squareSize * i, squareSize, squareSize);
 
                 }
             }
 
-            bufferedBitmap = new Bitmap(Math.Max(cachedBitmap.Width, _viewPortSize.Width), Math.Max(cachedBitmap.Height, _viewPortSize.Height));
+            cachedBitmap.Save("D:/bitmap.bmp");
+
+            // bufferedBitmap = new Bitmap(Math.Max(cachedBitmap.Width, viewPortSize.Width), Math.Max(cachedBitmap.Height, viewPortSize.Height));
+            // bufferedBitmapGraphics = Graphics.FromImage(bufferedBitmap);
+
+
+            // uno experimento - try out later on
+            bufferedBitmap = (Bitmap)cachedBitmap.Clone();
             bufferedBitmapGraphics = Graphics.FromImage(bufferedBitmap);
 
         }
@@ -109,11 +140,11 @@ namespace TomyMaps
 
         private Size getMapPixelSize()
         {
-            return new Size(charWidth * SquareSize, charHeight * SquareSize);
+            return new Size(map.getRawMapWidth() * squareSize, map.getRawMapHeight() * squareSize);
         }
         private int floorToSquareSize(int size)
         {
-            return size / _squareSize * _squareSize;
+            return size / squareSize * squareSize;
         }
         private Size floorToSquareSize(Size s)
         {

@@ -35,6 +35,7 @@
             // 
             // loadMap
             // 
+            this.loadMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.loadMap.Location = new System.Drawing.Point(755, 260);
             this.loadMap.Name = "loadMap";
             this.loadMap.Size = new System.Drawing.Size(109, 49);
@@ -45,6 +46,7 @@
             // 
             // debugBox
             // 
+            this.debugBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.debugBox.Location = new System.Drawing.Point(715, 30);
             this.debugBox.Multiline = true;
             this.debugBox.Name = "debugBox";
@@ -53,10 +55,13 @@
             // 
             // viewPortControl1
             // 
+            this.viewPortControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPortControl1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.viewPortControl1.Location = new System.Drawing.Point(12, 12);
+            this.viewPortControl1.Location = new System.Drawing.Point(0, 0);
             this.viewPortControl1.Name = "viewPortControl1";
-            this.viewPortControl1.Size = new System.Drawing.Size(587, 546);
+            this.viewPortControl1.Size = new System.Drawing.Size(587, 570);
             this.viewPortControl1.TabIndex = 0;
             this.viewPortControl1.Text = "viewPortControl1";
             // 
@@ -70,6 +75,7 @@
             this.Controls.Add(this.viewPortControl1);
             this.Name = "Form1";
             this.Text = "Maps";
+            this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
 

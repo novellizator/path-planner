@@ -22,10 +22,22 @@ namespace TomyMaps
     class Map
     {
         private string[] map; // the map itself
+        public string[] getRawMap()
+        {
+            return map;
+        }
 
         // width/height of a map in characters (basic resolution)
         private int charWidth = 0;
         private int charHeight = 0;
+        public int getRawMapWidth()
+        {
+            return charWidth;
+        }
+        public int getRawMapHeight()
+        {
+            return charHeight;
+        }
 
         public void Load(string filename)
         {
