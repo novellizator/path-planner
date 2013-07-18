@@ -16,7 +16,7 @@ Hrana je jednoznačne určená dvojicou vrcholov.
 \begin{define}
 {\sl Ohodnotený graf (G, w)} je graf s~spolu s~reálnou funkciou (tzv. ohodnotením)
 $w: E(G) \to \R$, kde $w$ je funkcia, ktorá každej hrane priradí
-reálne číslo takzvanú \emph{dĺžku}, alebo \emph{hodnotu}hrany.
+reálne číslo takzvanú \emph{dĺžku}, alebo \emph{hodnotu} hrany.
 \end{define}
 
 Ukážka obecného ohodnoteného grafu je na obrázku \ref{fig:ohodnoteny_graf}.
@@ -49,7 +49,7 @@ Samozrejme, medzi dvoma vrcholmi môže existovať viacero ciest.
 \begin{define}
 {\sl Najkratšia cesta P z vrcholu $v_0$ do vrcholu $v_n$
 v~ohodnotenom grafe (G, w)} 
-je cesta z~vrcholu $v_0$ do vrcholu $v_n$ s najmenšou vzdialenosťou. 
+je cesta z~vrcholu $v_0$ do vrcholu $v_n$ s najmenšou dĺžkou. 
 \end{define}
 
 
@@ -59,7 +59,7 @@ Keď sme si už zaviedli kľúčové pojmy, prejdime k samotnému
 zadaniu úlohy.
 Ako sme už spomínali, problém budeme riešit na tzv. mriežkových grafoch. Čo je mriežkový graf a v čom sa od obecného grafu odlišuje?
 
-V hernej praxi predstavuje mriežkový graf mapu hracej plochy, s ktorou sa stretávame v najrôznejších hrách, ako je Warcraft, Startcraft, Dragon Age
+V hernej praxi predstavuje mriežkový graf mapu hracej plochy, s ktorou sa stretávame v najrôznejších hrách, ako je Warcraft, Startcraft, Dragon Age \cite{sturtevant2012benchmarks}
 a~podobne.
 
 Ide o špeciálny a dosť obmedzený typ grafu. Vizuálne si ho môžme predstaviť ako konečný graf v ktorom sú vrcholy rozostúpené v tvare mriežky a hrana
@@ -69,6 +69,7 @@ je stále medzi dvojicami susedných vrcholov vo všetkých ôsmych smeroch. Dĺ
 Mriežkový graf patrí medzi {\sl riedke} grafy,
 pretože má veľmi malý počet hrán (lineárny od počtu vrcholov).
 \end{note}
+
 
 \begin{figure}[h]
 \centering
@@ -96,9 +97,15 @@ $\{v_{a,b}, v_{a+1,b+1}\}$, $\{v_{a,b}, v_{a-1,b+1}\}$, kde $ w(s) = \sqrt{2}$.
 \end{define}
 
 \begin{note}
-	Mriežkový graf sa dá reprezentovať ako matica $m \times n$ nad telesom $\Z_2$, kde jednotky predstavujú vrcholy. Príklad maticovej reprezentácie grafu rozmerov $4 \times 6$ je na obrázku \ref{fig:maticova_reprezentacia}.
+	Mriežkový graf sa dá reprezentovať ako matica $m \times n$ nad telesom $\Z_2$, kde jednotky predstavujú vrcholy. 
 \end{note}
+\begin{example}
+Mriežkový graf rozmerov $2 \times 2$ s vyznačenými dĺžkami
+hrán vidíme na obrázku~\ref{fig:mriezkovy_graf2x2}.
+Príklad mriežkového grafu $4 \times 7$ je na obrázku~\ref{fig:mriezkovy_graf}.
+Príklad jeho maticovej reprezentácie je na obrázku~\ref{fig:maticova_reprezentacia}.
 
+\end{example}
 
 
 \begin{figure}[h]
@@ -107,21 +114,22 @@ $\{v_{a,b}, v_{a+1,b+1}\}$, $\{v_{a,b}, v_{a-1,b+1}\}$, kde $ w(s) = \sqrt{2}$.
 \[
 G =
   \begin{bmatrix}
-    0 & 0 & 1 & 1 & 1 & 1\\
-	0 & 0 & 1 & 1 & 1 & 0\\
-	0 & 0 & 0 & 1 & 1 & 1\\
-	0 & 0 & 0 & 0 & 0 & 0\\
+    1 & 0 & 1 & 1 & 1 & 1 & 0\\
+	1 & 1 & 1 & 0 & 1 & 0 & 1\\
+	1 & 1 & 1 & 1 & 0 & 0 & 1\\
+	1 & 1 & 0 & 1 & 1 & 1 & 1\\
   \end{bmatrix}
 \]
-\label{fig:maticova_reprezentacia}
+
 \caption{Maticová reprezentácia mriežkového grafu}
+\label{fig:maticova_reprezentacia}
 \end{figure}
 
 
 
 
 \section{GPPC: Grid-Based Path Planning Competition}
-Algoritmus navrhnutý a naprogramovaný v tejto práci bol zaradený do súťaže \textbf{GPPC}, ktorá sa koná približne 2 krát ročne.
+Algoritmus navrhnutý a naprogramovaný v tejto práci bol zaradený do súťaže \textbf{GPPC}, ktorá sa koná približne raz ročne.
 
 \subsection{Špecifiká súťaže, limity}
 
@@ -131,21 +139,40 @@ a fázy testovania. Na predspracovanie grafu bude vyhradený čas
 maximálne 30 minút a program si svoje dáta uloží na disk do súboru o veľkosti maximálne 50MB.
 Potom vo fáze testovania budé dostávať požiadavky na nájdenie najkratšej cesty.
 
-Úlohou súťaže je naimplementovať tieto tri funkcie.
+Úlohou súťaže je naimplementovať tieto tri funkcie rozhrania.
 
-\lstset{language=C++}          % Set your language (you can change the language for each code-block optionally)
+%\lstset{language=C++}
 
-\begin{lstlisting} %[frame=single]  % Start your code-block
+\begin{lstlisting}
+struct xyLoc 
+{
+    int x;
+    int y;
+};
 
 void PreprocessMap(std::vector<bool> &bits, int width, int height, const char *filename);
                    
 void *PrepareForSearch(std::vector<bool> &bits, int width, int height,const char *filename);
+
 bool GetPath(void *data, xyLoc s, xyLoc g, std::vector &path);
 \end{lstlisting}
 
+Funkcia \emph{PreprocessMap} má za úlohu predspracovať
+mriežkový graf a vytvoriť si pomocné dátové štruktúry podľa predpísaných limitov. Jej prvým argumentom 
+je samotný mriežkový graf predaný ako zlinearizovaná matica, ktorú bolo vidieť na obrázku~\ref{fig:maticova_reprezentacia}. Ďalšími argumentami sú rozmery grafu,
+keďže z jednorozmernej reprezentácie nie sú odvoditeľné. Posledným argumentom je názov súboru, do ktorého sa pomocné dátové štruktúry uložia.
+
+Funkcia \emph{PrepareForSearch} slúži na načítanie dát z vytvoreného súboru. Argumenty má rovnaké, ako predošlá funkcia. Štvrtý argument
+dodáva názov súboru, z ktorého sa pomocné dáta načítajú. Funkcia po načítaní dát skonštruuje dátové štruktúry a vráti na nich smerník.
+
+Tento smerník prevezme v prvom argumente funkcia \emph{GetPath}, ktorá slúži na nájdenie najkratšej cesty. Jej ďalšími argumentami
+sú súradnice počiatočného a koncového bodu, pre ktoré sa bude hľadať cesta a posleným argumentom je referencia na vektor, do ktorého sa samotná cesta uloží. Funkcia vracia hodnotu typu boolean na základe toho, či už vypočítala istý úsek a chce vrátiť cestu. Zíde sa napríklad, keď treba vrátiť čo najrýchlejšie aspoň prvých $k$ krokov cesty (viď.~Kritériá, sekcia~\ref{kriteria}).
+
+
+
 \subsection{Kritériá súťaže, hodnotenie programov}
 Na algoritmus môžeme klásť rôzne požiadavky, ktoré si častokrát navzájom protirečia, preto programy posudzujeme poďla viacerých kritérií.
-
+\label{kriteria}
 \begin{itemize}
 \item Celkový čas na~nájdenie cesty.
 \item Čas na nájdenie prvých 20 tich krokov.

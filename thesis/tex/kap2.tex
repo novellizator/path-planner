@@ -34,17 +34,25 @@ Kritéria, podľa ktorých budeme porovnávať efektivitu algoritmov sú teda na
 
 \section{Dijkstrov algoritmus}
 Medzi základné algoritmy typu SSSP patrí Dijkstrov algoritmus \cite{dijkstra59} popísaný už v roku 1959. 
-Miernu modifikáciu pôvodného algoritmu môžeme vidieť na (Algoritmus \ref{alg:dijkstra}).  ASK?? spravil som citacie spravne?
+Miernu modifikáciu pôvodného algoritmu môžeme vidieť na (Algoritmus \ref{alg:dijkstra}). 
 Patrí medzi relaxačné algoritmy~a zbehne korektne na grafoch
 s nezápornými hranami.
 
 Pri hľadaní cesty z vrcholu $s$ do vrcholu $t$ prechádzame postupne vrcholy s neklesajúcou vzdialenosťou od $s$, až dokým sa nedostaneme k cieľovému vrcholu $t$.
 
+Vrchol môže byť v jednom z troch stavov: NENAVŠTÍVENÝ, OTVORENÝ a ZATVORENÝ.
+Nenavštívený bude vrchol, do ktorého sme ešte ani nezačali hľadať najkratšiu cestu. Vrchol je otvorený, keď sme našli najkratšiu cestu 
+k~nejakému jeho susedovi a vrchol je uzavretý, pokiaľ sme už k~nemu našli najkratšiu cestu.
+V algoritme budeme používať minimovú haldu, ktorá vracia vrcholy s najmenšou vzdialenosťou.
+Vrchol sa po vložení do haldy automaticky otvára.
 
-ASK?? rozlisujeme tri stavy vrcholov, co je halda blablabla mam popisat aj slovne???
+Na začiatku sú všetky vrcholy v~stave NENAVŠTÍVENÝ a~vložíme do~haldy počiatočný vrchol.
+Postupne z~haldy vyberáme vrcholy a~po~vybratí ich uzavrieme. 
+Po~vybraní vrcholu prejdeme všetkých jeho neuzavretých susedov a~vložíme ich do~haldy.
+
 
 \begin{algorithm}
-\caption{Dijkstra: nájdi najkratšiu cestu medzi dvoma bodmi $s$ a $t$}
+\caption{Dijkstra: zisti vzdialenost najkratšej cesty z vrcholu s $s$ do všetkých dostupných vrcholov}
 \label{alg:dijkstra}
 \begin{algorithmic}[1] % number one = line numbering is on
 \REQUIRE graf $G$
@@ -54,7 +62,7 @@ ASK?? rozlisujeme tri stavy vrcholov, co je halda blablabla mam popisat aj slovn
 \STATE $ d(*) \leftarrow \infty $
 \STATE $ stav(*) \leftarrow$ NENAVŠTÍVENÝ
 
-\COMMENT {pridám počiatok}
+\STATE // pridám počiatok
 \STATE $d(s) \leftarrow 0$
 \STATE $stav(s) \leftarrow $ OTVORENÝ
 \STATE Heap $H$
@@ -62,13 +70,13 @@ ASK?? rozlisujeme tri stavy vrcholov, co je halda blablabla mam popisat aj slovn
 
 \WHILE {$H$  not empty}
 	
-	\STATE // vyberiem v -- najbližší otvorený vrchol
+	\STATE // vyberieme v --- najbližší otvorený vrchol
 	\STATE $v \leftarrow ExtractMin(H)$
 	
 	\WHILE {$stav(v) \neq $ OTVORENÝ}
 		\STATE $v \leftarrow ExtractMin(H)$
 	\ENDWHILE
-	
+	\STATE $stav(v) \leftarrow$ UZAVRETÝ
 	\STATE // zrelaxujeme vrchol $v$
 	\FORALL {$e$, $e = (v, u)$}
 		\IF {$d(u) > d(v) + l(v, u)$}
@@ -86,7 +94,9 @@ ASK?? rozlisujeme tri stavy vrcholov, co je halda blablabla mam popisat aj slovn
 \begin{theorem}
 V dijkstrovom algoritme uzatvárame každý dosiahnuteľný vrchol práve raz.
 \end{theorem}
-
+\begin{proof}
+Napríklad \cite{mares07}.
+\end{proof}
 
 \subsection{Zložitosť}
 Na každý vrchol zavoláme operáciu $Insert$ maximálne $deg(v)$-krát a~teda počet všetkých zavolaní tejto operácie bude rádovo $\BigO{\sum_{v}{deg(v)}} = \BigO{m}$.
@@ -130,11 +140,6 @@ Keď teda uzavrieme vrchol so vzdialenosťou $d(u)$, môžme uzavrieť aj vrchol
 Tieto veci vieme výborne využiť pri konštrukcii štruktúry
 zvanej {\sl priehradková halda}. Tá, využijúc vyššieuvedenú vetu, uzatvára a pridáva vrcholy bez porušenia akejkoľvek konzistencie behu algoritmu.
 
-ASK?? mam to supnut to kapitoly o 'mojom' algoritme?
-Totizto o priehradkovej strukture sa da docitat vsade, neni
-to moj patent, ale na druhu stranu ja som tu strukturu implenmentoval konkretne ma moj mriezkovy graf...
-
-
 \subsection{Popis haldy}
 Najprv popíšeme fungovanie haldy a graficky znázorníme jej 
 operácie. Neskôr dokážeme, že keď túto haldu použijeme v Dijkstrovom algoritme, tak nám bude vracať korektné výsledky.
@@ -146,7 +151,6 @@ s pomocnými dátami $data$. Operácia $pop()$ vracia ľubovoľný element z prv
 Pre jednoduchšiu implementáciu budeme mať na začiatku smerník na prvý prvok prvej priehradky a po vyhodení najmenšieho prvku tento smerník jednoducho inkrementujeme, kým to bude možné. Keď už v prvej priehradke nezostane žiaden prvok a zavoláme operáciu $pop()$, vykoná sa nasledujúca vec: druhú priehradku presunieme na miesto prvej, tretiu na miesto druhej a prvú dáme namiesto tretej.
 
 Ilustrujme si to na obrázkových príkladoch. Príklad troj--priehradkovej haldy vidíme na obrázku \ref{fig:priehradky}.
-ASK?? troj--priehradkovej? 
 Halda uchováva premennú $ baza $, ktorá definuje bázu od ktorej sa rozsahy priehradok odvíjajú. Okrem
 nej, uchováva tri smerníky na tri po sebe idúce priehradky priehradky a smerník na vrchol haldy, zvaný $ top $.
 
@@ -212,7 +216,7 @@ pretože keď vyberieme vrchol z prvej priehradky, tak jeho vzdialenosť je v ro
 A* \cite{astar72} prvykrát popísaný v roku 1968.
 
 Tento algoritmus vychádza z Dijkstrovho algoritmu a je mu veľmi podobný. Hlavný rozdiel medzi týmito algoritmami je, že
-kým Dijkstrov algoritmus vyberá z haldy vrcholy s neklesajúcou vzdialenosťou $ d(v) $ od počiatku, tak algoritmus A* vyberá prvky s neklesajúcou vzdialenosťou $ f(v) := d(s,v) + h(v,t) $, kde $ h(v, t) $ značí heuristickú funkciu, ktorá je dolným odhadom vzdialenosti od vrcholu $ v $ do cieľa $ t $. Obrátene, Dikstrov algoritmus si vieme predstaviť ako algoritmus A*, kde $ \forall v \in G: h(v, t) = 0 $.
+kým Dijkstrov algoritmus vyberá z haldy vrcholy s neklesajúcou vzdialenosťou $ d(v) $ od počiatku, tak algoritmus A* vyberá prvky s neklesajúcou vzdialenosťou $ f(v) := d(s,v) + h(v,t) $, kde $ h(v, t) $ značí heuristickú funkciu, ktorá je dolným odhadom vzdialenosti od vrcholu $ v $ do cieľa $ t $. Obrátene, Dijkstrov algoritmus si vieme predstaviť ako algoritmus A*, kde $ \forall v \in G: h(v, t) = 0 $.
 
 Použitá heuristická funkcia má dopad na počet prehľadaných vrcholov a teda do zásadnej miery ovplyvňuje výkon algoritmu.
 
@@ -272,14 +276,6 @@ Pokiaľ ich zvolíme priveľa, tak prepočet vzdialenosti cez každý landmark p
 Pokiaľ zvolíme všetky landmarky hneď pri sebe, tak heuristika
 nám nebude vraciať dostatočne presné dolné odhady na vzdialenosť vrcholov, ktoré sú ďaleko od landmarkov.
 \end{example}
-
-
-ASK?? jak spravi dalsie hlbsie cislovanie odstavcov???
-
-
-
-
-
 
 
 TODO??potencialy euklid landmarks landmark selection priblem s priehradkami
