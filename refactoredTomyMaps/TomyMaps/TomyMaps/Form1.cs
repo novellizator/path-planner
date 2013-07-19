@@ -158,5 +158,23 @@ namespace TomyMaps
             TLPoint = new Point(0, 0);
             DrawBitmap();
         }
+
+        private void viewPortControl1_Paint(object sender, PaintEventArgs e)
+        {
+            DrawBitmap();
+        }
+
+        private void saveImage_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Title = "Uložiť zobrazený výrez";
+            sfd.Filter = "JPEG súbor | *.jpg";
+
+            if (sfd.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+            MessageBox.Show(sfd.FileName);
+        }
     }
 }

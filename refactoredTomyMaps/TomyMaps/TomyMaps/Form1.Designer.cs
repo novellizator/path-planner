@@ -33,6 +33,7 @@
             this.zoomIn = new System.Windows.Forms.Button();
             this.zoomOut = new System.Windows.Forms.Button();
             this.viewPortControl1 = new TomyMaps.ViewPortControl();
+            this.saveImage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // loadMap
@@ -88,14 +89,26 @@
             this.viewPortControl1.Size = new System.Drawing.Size(587, 570);
             this.viewPortControl1.TabIndex = 0;
             this.viewPortControl1.Text = "viewPortControl1";
+            this.viewPortControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.viewPortControl1_Paint);
             this.viewPortControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPortControl1_MouseMove);
             this.viewPortControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPortControl1_MouseUp);
+            // 
+            // saveImage
+            // 
+            this.saveImage.Location = new System.Drawing.Point(755, 465);
+            this.saveImage.Name = "saveImage";
+            this.saveImage.Size = new System.Drawing.Size(135, 23);
+            this.saveImage.TabIndex = 5;
+            this.saveImage.Text = "Ulož vidiťeľnú časť";
+            this.saveImage.UseVisualStyleBackColor = true;
+            this.saveImage.Click += new System.EventHandler(this.saveImage_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(902, 570);
+            this.Controls.Add(this.saveImage);
             this.Controls.Add(this.zoomOut);
             this.Controls.Add(this.zoomIn);
             this.Controls.Add(this.debugBox);
@@ -116,6 +129,7 @@
         private System.Windows.Forms.TextBox debugBox;
         private System.Windows.Forms.Button zoomIn;
         private System.Windows.Forms.Button zoomOut;
+        private System.Windows.Forms.Button saveImage;
     }
 }
 

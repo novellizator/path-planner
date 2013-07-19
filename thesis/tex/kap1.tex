@@ -137,12 +137,10 @@ Mriežkové grafy budú mať rozmery maximálne $2048 \times 2048$.
 Súťaž bude rozdelená do dvoch fáz --- fázy predspracovania grafu (pre-processing)
 a fázy testovania. Na predspracovanie grafu bude vyhradený čas
 maximálne 30 minút a program si svoje dáta uloží na disk do súboru o veľkosti maximálne 50MB.
-Potom vo fáze testovania budé dostávať požiadavky na nájdenie najkratšej cesty.
-
-Úlohou súťaže je naimplementovať tieto tri funkcie rozhrania.
+Potom vo fáze testovania budé dostávať požiadavky na nájdenie najkratšej cesty. Úlohou je naimplementovať interface zobrazený na obrázku \ref{fig:interface}. ASK?? obrazku???a ked nie obrazk, tak ake cislovanie tomu dat? cislovat znovu od jednicky?
 
 %\lstset{language=C++}
-
+\begin{figure}
 \begin{lstlisting}
 struct xyLoc 
 {
@@ -156,7 +154,9 @@ void *PrepareForSearch(std::vector<bool> &bits, int width, int height,const char
 
 bool GetPath(void *data, xyLoc s, xyLoc g, std::vector &path);
 \end{lstlisting}
-
+\caption{Interface, ktorý treba naimplementovať}
+\label{fig:interface}
+\end{figure}
 Funkcia \emph{PreprocessMap} má za úlohu predspracovať
 mriežkový graf a vytvoriť si pomocné dátové štruktúry podľa predpísaných limitov. Jej prvým argumentom 
 je samotný mriežkový graf predaný ako zlinearizovaná matica, ktorú bolo vidieť na obrázku~\ref{fig:maticova_reprezentacia}. Ďalšími argumentami sú rozmery grafu,

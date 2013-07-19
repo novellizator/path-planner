@@ -63,109 +63,6 @@ namespace TomyMaps
         }
 
 
-
-
-        public void DrawBitmapInto1(Graphics g, Point TLPoint, Size ViewPortSize, int squareS)
-        {
-            // squareSize has changed OR no map has been loaded so far
-            if (cachedBitmap == null ||
-                squareSize != squareS ||
-                cachedBitmapTLPoint.X > TLPoint.X || cachedBitmapTLPoint.Y > TLPoint.Y ||
-                (cachedBitmapTLPoint.X + cachedBitmap.Width < getMapPixelSize().Width &&
-                 cachedBitmapTLPoint.X + cachedBitmap.Width < TLPoint.X + ViewPortSize.Width) ||
-                (cachedBitmapTLPoint.Y + cachedBitmap.Height < getMapPixelSize().Height &&
-                 cachedBitmapTLPoint.Y + cachedBitmap.Height < TLPoint.Y + ViewPortSize.Height)
-            )
-            {
-                //System.Windows.Forms.MessageBox.Show("cachedBitmap == null");
-                squareSize = squareS;
-                PrecomputeBitmap(TLPoint, ViewPortSize);
-            }       
-
-            //g.DrawLine(new Pen(Color.Red), new Point(0, 0), new Point(100, 100));
-            //g.DrawImageUnscaled(cachedBitmap,0,0,1000,1000);
-
-            // Draw it on the buffered bitmap
-            bufferedBitmapGraphics.Clear(Color.Red);
-            Point relativeTLPoint = new Point(cachedBitmapTLPoint.X - TLPoint.X, cachedBitmapTLPoint.Y - TLPoint.Y);
-            Rectangle rect = new Rectangle(relativeTLPoint, ViewPortSize);
-            bufferedBitmapGraphics.DrawImageUnscaled(cachedBitmap, rect);
-
-
-            g.DrawImageUnscaled(bufferedBitmap, 0, 0);
-        }
-
-        public void DrawBitmapInto3(Graphics g, Point TLPoint, Size ViewPortSize, int squareS)
-        {
-            if (cachedBitmap == null ||
-                squareSize != squareS ||
-                cachedBitmapTLPoint.X > TLPoint.X ||
-                cachedBitmapTLPoint.Y > TLPoint.Y ||
-                cachedBitmapTLPoint.X + cachedBitmap.Width < TLPoint.X + ViewPortSize.Width ||
-                cachedBitmapTLPoint.Y + cachedBitmap.Height < TLPoint.Y + ViewPortSize.Height)
-            {
-                //System.Windows.Forms.MessageBox.Show("recomputing");
-                squareSize = squareS;
-                PrecomputeBitmap(TLPoint, ViewPortSize);
-            }
- 
-            //g.DrawLine(new Pen(Color.Red), new Point(0, 0), new Point(100, 100));
-            //g.DrawImageUnscaled(cachedBitmap,0,0,1000,1000);
- 
-            // Draw it on the buffered bitmap
-            bufferedBitmapGraphics.Clear(Color.Red);
-            Point relativeTLPoint = new Point(cachedBitmapTLPoint.X - TLPoint.X, cachedBitmapTLPoint.Y - TLPoint.Y);
-            Rectangle rect = new Rectangle(relativeTLPoint, ViewPortSize);
-            bufferedBitmapGraphics.DrawImageUnscaled(cachedBitmap, rect);
- 
- 
-            g.DrawImageUnscaled(bufferedBitmap, 0, 0);
-        }
-
-        public void DrawBitmapInto4(Graphics g, Point TLPoint, Size ViewPortSize, int squareS)
-        {
-            // squareSize has changed OR no map has been loaded so far
-            if (cachedBitmap == null)
-            {
-                //System.Windows.Forms.MessageBox.Show("cachedBitmap == null");
-                PrecomputeBitmap(TLPoint, ViewPortSize);
-            }
-            if (squareSize != squareS)
-            {
-                //System.Windows.Forms.MessageBox.Show("squareSize != squareS");
-                squareSize = squareS;
-                PrecomputeBitmap(TLPoint, ViewPortSize);
-            }
-
-            if (cachedBitmapTLPoint.X > TLPoint.X || cachedBitmapTLPoint.Y > TLPoint.Y)
-            {
-                //System.Windows.Forms.MessageBox.Show("cachedBitmapTLPoint.X > TLPoint.X || cachedBitmapTLPoint.Y > TLPoint.Y");
-                PrecomputeBitmap(TLPoint, ViewPortSize);
-            }
-
-            // if the area is precomputable and is not precomputed ... unfinished, need to make it for "Y" too.
-            if (cachedBitmapTLPoint.X + cachedBitmap.Width < getMapPixelSize().Width && 
-                 cachedBitmapTLPoint.X + cachedBitmap.Width < TLPoint.X + ViewPortSize.Width)
-            {
-                //System.Windows.Forms.MessageBox.Show("cachedBitmapTLPoint.X + ViewPortSize.Width < getMapPixelSize().Width && ");
-                PrecomputeBitmap(TLPoint, ViewPortSize);
-            }
-
-            //g.DrawLine(new Pen(Color.Red), new Point(0, 0), new Point(100, 100));
-            //g.DrawImageUnscaled(cachedBitmap,0,0,1000,1000);
-
-            // Draw it on the buffered bitmap
-            bufferedBitmapGraphics.Clear(Color.Red);
-            Point relativeTLPoint = new Point(cachedBitmapTLPoint.X - TLPoint.X, cachedBitmapTLPoint.Y - TLPoint.Y);
-            Rectangle rect = new Rectangle(relativeTLPoint, ViewPortSize);
-            bufferedBitmapGraphics.DrawImageUnscaled(cachedBitmap, rect);
-
-
-            g.DrawImageUnscaled(bufferedBitmap, 0, 0);
-        }
-
-
-
         private void PrecomputeBitmap(Point TLPoint, Size viewPortSize)
         {
             
@@ -224,7 +121,6 @@ namespace TomyMaps
                 }
             }
 
-            //cachedBitmap.Save("D:/bitmap.bmp");
 
             bufferedBitmap = new Bitmap(Math.Max(cachedBitmap.Width, viewPortSize.Width), Math.Max(cachedBitmap.Height, viewPortSize.Height));
             //bufferedBitmap = (Bitmap)cachedBitmap.Clone(); // bad experiment, then the rest wont be redrawn... (zoomout - leftovers)
