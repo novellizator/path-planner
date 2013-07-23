@@ -11,12 +11,20 @@ namespace TomyMaps
 {
     public partial class Form1 : Form
     {
+        private void setButtonsEnabled(bool enabled)
+        {
+            zoomIn.Enabled = enabled;
+            zoomOut.Enabled = enabled;
+            saveImage.Enabled = enabled;
+        }
 
         public Form1()
         {
             InitializeComponent();
 
             cachedBitmap.setMap(map);
+            setButtonsEnabled(false);
+
         }
 
 
@@ -79,7 +87,7 @@ namespace TomyMaps
             //TEST
             //map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
             //map.Load("D:/github-gppc/path-planner/newTomyMaps/battleground.map");
-
+            setButtonsEnabled(true);
             setTLPoint(new Point(0, 0));
             DrawBitmapAt(TLPoint);
 
@@ -111,6 +119,7 @@ namespace TomyMaps
 
             }
             isDragged = false;
+            textBox1.Text = TLPoint.ToString();
         }
 
         private void viewPortControl1_MouseMove(object sender, MouseEventArgs e)
@@ -147,15 +156,25 @@ namespace TomyMaps
 
         private void zoomIn_Click(object sender, EventArgs e)
         {
+            Point charMapTLPoint = new Point(TLPoint.X / squareSize, TLPoint.Y / squareSize);
             ++squareSize;
-            TLPoint = new Point(0, 0);
+
+            TLPoint = new Point(charMapTLPoint.X * squareSize, charMapTLPoint.Y * squareSize);
             DrawBitmap();
         }
 
         private void zoomOut_Click(object sender, EventArgs e)
         {
+            if (squareSize == 1)
+            {
+                return;
+            }
+
+            Point charMapTLPoint = new Point(TLPoint.X / squareSize, TLPoint.Y / squareSize);
             --squareSize;
-            TLPoint = new Point(0, 0);
+            TLPoint = new Point(charMapTLPoint.X * squareSize, charMapTLPoint.Y * squareSize);
+
+
             DrawBitmap();
         }
 
@@ -168,13 +187,47 @@ namespace TomyMaps
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Uložiť zobrazený výrez";
-            sfd.Filter = "JPEG súbor | *.jpg";
+            sfd.Filter = "GIF súbor | *.gif";
+            sfd.Filter += "|PNG súbor | *.png";
+            sfd.Filter += "|BMP súbor | *.bmp";
+            sfd.Filter += "|JPEG súbor (neodporúčané) | *.jpg";
+
 
             if (sfd.ShowDialog() != System.Windows.Forms.DialogResult.OK)
             {
                 return;
             }
-            MessageBox.Show(sfd.FileName);
+
+
+
+            Bitmap bitmapToSave = new Bitmap(viewPortControl1.Width, viewPortControl1.Height);
+            Graphics bitmapToSaveGraphics = Graphics.FromImage(bitmapToSave);
+            if (imageLoaded)
+            {
+                cachedBitmap.DrawBitmapInto(bitmapToSaveGraphics, TLPoint, viewPortControl1.ClientSize, squareSize);
+            }
+
+            bitmapToSave.Save(sfd.FileName);
+        }
+
+
+        // this is quite different from classical zoomIn button
+        private void viewPortControl1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            //Point distanceFromCenter = new Point(viewPortControl1.Width/2 - e.X,
+            //    viewPortControl1.Height/2 - e.Y);
+
+            //MessageBox.Show(distanceFromCenter.ToString());
+            //TLPoint.X += distanceFromCenter.X;
+            //TLPoint.Y += distanceFromCenter.Y;
+            Point centerTLPoint = new Point(TLPoint.X + viewPortControl1.Width / 2, 
+                TLPoint.Y + viewPortControl1.Height / 2);
+
+
+
+
+            zoomIn_Click(sender, e);
+
         }
     }
 }
