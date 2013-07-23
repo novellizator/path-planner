@@ -223,6 +223,9 @@ namespace TomyMaps
             Point centerTLPoint = new Point(TLPoint.X + viewPortControl1.Width / 2, 
                 TLPoint.Y + viewPortControl1.Height / 2);
 
+            Point centerTLPointToChar = new Point(centerTLPoint.X / squareSize, centerTLPoint.Y / squareSize);
+            ++squareSize;
+            Point newCenterTLPoint = new Point(centerTLPointToChar.X * squareSize, centerTLPointToChar.Y * squareSize);
 
 
 
