@@ -22,9 +22,15 @@ namespace TomyMaps
     class Map
     {
         private string[] map; // the map itself
+        private char[,] data=null; // data about scanned vertices and the shortest path
         public string[] getRawMap()
         {
             return map;
+        }
+
+        public char[,] getRawData()
+        {
+            return data;
         }
 
         // width/height of a map in characters (basic resolution)
@@ -41,6 +47,8 @@ namespace TomyMaps
 
         public void Load(string filename)
         {
+            data = null;
+
             StreamReader sr = new StreamReader(filename);
             string line;
             line = sr.ReadLine();
@@ -76,6 +84,58 @@ namespace TomyMaps
             sr.Close(); // so that I can edit the text file right after loading it 
         }
 
+        // loads the path and the scanned vertices from textfile and represents them as string array
+        // C = sCanned, P = path, 
+        public void LoadData(string filename)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            data = new char[charHeight, charWidth];
+            for (int w = 0; w < charWidth; w++)
+            {
+                for (int h = 0; h < charHeight; h++)
+                {
+                    data[h, w] = ' ';
+                }
+            }
+
+            StreamReader sr = new StreamReader(filename);
+
+            // load the path and the scanned vertices...
+            string pathLine = sr.ReadLine();
+            string[] spathLine = pathLine.Split();
+
+            
+
+
+            string scannedLine = sr.ReadLine();
+            string[] sscannedLine = scannedLine.Split();
+
+   
+            // first mark the scanned vertices, then overwrite with path info
+            for (int i = 0; i < sscannedLine.Length; i++)
+            {
+                int scannedNum = int.Parse(sscannedLine[i]);
+                int row = scannedNum / this.charWidth;
+                int col = scannedNum % this.charWidth;
+
+                data[row,col] = 'C';
+            }
+
+            for (int i = 0; i < spathLine.Length; i++)
+            {
+                int spathNum = int.Parse(spathLine[i]);
+                int row = spathNum / this.charWidth;
+                int col = spathNum % this.charWidth;
+
+                data[row,col] = 'P';
+            }
+
+            sr.Close(); // so that I can edit the text file right after loading it 
+        }
     }
 
 }

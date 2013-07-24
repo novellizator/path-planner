@@ -16,6 +16,8 @@ namespace TomyMaps
             zoomIn.Enabled = enabled;
             zoomOut.Enabled = enabled;
             saveImage.Enabled = enabled;
+            checkBox1.Enabled = enabled;
+            loadData.Enabled = enabled;
         }
 
         public Form1()
@@ -24,7 +26,7 @@ namespace TomyMaps
 
             cachedBitmap.setMap(map);
             setButtonsEnabled(false);
-
+            
         }
 
 
@@ -35,7 +37,7 @@ namespace TomyMaps
         private Point TLPoint = new Point(0, 0);
         private int squareSize = 1;
         private bool imageLoaded = false;
-
+        private bool isBichromatic = false;
 
         // dragging features
         bool isDragged = false;
@@ -45,18 +47,18 @@ namespace TomyMaps
         {
             TLPoint = tl;
         }
-        private void DrawBitmapAt(Point TL)
+        private void DrawBitmapAt(Point TL, bool forcePrecomputing = false)
         {
             if (imageLoaded)
             {
                 Graphics viewPortGraphics = viewPortControl1.GetGraphics();
-                cachedBitmap.DrawBitmapInto(viewPortGraphics, TL, viewPortControl1.ClientSize, squareSize);
+                cachedBitmap.DrawBitmapInto(viewPortGraphics, TL, viewPortControl1.ClientSize, squareSize, isBichromatic, forcePrecomputing);
             }
         }
 
-        private void DrawBitmap()
+        private void DrawBitmap(bool forcePrecomputing = false)
         {
-            DrawBitmapAt(TLPoint);
+            DrawBitmapAt(TLPoint, forcePrecomputing);
         }
 
         private void loadMap_Click(object sender, EventArgs e)
@@ -84,14 +86,38 @@ namespace TomyMaps
 
 
             imageLoaded = true;
-            //TEST
-            //map.Load("D:/school/TRETIAK/bakalarka/github-path-planner/TomyMaps/battleground.map");
-            //map.Load("D:/github-gppc/path-planner/newTomyMaps/battleground.map");
+
             setButtonsEnabled(true);
             setTLPoint(new Point(0, 0));
-            DrawBitmapAt(TLPoint);
+            DrawBitmap(true);
 
         }
+
+        private void loadData_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Load the file containing information about the path and scanned vertices";
+            ofd.Filter = ".data| *.data";
+            ofd.Filter += "|All types|*.*";
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                map.LoadData(ofd.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            DrawBitmap(true);
+        }
+
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
@@ -119,7 +145,6 @@ namespace TomyMaps
 
             }
             isDragged = false;
-            textBox1.Text = TLPoint.ToString();
         }
 
         private void viewPortControl1_MouseMove(object sender, MouseEventArgs e)
@@ -204,7 +229,7 @@ namespace TomyMaps
             Graphics bitmapToSaveGraphics = Graphics.FromImage(bitmapToSave);
             if (imageLoaded)
             {
-                cachedBitmap.DrawBitmapInto(bitmapToSaveGraphics, TLPoint, viewPortControl1.ClientSize, squareSize);
+                cachedBitmap.DrawBitmapInto(bitmapToSaveGraphics, TLPoint, viewPortControl1.ClientSize, squareSize, isBichromatic);
             }
 
             bitmapToSave.Save(sfd.FileName);
@@ -214,23 +239,19 @@ namespace TomyMaps
         // this is quite different from classical zoomIn button
         private void viewPortControl1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            //Point distanceFromCenter = new Point(viewPortControl1.Width/2 - e.X,
-            //    viewPortControl1.Height/2 - e.Y);
-
-            //MessageBox.Show(distanceFromCenter.ToString());
-            //TLPoint.X += distanceFromCenter.X;
-            //TLPoint.Y += distanceFromCenter.Y;
-            Point centerTLPoint = new Point(TLPoint.X + viewPortControl1.Width / 2, 
-                TLPoint.Y + viewPortControl1.Height / 2);
-
-            Point centerTLPointToChar = new Point(centerTLPoint.X / squareSize, centerTLPoint.Y / squareSize);
-            ++squareSize;
-            Point newCenterTLPoint = new Point(centerTLPointToChar.X * squareSize, centerTLPointToChar.Y * squareSize);
-
+            //Point distanceFromCenter = new Point(viewPortControl1.Width / 2 - e.X,
+            //    viewPortControl1.Height / 2 - e.Y);
 
 
             zoomIn_Click(sender, e);
 
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            isBichromatic = !isBichromatic;
+            DrawBitmap();
+        }
+
     }
 }

@@ -16,6 +16,9 @@ namespace TomyMaps
 
         private int squareSize = 1;
 
+        // indicated whether to colorize the map or just use colors for passable areas
+        private bool isBichromatic = false; 
+
         // this is what I'm manipulating with
         private Bitmap cachedBitmap = null;
         private Point cachedBitmapTLPoint = new Point(0, 0); // absolute 
@@ -32,7 +35,7 @@ namespace TomyMaps
         private Graphics bufferedBitmapGraphics = null;
 
 
-        public void DrawBitmapInto(Graphics g, Point TLPoint, Size ViewPortSize, int squareS)
+        public void DrawBitmapInto(Graphics g, Point TLPoint, Size ViewPortSize, int squareS, bool isBichrom, bool forcePrecomputing = false)
         {
             // squareSize has changed OR no map has been loaded so far
             if (cachedBitmap == null ||
@@ -41,19 +44,21 @@ namespace TomyMaps
                 (cachedBitmapTLPoint.X + cachedBitmap.Width < getMapPixelSize().Width &&
                  cachedBitmapTLPoint.X + cachedBitmap.Width < TLPoint.X + ViewPortSize.Width) ||
                 (cachedBitmapTLPoint.Y + cachedBitmap.Height < getMapPixelSize().Height &&
-                 cachedBitmapTLPoint.Y + cachedBitmap.Height < TLPoint.Y + ViewPortSize.Height)
+                 cachedBitmapTLPoint.Y + cachedBitmap.Height < TLPoint.Y + ViewPortSize.Height) ||
+                isBichrom != isBichromatic ||
+                forcePrecomputing
             )
             {
                 //System.Windows.Forms.MessageBox.Show("cachedBitmap == null");
                 squareSize = squareS;
+                isBichromatic = isBichrom;
                 PrecomputeBitmap(TLPoint, ViewPortSize);
             }
 
-            //g.DrawLine(new Pen(Color.Red), new Point(0, 0), new Point(100, 100));
-            //g.DrawImageUnscaled(cachedBitmap,0,0,1000,1000);
+    
 
             // Draw it on the buffered bitmap
-            bufferedBitmapGraphics.Clear(Color.Red);
+            bufferedBitmapGraphics.Clear(Color.White);
             Point relativeTLPoint = new Point(cachedBitmapTLPoint.X - TLPoint.X, cachedBitmapTLPoint.Y - TLPoint.Y);
             Rectangle rect = new Rectangle(relativeTLPoint, ViewPortSize);
             bufferedBitmapGraphics.DrawImageUnscaled(cachedBitmap, rect);
@@ -62,7 +67,63 @@ namespace TomyMaps
             g.DrawImageUnscaled(bufferedBitmap, 0, 0);
         }
 
+        private Color getColorByChar(char c)
+        {
 
+            Color col;
+
+
+            if (isBichromatic)
+            {
+                switch (c)
+                {
+                    case 'S':
+                    case '.':
+                        col = Color.PapayaWhip;
+                        break;
+
+                    default:
+                        col = Color.DarkSlateGray;
+                        break;
+                }
+            }
+            else
+            {
+                switch (c)
+                {
+                    case 'W': // Water
+                        col = Color.Blue;
+                        break;
+                    case 'T': // Tree
+                        col = Color.Green;
+                        break;
+                    case '@': // Outside
+                        col = Color.Gray;
+                        break;
+                    case 'S': // Swamp (traversable)
+                    case '.': // default traversable area
+                        col = Color.PapayaWhip;
+                        break;
+                    default: // Error
+                        col = Color.Gray;
+                        break;
+                }
+            }
+
+            // path coloring
+            switch (c)
+            {
+                case 'C':
+                    col = Color.DarkOrange;
+                    break;
+                case 'P':
+                    col = Color.Red;
+                    break;
+            }
+
+
+            return col;
+        }
         private void PrecomputeBitmap(Point TLPoint, Size viewPortSize)
         {
             
@@ -93,28 +154,25 @@ namespace TomyMaps
             {
                 for (int j = 0; j < chWidth; j++)
                 {
-                    Color col;
 
-                    // map coordinates use topleftpoint for offset
-                    switch (map.getRawMap()[baseHeight + i][baseWidth + j])
-                    {
-                        case 'W': // Water
-                            col = Color.Blue;
-                            break;
-                        case 'T': // Tree
-                            col = Color.Green;
-                            break;
-                        case '@': // Outside
-                            col = Color.Gray;
-                            break;
-                        case 'S': // Swamp (traversable)
-                        case '.': // default traversable area
-                            col = Color.PapayaWhip;
-                            break;
-                        default: // Error
-                            col = Color.Red;
-                            break;
-                    }
+                    char charSquare = map.getRawMap()[baseHeight + i][baseWidth + j];
+                    
+                    // "default "color determined by the map
+                    Color col = getColorByChar(charSquare);
+
+                    // if the color is detemrined by data, then the "default" color will be overridden
+                    char[,] rawdata = map.getRawData();
+                    if (rawdata != null)
+	                {
+                        char dataSquare = map.getRawData()[baseHeight + i,baseWidth + j];
+                        if (dataSquare != ' ')
+                        {
+                            col = getColorByChar(dataSquare);
+                        }
+		 
+	                }
+                    
+
                     currBrush.Color = col;
                     cachedBitmapGraphics.FillRectangle(currBrush, squareSize * j, squareSize * i, squareSize, squareSize);
 
