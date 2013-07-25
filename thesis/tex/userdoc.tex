@@ -1,8 +1,24 @@
 \chapter{T-maps --- užívateľská dokumentácia}
 \label{userdoc}
 \section{Popis programu T-maps}
-Program T-maps slúži na grafické znázornenie mriežkového grafu, najkratších ciest a prehľadávaných vrcholov.
-Mriežkový graf je interpretovaný ako farebná bitmapa, kde rôzne farby označujú rôzne typy vrcholov.
+Program T-maps načíta mriežkový graf vo forme znakovej matice a vykreslí ho. K danému grafu môže voliteľne načítať dátový súbor, ktorý obsahuje
+informácie o~navštívených vrcholoch a~o~najkratšej ceste.
+Túto maticu aj s~dátami vykreslí na~obrazovku. Výstup pripomína mapu používanú v~počítačových hrách.
+Zvláda niekoľko ďalších operácií, ako je priblíženie a~oddialenie mapy, posúvanie sa po~mape a~uloženie aktuálne prehliadaného úseku mapy.
+
+
+\section{Formát vstupu a výstupu}
+Presný formát súboru s~mriežkovým grafom je popísaný v~\cite{sturtevant2012benchmarks} a~je zhodný s~formátom, 
+ktorý používa algoritmus.
+
+Dátový súbor obsahuje dva riadky. Prvý riadok obsahuje medzerou oddelené čísla vrcholov, ktoré ležia na najkratšej ceste.
+Druhý riadok obsahuje čísla vrcholov, ktoré boli navštívené počas behu algoritmu. ASK?? navstivene je ok??
+Pokiaľ je vrchol v $r$-tom riadku matice a $s$-tom stĺpci. Pričom širka matice je označená ako $sirka$. TODO?? mozno supnut do prvej kapitoly...
+ Potom číslo vrcholu sa vypočita podľa vzorca $cisloVrcholu := r*sirka + s$. 
+
+Výstup môže byť exportovaný do viacerých grafických formátov, medzi ktorými sú GIF, PNG, BMP a JPEG.
+
+
 
 Typy vrcholov a ich farba: TODO? vrcholov? su len vrcholy a nevrcholy...
 \begin{itemize}
