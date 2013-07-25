@@ -277,25 +277,23 @@ Keywords:
 \part{Implementácia}
 \include{kap3}
 \include{kap4}
-\include{tmaps}
-% Ukázka použití některých konstrukcí LateXu (odkomentujte, chcete-li)
-%\include{ukazka}
 
 \include{zaver}
 
 %%% Seznam použité literatury
 \include{literatura}
 
-%%% Tabulky v bakalářské práci, existují-li.
-\chapwithtoc{Zoznam tabuliek}
-
-%%% Použité zkratky v bakalářské práci, existují-li, včetně jejich vysvětlení.
-\chapwithtoc{Zoznam použitých skratiek}
 
 %%% Přílohy k bakalářské práci, existují-li (různé dodatky jako výpisy programů,
 %%% diagramy apod.). Každá příloha musí být alespoň jednou odkazována z vlastního
 %%% textu práce. Přílohy se číslují.
-\chapwithtoc{Prílohy}
+%\chapwithtoc{Prílohy}
+
+\begin{appendices}
+\include{userdoc}
+\include{programdoc}
+\end{appendices}
+
 
 \openright
 \end{document}
