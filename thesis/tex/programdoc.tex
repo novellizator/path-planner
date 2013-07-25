@@ -1,2 +1,39 @@
 \chapter{T-maps --- programátorská dokumentácia}
-nejaka blablabal
+\label{programdoc}
+
+\section{Architektúra aplikácie}
+Architektúra programu \emph{T-maps} je inšpirovaná konceptom MVC \cite{krasner_mvc_1988}.
+Model predstavujú tvoria dve triedy: Map a CachedBitmap.
+View a Controller sú spojené triede Form1.
+
+
+Jednou zo schopností programu je nekonečný zoom. Ten je riešený 
+\begin{figure}[h]
+\begin{lstlisting}[language=C++]
+class CachedBitmap
+{
+    Map map;
+    public void setMap(Map m);
+    public void DrawBitmapInto(Graphics g, Point TLPoint, Size ViewPortSize, int squareS, bool isBichrom, bool forcePrecomputing = false);
+ 
+    private void PrecomputeBitmap(Point TLPoint, Size viewPortSize);
+}
+\end{lstlisting}
+\caption{Kľúčové funkcie triedy CachedBitmap}
+\label{fig:cachedbitmap_interface_plus}
+\end{figure}
+
+
+\begin{figure}[h]
+\begin{lstlisting}[language=C++]
+class Map
+{
+    char[][] data;
+    char[][] map;
+    public void Load(string filename);
+    public void LoadData(string filename);
+}
+\end{lstlisting}
+\caption{Kľúčové funkcie triedy Map}
+\label{fig:map_interface}
+\end{figure}

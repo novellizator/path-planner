@@ -8,8 +8,8 @@ Ako bolo v úvode spomenuté, súťaž {\sl Grid-Based Path Planning Competition
 na ktorých sa algoritmy dajú testovať. Konkrétny popis typov máp sa nachádza v \cite{sturtevant2012benchmarks}.
 
 \subsection{Testovacie kritériá}
-Testovacie kritéria budú podobné ako testovacie kritériá v súťaži. Budú sa však mierne líšiť, pretože algoritmus nebol 
-naplánovaný tak, aby .... TODO?? (prvych 20 kroko a nezaujima, na druhu stranu ma zaujima pocet prehladanych vrcholov...)
+Testovacie kritéria sú podobné ako testovacie kritériá v súťaži. 
+Odlišujú sa z dvoch dôvodov. TODO?? prvych 20 krokov je nezmysel + pridal som niektore veci navyse
 
 \begin{itemize}
 \item Počet prehľadaných vrcholov.
@@ -24,23 +24,20 @@ Testovať budeme nasledujúce algoritmy:
 \item Dijkstrov algoritmus nad priehradkovou haldou.
 \item A* používajúc rôzny počet landmarkov.
 \item A* používajú optimálny počet landmarkov a obdĺžnikovú dekompozíciu.
-\item TODO?? nieco dalsie blablabla - cudzie algoritmy.
+\item TODO?? nieco dalsie blablabla - cudzie algoritmy zo sutaze
 \end{itemize}
 
 
 \subsection{Kompilácia}
 Kód bude kompilovaný kompilátorom g++. Bude porovnaná
-rýchlosť behu programu pri kompilácii s týmito direktívami.
-\begin{itemize}
-\item -O1
-\item -O2
-\item -O3
-\item -O3 -march=native
-\end{itemize}
-ASK?? toto bude len pri jednom algoritme pri jednom grafe, nie? neni to zbytocne???
+rýchlosť behu programu pri kompilácii s direktívami \emph{g++ -march=native -O3}, čo zaručuje maximálnu rýchlosť a efektivitu behu kódu.
 
-\subsection{Typy map a ciest}
-TODO?? - kratke dlhe, klukate a rovne obrazok asopn 3 map
+\subsection{Typy máp a ciest}
+Algoritmy budú testovane na troch mapách. 
+Ich grafická reprezentácia je vytvorená v programe T-maps.
+Popis programu sa nachádza v prílohách ~\ref{userdoc}~\ref{programdoc}.
+
+
 
 
 
