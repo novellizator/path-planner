@@ -8,30 +8,38 @@ Zvláda niekoľko ďalších operácií, ako je priblíženie a~oddialenie mapy,
 
 
 \section{Formát vstupu a výstupu}
-Presný formát súboru s~mriežkovým grafom je popísaný v~\cite{sturtevant2012benchmarks} a~je zhodný s~formátom, 
-ktorý používa algoritmus.
+Presný formát vstupného súboru s~mriežkovým grafom je popísaný v~\cite{sturtevant2012benchmarks} a~je zhodný s~formátom, 
+ktorý používa algoritmus. Znaková matica obsahuje rôzne znaky reprezentujúce rôzne herné prvky.
+Strom je reprezentovaný znakom \uv{T}(tree), voda znakom \uv{W}(water), priechodná oblasť(a teda znak, ktorý reprezentuje
+vrchol grafu) znakom \uv{.}, prípadne \uv{S} (swamp).
 
 Dátový súbor obsahuje dva riadky. Prvý riadok obsahuje medzerou oddelené čísla vrcholov, ktoré ležia na najkratšej ceste.
-Druhý riadok obsahuje čísla vrcholov, ktoré boli navštívené počas behu algoritmu. ASK?? navstivene je ok??
-Pokiaľ je vrchol v $r$-tom riadku matice a $s$-tom stĺpci. Pričom širka matice je označená ako $sirka$. TODO?? mozno supnut do prvej kapitoly...
- Potom číslo vrcholu sa vypočita podľa vzorca $cisloVrcholu := r*sirka + s$. 
+Druhý riadok obsahuje čísla vrcholov, ktoré boli navštívené počas behu algoritmu. 
+Vrcholy sú popísané jedným číslom tak, ako to bolo popísané v poznámke~\ref{note:popis_vrcholu}.
 
 Výstup môže byť exportovaný do viacerých grafických formátov, medzi ktorými sú GIF, PNG, BMP a JPEG.
 
 
 
-Typy vrcholov a ich farba: TODO? vrcholov? su len vrcholy a nevrcholy...
+\section{Vykreslenie znakovej matice}
+
+Znaky v matici môžu byť vykreslené dvomi spôsobmi. V takzvanom bichromatickom móde sa na vykreslenie matice použijú dve farby.
+Svetlejšou farbou sú vykreslené znaky reprezentujúce vrcholy matice (v hrách ide o prechodný terén), tmavšou farbou sú vykreslené znaky, ktoré
+nereprezentujú žiaden vrchol. Ide o stromy, vodu a podobne.
+
+Pri plnofarebnom vykreslení sú znaky vykreslené nasledovnými farbami:
 \begin{itemize}
 \item Strom - zelená.
 \item Voda - modrá.
 \item Bažina a defaultná priechodná oblast - papájovožltá.
 \item Defaultná nepriechodná oblasť - sivá.
-
 \end{itemize}
 
+
+\section{Vykreslenie dátového súboru}
 Pokiaľ bol vrchol prehľadávaný počas hľadania najkratšej cesty, jeho farba bude oranžová. Ak je dokonca súčasťou najkratšej cesty, 
 tak bude červený.
 
-\section{Použitie programu}
+\section{Ukážky programu}
 
 TODO??-- obrazky = program s mapou, bichromaticka mapa teda graf, priblizenie detailu(dodaj infinite zoom), nacitana najkratsia cesta s prehladanymi vrcholmi

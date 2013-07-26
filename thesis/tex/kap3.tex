@@ -66,9 +66,13 @@ Jediným problémom ostalo rozdeliť mriežkový graf na tieto obdĺžniky.
 
 
 \section{Hľadáme obdĺžniky}
+Našou snahou je dekomponovať mriežkový graf do obdĺžnikov tak, aby bola čo najväčšia pravdepodobnosť toho, že 
+dva náhodne zvolené body (začiatok a koniec) ležia v jednom obdĺžniku. Čiže aby sa dalo toto zrýchlené
+hľadanie najkratšej cesty použiť v najväčšom možnom počte prípadov.
 
 
 \subsection{Proporcie obdĺžnikov}
+
 Dôležitou otázkou je, na akých vlastnostiach obdĺžnikov záleží. Uvažujme nasledujúci motivačný príklad.
 \begin{example}
 Majme na mriežkovom grafe nájdené dva obdĺžniky, ktoré dovedna pokrývajú 10 vrcholov.
@@ -108,7 +112,7 @@ $\sum_{i \in Ek}P[A_i] = \sum_{i = 1}^{k} \frac{{{k_i} \choose {2}}}{{{|Prv|} \c
 
 Keďže chceme nejak rozvrhnúť prvky v triedach $ek_i$, a menovateľ je konštanta, môžme ho vynechať.
 
-Maximalizujeme teda hodnotu výrazu 
+Maximalizujeme hodnotu výrazu 
 $\sum_{i = 1}^{k} {{k_i} \choose {2}} = \sum_{i = 1}^{k} {\frac{k_i!}{(k_i -2 )!2!}} = \sum_{i = 1}^{k}{\frac{k_i (k_i-1)}{2}}$.
 Po vyškrtnutí konštanty a roznásobení sme dostali nasledujúcu optimalizačnú úlohu:
 maximalizovať $\sum_{i = 1}^{k} {k_i^2 - k_i}$ za podmienok $\sum_{k=1}^{k}k_i = n$,
@@ -120,24 +124,29 @@ druhá suma sa nasčíta na $-n$, čo je konštanta, takže nám stačí maximal
 $\sum_{i = 1}^{k} {k_i^2}$.
 
 Teraz nám už len zostáva použiť nerovnosť
-$(a+b)^2 \geq a^2 + b^2$ ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie.
-Ekvivalenčné triedy musia teda byť čo najväčšie a~problém sa transformuje na~problém hľadania
-obdĺžnikov s~najväčším možným obsahom.
+$(a+b)^2 \geq a^2 + b^2$ ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie
+a teda aj ekvivalenčné triedy musia byť čo najväčšie.
+
+Potrebujeme teda nájsť obdĺžniky s~najväčším možným obsahom. 
 V~programe tento problém rieši trieda Colorizator.
+Tá v grafe nájde najväčší obdĺžnik, a \uv{ofarbí} ho jednou farbou.
+Na zvyšnom neofarbenom grafe znovu hľadá najväčší obdĺžnik a ofarbí ho inou farbou, atď.
+Farbenie skončí, keď obsah najväčsieho obdĺžnika je menší, ako 10.
 
 
 \subsection{Nájdenie najväčšej jednotkovej podmatice}
-Ako sme si v~úvode povedali, mriežkovú mapu vieme reprezentovať ako maticu a~teda
+Ako sme si v~úvode povedali, mriežkovú mapu vieme reprezentovať ako maticu, čiže
 problém môžeme ekvivalentne zapísať ako problém hľadania najväčšej jednotkovej podmatice.
-Tento problém má riešenie v~čase lineárnom od~počtu vrcholov a~teda nájdenie $k$ najväčších
+Tento problém má riešenie v~čase lineárnom od~počtu vrcholov, takže nájdenie $k$ najväčších
 jednotkových matíc trvá $\BigO{k*n}$, kde $n$ je počet vrcholov matice.
 
 Slovný popis algoritmu \ref{alg:largest_submatrix}: 
 V~prvom prechode maticou si u~každého vrcholu zapamätáme počet jedničiek naľavo od neho, vrátane daného vrcholu. 
 Tento prechod trvá lineárny čas.
 
-V~druhom prechode treba prejsť zaradom všetky stĺpce zľava doprava
-
+V~druhom prechode algoritmus prejde zaradom všetky stĺpce zľava doprava
+Každý stĺpec prechádzame odhora nadol a zisťujeme, aký je najväčší obsah obdĺžnika, ktorého horný pravý roh je práve prechádzaný prvok.
+Pričom vy TODO??
 
 
 \begin{algorithm}
@@ -157,13 +166,13 @@ V~druhom prechode treba prejsť zaradom všetky stĺpce zľava doprava
 \ENDFOR
 
 \FOR {stĺpec $s$, $s \in M$ }
-	\STATE Vytvor nový zásobník dvojíc (riadok, nalavoOdPrvku)
+	\STATE Vytvor nový zásobník dvojice čísel (riadok, nalavoOdPrvku)
 	\FOR {riadok $r$, $r \in M$ }
 		\STATE $p \leftarrow (s, r)$
 		
 		\WHILE {Zásobník je neprázdny}
 			\STATE vyberiem prvok $top$ z vrcholu zásobníka
-			\IF {$top$ . nalavoOdPrvku $>$ nalavoOdPrvku(p)}
+			\IF {$top$.nalavoOdPrvku $>$ nalavoOdPrvku(p)}
 						
 				\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)
 				\STATE DlzkaSekvencie(prvokZoZasobnika) = r - prvokZoZasobnika.r
@@ -177,6 +186,7 @@ V~druhom prechode treba prejsť zaradom všetky stĺpce zľava doprava
 		\STATE Do zásobníka vložím dvojicu (r, nalavoOdPrvku(p))
 	\ENDFOR
 	
+	\STATE // prešli sme stĺpec, teda skončíme
 	\WHILE {Zásobník je neprázdny}
 		\STATE vyberiem prvok $top$ z vrcholu zásobníka
 		\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)

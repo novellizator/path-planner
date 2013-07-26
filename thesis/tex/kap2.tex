@@ -97,7 +97,7 @@ Napríklad \cite{mares07}.
 
 \subsection{Zložitosť}
 Každý vrchol vložíme do haldy maximálne $deg(v)$-krát 
-(zhodou náhod postupne vyberáme z haldy jeho susedov a cez každého nasledujúceho suseda vedie kratšia cesta k vrcholu $v$ -- teda ho stále pridáme znovu).
+(v najhoršom prípade postupne vyberáme z haldy jeho susedov a cez každého nasledujúceho suseda vedie kratšia cesta k vrcholu $v$ -- teda ho stále pridáme znovu).
 Počet všetkých vložení bude teda rádovo $\BigO{\sum_{v}{deg(v)}} = \BigO{m}$.
 Zo štruktúry môžme vybrať maximálne toľko prvkov, koľko sme tam vložili a~teda aj volania $ExtractMin$ trvajú $\BigO{m}$.
 
@@ -113,7 +113,7 @@ Nakoľko mriežkový graf je veľmi špeciálny typ grafu,
 vieme niektoré jeho vlastnosti využiť na~to, aby sme vytvorili štruktúru, ktorá zvládne obe operácie v~konštantnom čase. 
 
 
-Na konštrukciu tejto štruktúry (viď. \cite{gs97}) budeme potrebovať nasledujúcu vetu. ASK?? moze takto pouzivat vid???
+Na konštrukciu tejto štruktúry (viď. \cite{gs97}) budeme potrebovať nasledujúcu vetu.
 
 \begin{theorem}
 \label{dinic-observation}
@@ -121,7 +121,7 @@ Pokiaľ sme v Dijkstrovom algoritme uzavreli vrchol $u$ so vzdialenosťou $d(u)$
 uzavrieť všetky vrcholy $v$ so~vzdialenosťami $d(v) \in (d, d + \epsilon)$.
 \end{theorem}
 \begin{proof}
-Do haldy vieme pridávať len vrcholy so vzdialenosťami aspoň $d + \epsilon$ (kratšia hrana tam už nie je), 
+Do haldy vieme pridávať len vrcholy so~vzdialenosťami aspoň $d + \epsilon$ (kratšia hrana tam už nie je), 
 ale~tie už cestu k~vrcholom so~vzdialenosťami
 $d_v \in (d, d + \epsilon)$ skrátiť nemôžu.
 \end{proof}
