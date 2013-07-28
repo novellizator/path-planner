@@ -14,9 +14,9 @@ Hrana je jednoznačne určená dvojicou vrcholov.
 
 
 \begin{define}
-{\sl Ohodnotený graf (G, w)} je graf s~spolu s~reálnou funkciou (tzv. ohodnotením)
+{\sl Ohodnotený graf (G, w)} je graf G~spolu s~reálnou funkciou (tzv. ohodnotením)
 $w: E(G) \to \R$, kde $w$ je funkcia, ktorá každej hrane priradí
-reálne číslo takzvanú \emph{dĺžku}, alebo \emph{hodnotu} hrany.
+reálne číslo reprezentujúce \emph{dĺžku}, alebo \emph{hodnotu} hrany.
 \end{define}
 
 Ukážka obecného ohodnoteného grafu je na obrázku \ref{fig:ohodnoteny_graf}.
@@ -90,19 +90,19 @@ pretože má veľmi malý počet hrán (lineárny od počtu vrcholov).
 Zadefinujme si teraz mriežkový graf formálne.
 
 \begin{define}
-{\sl Mriežkový graf rozmerov $m \times n$} je ohodnotený graf s~ohodnotením $w$ s m*n vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
+{\sl Mriežkový graf rozmerov $m \times n$} je ohodnotený graf s~ohodnotením $w$ s $m \cdot n$ vrcholmi očíslovanými od $v_{1,1}$ až po $v_{m,n}$ 
 s~priamymi hranami $j$ v~tvare $\{v_{a,b}, v_{a,b+1}\}, \{v_{a,b}, v_{a+1,b}\}$, kde $w(j) = 1$ 
 a šikmými hranami $ s $ v~tvare 
 $\{v_{a,b}, v_{a+1,b+1}\}$, $\{v_{a,b}, v_{a-1,b+1}\}$, kde $ w(s) = \sqrt{2}$.
 \end{define}
 
 \begin{note}
-	Mriežkový graf sa dá reprezentovať ako matica $m \times n$ nad telesom $\Z_2$, kde jednotky predstavujú miesta, kde sú predstavujú vrcholy. 
+	Mriežkový graf sa dá reprezentovať ako matica $m \times n$ nad telesom $\Z_2$, kde jednotky predstavujú miesta, kde sú vrcholy. 
 \end{note}
 
 \begin{note}
 \label{note:popis_vrcholu}
-	Konkrétny vrchol $v_{x,y}$ sa dá taktiež popísať jedným čislom $c:= x*n + y$, kde $n$ je počet stĺpcov matice.
+	Konkrétny vrchol $v_{x,y}$ sa dá taktiež popísať jedným čislom $c:= x\cdot n + y$, kde $n$ je počet stĺpcov matice.
 \end{note}
 
 
@@ -186,5 +186,5 @@ Na algoritmus môžeme klásť rôzne požiadavky, ktoré si častokrát navzáj
 \item Maximálny čas vrátenia hociktorej časti cesty.
 \end{itemize}
 
-Testovací počítač má 12 GB RAM pamäti a dva 2.4 Ghz Intel Xeon E5620
+Testovací počítač má 12 GB RAM pamäti a dva 2.4 GHz Intel Xeon E5620
 procesory.

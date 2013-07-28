@@ -11,7 +11,7 @@ Na hľadanie najkratších ciest v grafe poznáme mnoho algoritmov, ktoré rozde
 Tieto problémy sú na obecných grafoch NP-ťažké.
 Napriek tomu na mriežkových grafoch (kde sú vzdialenosti medzi vrcholmi vždy kladné) existujú algoritmy v polynomiálnom čase.
 
-V práci budeme ďalej zaoberať riešením prvého problému (Point to Point Shortest Path). 
+V práci sa budeme ďalej zaoberať riešením prvého problému (Point to Point Shortest Path). 
 
 V tejto kapitole popíšeme algoritmy, ktoré sú použiteľné na grafoch s nezápornými dĺžkami hrán. 
 
@@ -31,7 +31,7 @@ Kritéria, podľa ktorých budeme porovnávať efektivitu algoritmov sú teda na
 
 \section{Dijkstrov algoritmus}
 Medzi základné algoritmy typu SSSP patrí Dijkstrov algoritmus \cite{dijkstra59} popísaný už v roku 1959. 
-Miernu modifikáciu pôvodného algoritmu môžeme vidieť na (Algoritmus \ref{alg:dijkstra}). 
+Miernu modifikáciu pôvodného algoritmu môžeme vidieť na Algoritme \ref{alg:dijkstra}). 
 Patrí medzi relaxačné algoritmy~a zbehne korektne na grafoch
 s nezápornými hranami.
 
@@ -49,7 +49,7 @@ Po~vybraní otvoreného vrcholu prejdeme všetkých jeho neuzavretých susedov a
 
 
 \begin{algorithm}
-\caption{Dijkstra: zisti vzdialenosť najkratšej cesty z vrcholu s $s$ do všetkých dostupných vrcholov}
+\caption{Dijkstra: zisti vzdialenosť najkratšej cesty z vrcholu $s$ do všetkých dostupných vrcholov}
 \label{alg:dijkstra}
 \begin{algorithmic}[1] % number one = line numbering is on
 \REQUIRE graf $G$
@@ -128,7 +128,7 @@ $d_v \in (d, d + \epsilon)$ skrátiť nemôžu.
 
 
 \begin{consequence}
-Keď uzavrieme vrchol so vzdialenosťou $d_u$, môžme uzavrieť aj vrcholy vo vzdialenosťami menšími, ako $d_u + \epsilon$
+Keď uzavrieme vrchol so vzdialenosťou $d_u$, môžme uzavrieť aj vrcholy so vzdialenosťami menšími, ako $d_u + \epsilon$
 pričom poradie je nezávislé od skutočnej vzdialenosti vrcholov.
 \end{consequence}
 
@@ -138,22 +138,23 @@ Dĺžka $\epsilon$ najkratšej hrany v mriežkovom grafe je 1. Je to dĺžka ake
 Keď teda uzavrieme vrchol so vzdialenosťou $d(u)$, môžme uzavrieť aj vrcholy so vzdialenosťami menšími, ako je $d(u) + 1$ a to v ľubovoľnom poradí.
 \end{example}
 
-Tieto veci vieme výborne využiť pri konštrukcii štruktúry
+Tieto skutočnosti vieme výborne využiť pri konštrukcii štruktúry
 zvanej {\sl priehradková halda}. Tá, využijúc vyššie uvedenú vetu, uzatvára a pridáva vrcholy bez porušenia akejkoľvek konzistencie behu algoritmu.
 
 \subsection{Popis haldy}
 Najprv popíšeme fungovanie haldy a graficky znázorníme jej 
 operácie. Neskôr dokážeme, že keď túto haldu použijeme v Dijkstrovom algoritme, tak nám bude vracať korektné výsledky.
 
-Majme haldu s tromi priehradkami (nazvime ju $BucketHeap$), pričom rozsah jednej priehradky je ostro menší, ako 1.
-Prvá priehradka uchováva prvky s rozsahom vzdialeností $ [b, b+1) $, druhá $ [b+1, b+2) $ a tretia $ [b+2, b+1+\sqrt{2}) $
+Majme haldu s tromi priehradkami (nazvime ju $BucketHeap$), pričom rozsah jednej priehradky je ostro menší ako 1.
+Prvá priehradka uchováva prvky s rozsahom vzdialeností
+$ [b, b+1) $, druhá $ [b+1, b+2) $ a tretia $ [b+2, b+1+\sqrt{2}) $
 pre danú bázu $ b $. Pre jednoduchšiu implementáciu $b \in \N$. Operácia $push((dist, data))$ vloží do haldy prvok so vzdialenosťou $dist$ 
 s pomocnými dátami $data$. Operácia $pop()$ vracia ľubovoľný element z prvej priehradky. 
-Pre jednoduchšiu implementáciu budeme mať na začiatku smerník na prvý prvok prvej priehradky a po vyhodení najmenšieho prvku tento smerník jednoducho inkrementujeme, kým to bude možné. Keď už v prvej priehradke nezostane žiaden prvok a zavoláme operáciu $pop()$, vykoná sa nasledujúca vec: druhú priehradku presunieme na miesto prvej, tretiu na miesto druhej a prvú dáme namiesto tretej.
+Pre jednoduchšiu implementáciu budeme mať na začiatku smerník na prvý prvok prvej priehradky a po vyhodení najmenšieho prvku tento smerník jednoducho inkrementujeme, kým to bude možné. Keď už v prvej priehradke nezostane žiaden prvok a zavoláme operáciu $pop()$, vykoná sa nasledujúca operácia: druhú priehradku presunieme na miesto prvej, tretiu na miesto druhej a prvú dáme namiesto tretej.
 
 Ilustrujme si to na obrázkových príkladoch. Príklad troj--priehradkovej haldy vidíme na obrázku \ref{fig:priehradky}.
-Halda uchováva premennú $ baza $, ktorá definuje bázu od ktorej sa rozsahy priehradok odvíjajú. Okrem
-nej, uchováva tri smerníky na tri po sebe idúce priehradky priehradky a smerník na vrchol haldy, zvaný $ top $.
+Halda uchováva premennú $ baza $ definujúcu bázu, od ktorej sa rozsahy priehradok odvíjajú. Okrem
+nej, uchováva tri smerníky na tri po sebe idúce priehradky a smerník na vrchol haldy, zvaný $ top $.
 
 
 
@@ -164,7 +165,8 @@ nej, uchováva tri smerníky na tri po sebe idúce priehradky priehradky a smern
 \label{fig:priehradky}
 \end{figure}
 
-Pridanie dvoch prvkov je znázornené na obrázku \ref{fig:priehradky_i}. Priehradka, do ktorej má byť prvok s danou vzdialenosťou vložený sa vypočíta podľa vzorca: $ \lfloor vzdialenostPrvku - baza +1 \rfloor $.
+Pridanie dvoch prvkov je znázornené na obrázku \ref{fig:priehradky_i}. Priehradka, do ktorej má byť prvok s danou vzdialenosťou vložený sa vypočíta podľa vzorca:\\
+ $ \lfloor vzdialenostPrvku - baza +1 \rfloor $.
 
 
 \begin{figure}[h]
@@ -192,7 +194,7 @@ na miesto prvej, tretiu na miesto druhej a prvú umiestniť nakoniec. Viď obrá
 Keďže máme konštatný počet priehradok, tak aj táto operácia
 trvá konštantný čas.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i_d2.eps}
 \caption{Zmazanie posledného prvku prvej priehradky vedie k zmene poradia priehradok}
@@ -204,11 +206,11 @@ trvá konštantný čas.
 Dijkstrov algoritmus používajúci haldu $BucketHeap$ vráti korektné najkratšie vzdialenosti do vrcholov grafu.
 \end{theorem}
 \begin{proof}
-Rozsah každej priehradky je ostro menší, ako 1. To znamená, že podľa vety~\ref{dinic-observation} a príkladu \ref{ex:range} operácia $pop()$ vracia prvky v poradí, ktoré
+Rozsah každej priehradky je ostro menší ako 1. To znamená, že podľa vety~\ref{dinic-observation} a príkladu \ref{ex:range} operácia $pop()$ vracia prvky v poradí, ktoré
 nepokazí chod algoritmu. 
 
 Treba ešte dokázať, že tri priehradky postačujú. To je zrejmé,
-pretože keď vyberieme vrchol z prvej priehradky, tak jeho vzdialenosť je v rozsahu $[b, b+1)$. Keď prechádzame jeho susedné vrcholy, tak najdlhšia hrana je $ \sqrt{2} $ a teda vzdialenosť k najvzdialenejšiemu susednému vrcholu je ostro menšia, ako $b+1+\sqrt{2}$, čo sa zmestí to intervalu poslednej priehradky.
+pretože keď vyberieme vrchol z prvej priehradky, tak jeho vzdialenosť je v rozsahu $[b, b+1)$. Keď prechádzame jeho susedné vrcholy, tak najdlhšia hrana je $ \sqrt{2} $ a teda vzdialenosť k najvzdialenejšiemu susednému vrcholu je ostro menšia, ako $b+1+\sqrt{2}$, čo sa zmestí do intervalu poslednej priehradky.
 \end{proof}
 
 

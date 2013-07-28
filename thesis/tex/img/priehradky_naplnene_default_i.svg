@@ -284,7 +284,7 @@
            width="188"
            id="rect5735-0" /></flowRegion><flowPara
          id="flowPara5737-28">(3.10, dáta)</flowPara></flowRoot>    <flowRoot
-       transform="translate(149.80999,35.597979)"
+       transform="translate(150.80999,48.597979)"
        style="font-size:35px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        id="flowRoot5844"
        xml:space="preserve"><flowRegion
@@ -296,7 +296,7 @@
            width="158.39192"
            id="rect5848" /></flowRegion><flowPara
          id="flowPara5850"
-         style="font-size:30px">báza = 1</flowPara></flowRoot>    <flowRoot
+         style="font-size:27px">báza = 1</flowPara></flowRoot>    <flowRoot
        style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        id="flowRoot5731-8-6"
        xml:space="preserve"
@@ -397,7 +397,7 @@
            width="120"
            id="rect5993-8" /></flowRegion><flowPara
          id="flowPara5995-9">box 3</flowPara></flowRoot>    <flowRoot
-       transform="translate(-21.87182,21.597979)"
+       transform="translate(-20.87182,34.597979)"
        style="font-size:17px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        id="flowRoot6037"
        xml:space="preserve"><flowRegion
@@ -407,11 +407,11 @@
            height="194"
            width="418"
            id="rect6041" /></flowRegion><flowPara
-         style="font-size:30px"
+         style="font-size:27px"
          id="flowPara6043">1. priehradka = box 1</flowPara><flowPara
-         style="font-size:30px"
+         style="font-size:27px"
          id="flowPara6047">2. priehradka = box 2</flowPara><flowPara
-         style="font-size:30px"
+         style="font-size:27px"
          id="flowPara6049">3. priehradka = box 3</flowPara><flowPara
          style="font-size:40px"
          id="flowPara6045" /></flowRoot>    <polygon
@@ -454,7 +454,8 @@
          id="flowPara6344" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot6582"
-       style="font-size:17px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+       style="font-size:17px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(33,38)"><flowRegion
          id="flowRegion6584"><rect
            id="rect6586"
            width="373"
@@ -462,12 +463,12 @@
            x="628"
            y="77.094482" /></flowRegion><flowPara
          id="flowPara6588"
-         style="font-size:30px;fill:#ff0000">element1 = (3.0, dáta)</flowPara><flowPara
+         style="font-size:27px;fill:#ff0000">element1 = (3.0, dáta)</flowPara><flowPara
          id="flowPara6590"
-         style="font-size:30px;fill:#ff0000">element2 = (1.25, dáta)</flowPara><flowPara
-         style="font-size:30px;fill:#ff0000"
+         style="font-size:27px;fill:#ff0000">element2 = (1.25, dáta)</flowPara><flowPara
+         style="font-size:27px;fill:#ff0000"
          id="flowPara6621">insert (element1)</flowPara><flowPara
-         style="font-size:30px;fill:#ff0000"
+         style="font-size:27px;fill:#ff0000"
          id="flowPara6623">insert (element2)</flowPara><flowPara
          style="font-size:30px;fill:#ff0000"
          id="flowPara6619" /></flowRoot>    <flowRoot
