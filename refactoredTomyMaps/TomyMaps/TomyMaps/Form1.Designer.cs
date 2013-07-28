@@ -40,10 +40,10 @@
             // loadMap
             // 
             this.loadMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.loadMap.Location = new System.Drawing.Point(660, 27);
-            this.loadMap.Margin = new System.Windows.Forms.Padding(2);
+            this.loadMap.Location = new System.Drawing.Point(880, 33);
+            this.loadMap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.loadMap.Name = "loadMap";
-            this.loadMap.Size = new System.Drawing.Size(80, 40);
+            this.loadMap.Size = new System.Drawing.Size(107, 49);
             this.loadMap.TabIndex = 1;
             this.loadMap.Text = "Load Map";
             this.loadMap.UseVisualStyleBackColor = true;
@@ -53,10 +53,10 @@
             // 
             this.zoomIn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.zoomIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.zoomIn.Location = new System.Drawing.Point(666, 199);
-            this.zoomIn.Margin = new System.Windows.Forms.Padding(2);
+            this.zoomIn.Location = new System.Drawing.Point(888, 245);
+            this.zoomIn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.zoomIn.Name = "zoomIn";
-            this.zoomIn.Size = new System.Drawing.Size(70, 70);
+            this.zoomIn.Size = new System.Drawing.Size(93, 86);
             this.zoomIn.TabIndex = 3;
             this.zoomIn.Text = "+";
             this.zoomIn.UseVisualStyleBackColor = true;
@@ -66,10 +66,10 @@
             // 
             this.zoomOut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.zoomOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.zoomOut.Location = new System.Drawing.Point(666, 283);
-            this.zoomOut.Margin = new System.Windows.Forms.Padding(2);
+            this.zoomOut.Location = new System.Drawing.Point(888, 348);
+            this.zoomOut.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.zoomOut.Name = "zoomOut";
-            this.zoomOut.Size = new System.Drawing.Size(70, 70);
+            this.zoomOut.Size = new System.Drawing.Size(93, 86);
             this.zoomOut.TabIndex = 4;
             this.zoomOut.Text = "-";
             this.zoomOut.UseVisualStyleBackColor = true;
@@ -78,10 +78,10 @@
             // saveImage
             // 
             this.saveImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveImage.Location = new System.Drawing.Point(660, 71);
-            this.saveImage.Margin = new System.Windows.Forms.Padding(2);
+            this.saveImage.Location = new System.Drawing.Point(880, 87);
+            this.saveImage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.saveImage.Name = "saveImage";
-            this.saveImage.Size = new System.Drawing.Size(80, 40);
+            this.saveImage.Size = new System.Drawing.Size(107, 49);
             this.saveImage.TabIndex = 5;
             this.saveImage.Text = "Save visible area";
             this.saveImage.UseVisualStyleBackColor = true;
@@ -91,9 +91,10 @@
             // 
             this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(666, 385);
+            this.checkBox1.Location = new System.Drawing.Point(893, 474);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(81, 17);
+            this.checkBox1.Size = new System.Drawing.Size(103, 21);
             this.checkBox1.TabIndex = 7;
             this.checkBox1.Text = "Bichromatic";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -102,9 +103,10 @@
             // loadData
             // 
             this.loadData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.loadData.Location = new System.Drawing.Point(660, 116);
+            this.loadData.Location = new System.Drawing.Point(880, 143);
+            this.loadData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.loadData.Name = "loadData";
-            this.loadData.Size = new System.Drawing.Size(80, 40);
+            this.loadData.Size = new System.Drawing.Size(107, 49);
             this.loadData.TabIndex = 8;
             this.loadData.Text = "Load Path";
             this.loadData.UseVisualStyleBackColor = true;
@@ -112,14 +114,14 @@
             // 
             // viewPortControl1
             // 
-            this.viewPortControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewPortControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPortControl1.BackColor = System.Drawing.Color.White;
             this.viewPortControl1.Location = new System.Drawing.Point(0, 0);
-            this.viewPortControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.viewPortControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.viewPortControl1.Name = "viewPortControl1";
-            this.viewPortControl1.Size = new System.Drawing.Size(633, 476);
+            this.viewPortControl1.Size = new System.Drawing.Size(844, 586);
             this.viewPortControl1.TabIndex = 0;
             this.viewPortControl1.Text = "viewPortControl1";
             this.viewPortControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.viewPortControl1_Paint);
@@ -129,9 +131,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(769, 476);
+            this.ClientSize = new System.Drawing.Size(1025, 586);
             this.Controls.Add(this.loadData);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.saveImage);
@@ -139,7 +141,7 @@
             this.Controls.Add(this.zoomIn);
             this.Controls.Add(this.loadMap);
             this.Controls.Add(this.viewPortControl1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Maps";
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);

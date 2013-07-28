@@ -2,7 +2,7 @@
 \label{userdoc}
 \section{Popis programu T-maps}
 Program T-maps načíta mriežkový graf vo forme znakovej matice a vykreslí ho. K danému grafu môže voliteľne načítať dátový súbor, ktorý obsahuje
-informácie o~navštívených vrcholoch a~o~najkratšej ceste.
+informácie o~behu algoritmu: informáciu o~navštívených vrcholoch a~o~najkratšej ceste.
 Túto maticu aj s~dátami vykreslí na~obrazovku. Výstup pripomína mapu používanú v~počítačových hrách.
 Zvláda niekoľko ďalších operácií, ako je priblíženie a~oddialenie mapy, posúvanie sa po~mape a~uloženie aktuálne prehliadaného úseku mapy.
 
@@ -42,4 +42,41 @@ tak bude červený.
 
 \section{Ukážky programu}
 
-TODO??-- obrazky = program s mapou, bichromaticka mapa teda graf, priblizenie detailu(dodaj infinite zoom), nacitana najkratsia cesta s prehladanymi vrcholmi
+
+Na~obrázkoch nižšie sa~nachádza znaková matica veľmi malého mriežkového
+ grafu (Obr.~\ref{fig:testmap_znakova_matica}) a~ukážky z~programu:
+ screenshot programu pri načítanej znakovej matici vo~farebnom móde (Obr.~\ref{fig:testmap_program_color}),
+ a~ukážka výstupu programu v bichromatickom móde aj s nájdenou najkratšou cestou.
+
+
+
+\begin{figure}[h]
+\centering
+$$
+  \begin{matrix}
+    @&@&@&.&.&.&@&@&@&@ \\
+    @&T&T&T&.&.&.&.&.&@\\
+    T&T&T&T&T&W&W&S&S&.\\
+    T&W&W&W&W&W&W&.&.&.\\
+    @&@&@&@&@&@&@&@&@&@\\
+  \end{matrix}
+$$
+
+\caption{Maticová reprezentácia mriežkového grafu}
+\label{fig:testmap_znakova_matica}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{./img/testmap_program_color.png}
+\caption{Screenshot programu (30x zoom)}
+\label{fig:testmap_program_color}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[height=5.5cm]{./img/graf.eps}
+\caption{Vyexportovaný výstup v bichromatickom móde aj s označenou najkratšou cestou a prehľadanými vrcholmi}
+\label{fig:testmap_bichromatic_path}
+\end{figure}

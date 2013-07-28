@@ -3,12 +3,12 @@
 
 \section{Architektúra aplikácie}
 Architektúra programu \emph{T-maps} je inšpirovaná konceptom MVC \cite{krasner_mvc_1988}.
-Model tvoria dve triedy: Map a CachedBitmap.
+Model tvoria dve triedy: Map (Obr.~\ref{fig:map_interface}) a CachedBitmap (Obr.~\ref{fig:cachedbitmap_interface_plus}).
 View a Controller sú spojené triede Form1.
 
 
 Aplikácia bola navrhnutá s dôrazom na nízke systémové nároky aj pri operáciách, ako je nekonečný zoom. 
-Ten je riešený tak, že v triede $CachedBitmap$ je uložená bitmapa odpovedajúca výseku znakovej matice, ktorá sa v prípade potreby prepočíta.
+Ten je riešený tak, že v triede $CachedBitmap$  je uložená bitmapa odpovedajúca výseku znakovej matice, ktorá sa v prípade potreby prepočíta.
 Rozmery tejto bitmapy odpovedajú dvojnásobku rozmerov zobrazovacieho okna aplikácie.
 
 \section{Kľúčové funkcie aplikácie}
