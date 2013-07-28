@@ -183,7 +183,7 @@ Celé zmazanie spočíva v inkrementácii ukazovateľa na vrch priehradky.
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{./img/priehradky_naplnene_default_i_d1.eps}
-\caption{Vybranie prvku --- prvok na ktorý ukazuje smerník v prvej priehradke a inkrementujeme ho.}
+\caption{Vybranie prvku --- Inkrementujeme smerník na vrchol priehradky.}
 \label{fig:priehradky_i_d1}
 \end{figure}
 
@@ -215,7 +215,7 @@ pretože keď vyberieme vrchol z prvej priehradky, tak jeho vzdialenosť je v ro
 
 
 \section{A*}
-Ďalší algoritmus, ktorým sa budeme zaoberať je algoritmus
+Ďalší algoritmus, ktorým sa budeme zaoberať, je algoritmus
 A* \cite{astar72} prvykrát popísaný v roku 1968.
 
 Tento algoritmus vychádza z Dijkstrovho algoritmu a je mu veľmi podobný. Hlavný rozdiel medzi týmito algoritmami je, že
@@ -237,7 +237,9 @@ Najčastejšie heuristické funkcie sú tieto:
 
 \paragraph{Euklidovská vzdialenosť}
 
-Euklidovská vzdialenosť je najjednoduchšie implementovateľná heuristická funkcia. Na väčšine jednoduchých grafov s malým počtom prekážok vracia dobré výsledky. Problém nastáva na grafoch, kde začiatok a koniec cesty sú geometricky blízko seba, hoci ich skutočná vzdialenosť je veľká.
+je najjednoduchšie implementovateľná heuristická funkcia.
+ Na väčšine jednoduchých grafov s malým počtom prekážok vracia dobré výsledky.
+  Problém nastáva na grafoch, kde začiatok a koniec cesty sú geometricky blízko seba, hoci ich skutočná vzdialenosť je veľká.
 Príklad vidíme na obrázku \ref{fig:antieuclid}.
 TODO?? pozor na blbe rozdelenie obdlznikov - ja to ratam 
 aj cez sikme hrany atd atd
@@ -255,12 +257,8 @@ aj cez sikme hrany atd atd
 Nevýhoda použitia euklidovskej heuristickej funkcie je na obecných mapách zjavná. To motivovalo vymyslieť heuristiku, ktorá lepšie odráža vzdialenosti v grafe.
 
 Jednou z týchto heuristík je počítanie dolného odhadu pomocou tzv. {\sl landmarks}. 
-
 Landmarks sú vybrané vrcholy v grafe, z ktorých je následne prepočítaná najkratšia vzdialenosť do všetkych ostatných
 vrcholov grafu. 
-
-
-
 Kedže jeden prechod grafu vieme Dijkstrovým algoritmom s priehradkami vykonať za lineárny čas, predpočítanie $ k $ landmarkov trvá $ \BigO{kn} $, kde $n$ značí počet vrcholov grafu.
 
 

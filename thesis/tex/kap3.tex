@@ -8,11 +8,11 @@ V mnohých prípadoch neleží medzi počiatočným a koncovým bodom žiadna pr
 Pre ľahšie vyjadrovanie si zaveďme definíciu {\sl mriežkového grafu bez prekážok}.
 
 \begin{define}
-{\sl Mriežkový graf je bez prekážok} 
+{\sl Mriežkový graf je bez prekážok}, 
 pokiaľ medzi každými dvoma susednými vrcholmi existuje hrana.
 \end{define}
-Kvôli lepšej prehľadnosti s stručnosti budeme mriežkový graf bez prekážok nazývať aj {\sl obdĺžnik}.
-Intuitívne, kvôli jeho vizuálnej predstave. Jeho obsahom bude počet vrcholov patriacich to tohto obdĺžniku.
+Kvôli lepšej prehľadnosti a stručnosti budeme mriežkový graf bez prekážok nazývať aj {\sl obdĺžnik}.
+Intuitívne, kvôli jeho vizuálnej predstave. Jeho obsahom bude počet vrcholov patriacich do tohto obdĺžniku.
 
 Majme mriežkový graf bez~prekážok a~hľadajme najkratšiu cestu medzi bodmi $s=(x_s,y_s), t=(x_t,y_t)$.
 V~tomto prípade vieme nájsť najkratšiu cestu veľmi jednoducho.
@@ -77,7 +77,7 @@ Dôležitou otázkou je, na akých vlastnostiach obdĺžnikov záleží. Uvažuj
 \begin{example}
 Majme na mriežkovom grafe nájdené dva obdĺžniky, ktoré dovedna pokrývajú 10 vrcholov.
 Predstavme si tieto dva prípady. V prvom prípade prvý pokrýva 9 vrcholov, druhý 1. V druhom prípade obdĺžniky pokrývajú 6 vrcholov a 4 vrcholy.
-Chceme maximalizovať pravdepodobnosť toho, aby pri voľbe dvoch náhodných bodov boli obe body v rovnakom obdĺžniku.
+Chceme maximalizovať pravdepodobnosť toho, aby pri voľbe dvoch náhodných bodov boli oba body v rovnakom obdĺžniku.
 \end{example}
 
 Úlohu vieme zobecniť na klasickú pravdepodobnostno-optimalizačnú úlohu.
@@ -96,7 +96,7 @@ Alternatívne sa môžeme na úlohu pozerať ako na problém farbenia $n$ gulič
 Zapíšme túto úlohu formálne. Majme $n$-prvkovú množinu $Prv = \{x_1,\ldots,x_n\}$, $k$-prvkovú množinu ekvivalenčných tried $Ek = \{ek_1,\ldots, ek_k\}$, veľkosť 
 triedy $\|ek_i\|$ označme $k_i$ a zaveďme funkciu $f \colon Prv \to Ek$ ktorá roztriedi prvky do ekvivalenčných tried.
 
-Označme výberový priestor $\Omega = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b \}$
+Označme výberový priestor $\Omega = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b \}$.
 Udalosťou $A_i$ nazveme jav, v~ktorom oba prvky patria do tej istej ekvivalenčnej triedy $ek_i$,
 teda $A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = ek_i \}$.
 Jav $A = \bigcup_{i=1}^{k} A_i$ teda nastáva práve vtedy,
@@ -124,27 +124,27 @@ druhá suma sa nasčíta na $-n$, čo je konštanta, takže nám stačí maximal
 $\sum_{i = 1}^{k} {k_i^2}$.
 
 Teraz nám už len zostáva použiť nerovnosť
-$(a+b)^2 \geq a^2 + b^2$ ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie
+$(a+b)^2 \geq a^2 + b^2$, ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie
 a teda aj ekvivalenčné triedy musia byť čo najväčšie.
 
 Potrebujeme teda nájsť obdĺžniky s~najväčším možným obsahom. 
 V~programe tento problém rieši trieda Colorizator.
-Tá v grafe nájde najväčší obdĺžnik, a \uv{ofarbí} ho jednou farbou.
+Tá v grafe nájde najväčší obdĺžnik a \uv{ofarbí} ho jednou farbou.
 Na zvyšnom neofarbenom grafe znovu hľadá najväčší obdĺžnik a ofarbí ho inou farbou, atď.
-Farbenie skončí, keď obsah najväčsieho obdĺžnika je menší, ako 10.
+Farbenie skončí, keď obsah najväčsieho obdĺžnika je menší ako 10.
 
 
 \subsection{Nájdenie najväčšej jednotkovej podmatice}
 Ako sme si v~úvode povedali, mriežkovú mapu vieme reprezentovať ako maticu, čiže
 problém môžeme ekvivalentne zapísať ako problém hľadania najväčšej jednotkovej podmatice.
 Tento problém má riešenie v~čase lineárnom od~počtu vrcholov, takže nájdenie $k$ najväčších
-jednotkových matíc trvá $\BigO{k*n}$, kde $n$ je počet vrcholov matice.
+jednotkových matíc trvá $\BigO{k \cdot n}$, kde $n$ je počet vrcholov matice.
 
 Slovný popis algoritmu \ref{alg:largest_submatrix}: 
 V~prvom prechode maticou si u~každého vrcholu zapamätáme počet jedničiek naľavo od neho, vrátane daného vrcholu. 
 Tento prechod trvá lineárny čas.
 
-V~druhom prechode algoritmus prejde zaradom všetky stĺpce zľava doprava
+V~druhom prechode algoritmus prejde zaradom všetky stĺpce zľava doprava.
 Každý stĺpec prechádzame odhora nadol a zisťujeme, aký je najväčší obsah obdĺžnika, ktorého horný pravý roh je práve prechádzaný prvok.
 Pričom vy TODO??
 
@@ -153,7 +153,7 @@ Pričom vy TODO??
 \caption{Nájdenie najväčšej jednotkovej podmatice v matici  $m$x$n$}
 \label{alg:largest_submatrix}
 \begin{algorithmic}[1] % number one = line numbering is on
-\REQUIRE matica $M$ rozmerov $m x n$ nad telesom $\Z_2$
+\REQUIRE matica $M$ rozmerov $m \times n$ nad telesom $\Z_2$
 \ENSURE pravý dolný roh podmatice aj s jej rozmermi
 
 
