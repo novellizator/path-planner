@@ -464,16 +464,17 @@ struct HelpMap {
 	int xto;
 	int yto;
 };
-//HelpMap m("mapa.map", 1,1,7,1);
+HelpMap m("mapa.map", 1,1,7,1);
 //HelpMap m("Aftershock.map", 163,428,170,427);
 //HelpMap m("Aftershock.map", 1,130,9,113); //20.3136
-HelpMap m("Aftershock.map", 442,8,503,495); //726.247
+//HelpMap m("Aftershock.map", 442,8,503,495); //726.247
 //HelpMap m("Aftershock.map", 490, 264, 488, 260); //4.82843
 int main()
 {
-	freopen( "D:/vystup.txt", "w", stdout );
+	//freopen( "D:/vystup.txt", "w", stdout );
 	LoadMap(m.map, map, width, height);
 
+	printMap(map);
 	Colorizator col;
 	col.colorize();
 	vector<int> cMap = col.getColorizedMap();

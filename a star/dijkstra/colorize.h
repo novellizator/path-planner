@@ -8,9 +8,31 @@ using std::stack;
 using std::pair;
 using std::vector;
 
+
 struct dataAboutRectangle 
 {
-	dataAboutRectangle(int l = 0, int s = 0): left(l), sequenceSize(s) 
+	dataAboutRectangle(int l = 0, int u = 0, int d = 0): left(l), sequenceSizeUp(u), sequenceSizeDown(d) 
+	{}
+
+
+	int getArea() const
+	{
+		return left * (sequenceSizeUp + sequenceSizeDown + 1); // 1 = myself
+	}
+	
+	pair<int, int> getTLPoint() const // TODO, also getWidth, getHeight...
+	{
+		return std::make_pair(1, 1);
+	}
+	int left;
+	int sequenceSizeUp;
+	int sequenceSizeDown; 
+
+};
+
+struct dataAboutRectangle2 
+{
+	dataAboutRectangle2(int l = 0, int s = 0): left(l), sequenceSize(s) 
 	{}
 
 
@@ -149,6 +171,8 @@ private:
 		for (int c = 0; c < width; ++c)
 		{
 			stack<StackStruct> S;
+
+			// 1) go from the top all the way down
 			for (int r = 0; r < height; ++r)
 			{
 				int val = data[linearize(r,c)].left;
@@ -159,7 +183,7 @@ private:
 					StackStruct stackTop = S.top();
 					if (stackTop.val > val)
 					{
-						data[linearize(stackTop.row, c)].sequenceSize = r - stackTop.row;
+						data[linearize(stackTop.row, c)].sequenceSizeDown = r - stackTop.row - 1; //excluding actual row
 						S.pop();
 					}
 					else break;
@@ -176,7 +200,40 @@ private:
 				// pop all the elements greater than the element given now
 				StackStruct stackTop = S.top();
 		
-				data[linearize(stackTop.row, c)].sequenceSize = height - stackTop.row;
+				data[linearize(stackTop.row, c)].sequenceSizeDown = height - stackTop.row - 1;
+				S.pop();
+			}
+
+
+			// 2) and now reverse it
+			for (int r = height-1; r >= 0; --r)
+			{
+				int val = data[linearize(r,c)].left;
+
+				while (!S.empty())
+				{
+					// pop all the elements greater than the element given now
+					StackStruct stackTop = S.top();
+					if (stackTop.val > val)
+					{
+						data[linearize(stackTop.row, c)].sequenceSizeUp = stackTop.row - r - 1; //excluding actual row
+						S.pop();
+					}
+					else break;
+				}
+
+				// push the given element
+				S.push(StackStruct(r, val));
+
+			}
+
+			// empty the stack
+			while (!S.empty())
+			{
+				// pop all the elements greater than the element given now
+				StackStruct stackTop = S.top();
+		
+				data[linearize(stackTop.row, c)].sequenceSizeUp = stackTop.row;// == stackTop.row - (-1) - 1;
 				S.pop();
 			}
 		}
@@ -208,13 +265,28 @@ private:
 		return ret;
 	}
 
+
+
 	void colorizeRectangle(const pair<int, dataAboutRectangle>& rectangle, int color)
 	{
 		int vertex = rectangle.first;
 		xyLoc loc = coordinatize(vertex);
 
-		for (int c = loc.x - rectangle.second.left + 1; c <= loc.x; ++c)
-		
+		for (int c = loc.x - rectangle.second.left + 1; c <= loc.x; ++c)		
+		{
+			for (int r = loc.y - rectangle.second.sequenceSizeUp ; r <= loc.y + rectangle.second.sequenceSizeDown; ++r)
+			{
+				colorizedMap[linearize(r, c)] = color;
+			}
+		}
+	}
+
+	void colorizeRectangle2(const pair<int, dataAboutRectangle2>& rectangle, int color)
+	{
+		int vertex = rectangle.first;
+		xyLoc loc = coordinatize(vertex);
+
+		for (int c = loc.x - rectangle.second.left + 1; c <= loc.x; ++c)		
 		{
 			for (int r = loc.y; r < loc.y + rectangle.second.sequenceSize; ++r)
 			{
