@@ -35,7 +35,7 @@ namespace TomyMaps
 
 
         private Point TLPoint = new Point(0, 0);
-        private int squareSize = 1;
+        private int squareSize;
         private bool imageLoaded = false;
         private bool isBichromatic = false;
 
@@ -89,6 +89,7 @@ namespace TomyMaps
 
             setButtonsEnabled(true);
             setTLPoint(new Point(0, 0));
+            squareSize = viewPortControl1.Width / map.getRawMap()[0].Length;
             DrawBitmap(true);
 
         }
@@ -179,14 +180,7 @@ namespace TomyMaps
             }
         }
 
-        private void zoomIn_Click(object sender, EventArgs e)
-        {
-            Point charMapTLPoint = new Point(TLPoint.X / squareSize, TLPoint.Y / squareSize);
-            ++squareSize;
 
-            TLPoint = new Point(charMapTLPoint.X * squareSize, charMapTLPoint.Y * squareSize);
-            DrawBitmap();
-        }
 
         private void zoomOut_Click(object sender, EventArgs e)
         {
@@ -195,13 +189,53 @@ namespace TomyMaps
                 return;
             }
 
-            Point charMapTLPoint = new Point(TLPoint.X / squareSize, TLPoint.Y / squareSize);
-            --squareSize;
-            TLPoint = new Point(charMapTLPoint.X * squareSize, charMapTLPoint.Y * squareSize);
+            //Point charMapTLPoint = new Point(TLPoint.X / squareSize, TLPoint.Y / squareSize);
+            //--squareSize;
+            //TLPoint = new Point(charMapTLPoint.X * squareSize, charMapTLPoint.Y * squareSize);
 
+            // 1) compute he centerPoint - this won't change as long as possible
+            Point centerPoint = new Point(TLPoint.X + viewPortControl1.Width / 2, TLPoint.Y + viewPortControl1.Height / 2);
+            Point charMapCenterPoint = new Point(centerPoint.X / squareSize, centerPoint.Y / squareSize);
+
+            --squareSize;
+            Point newCenterPoint = new Point(charMapCenterPoint.X * squareSize, charMapCenterPoint.Y * squareSize);
+            TLPoint.X = Math.Max(0, newCenterPoint.X - viewPortControl1.Width / 2);
+            TLPoint.Y = Math.Max(0, newCenterPoint.Y - viewPortControl1.Height / 2);
 
             DrawBitmap();
         }
+
+
+        // zoomINn - the charCenter stays the same
+        private void zoomIn_Click(object sender, EventArgs e)
+        {
+            // 1) compute he centerPoint - this won't change
+            Point centerPoint = new Point(TLPoint.X + viewPortControl1.Width /2, TLPoint.Y + viewPortControl1.Height /2);
+            Point charMapCenterPoint = new Point(centerPoint.X / squareSize, centerPoint.Y / squareSize);
+
+            ++squareSize;
+
+            // 2) get back the new TLPoint
+            Point newCenterPoint = new Point(charMapCenterPoint.X * squareSize, charMapCenterPoint.Y * squareSize);
+            TLPoint = new Point(newCenterPoint.X - viewPortControl1.Width/2, newCenterPoint.Y - viewPortControl1.Height/2);
+
+            DrawBitmap();
+        }
+
+
+        // centralize & zoom in
+        private void viewPortControl1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Point distanceFromCenter = new Point(viewPortControl1.Width / 2 - e.X,
+                viewPortControl1.Height / 2 - e.Y);
+
+            TLPoint.X = Math.Max(0, TLPoint.X - distanceFromCenter.X);
+            TLPoint.Y = Math.Max(0, TLPoint.Y - distanceFromCenter.Y);
+
+            zoomIn_Click(sender, e);
+        }
+
+
 
         private void viewPortControl1_Paint(object sender, PaintEventArgs e)
         {
@@ -236,16 +270,6 @@ namespace TomyMaps
         }
 
 
-        // this is quite different from classical zoomIn button
-        private void viewPortControl1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            //Point distanceFromCenter = new Point(viewPortControl1.Width / 2 - e.X,
-            //    viewPortControl1.Height / 2 - e.Y);
-
-
-            zoomIn_Click(sender, e);
-
-        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
