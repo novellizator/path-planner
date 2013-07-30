@@ -217,8 +217,12 @@ namespace TomyMaps
 
             // 2) get back the new TLPoint
             Point newCenterPoint = new Point(charMapCenterPoint.X * squareSize, charMapCenterPoint.Y * squareSize);
-            TLPoint = new Point(newCenterPoint.X - viewPortControl1.Width/2, newCenterPoint.Y - viewPortControl1.Height/2);
+            //TLPoint = new Point(newCenterPoint.X - viewPortControl1.Width/2, newCenterPoint.Y - viewPortControl1.Height/2);
 
+            TLPoint.X = Math.Max(0, newCenterPoint.X - viewPortControl1.Width / 2);
+            TLPoint.Y = Math.Max(0, newCenterPoint.Y - viewPortControl1.Height/ 2);
+            //MessageBox.Show(centerPoint.ToString());
+            //MessageBox.Show(newCenterPoint.ToString());
             DrawBitmap();
         }
 

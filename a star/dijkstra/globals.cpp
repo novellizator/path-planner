@@ -1,25 +1,8 @@
 #include "globals.h"
-#include "Entry.h";
+#include "Entry.h"
 
 
-int linearize(int y, int x)
-{
-	return y * width + x;
-}
 
-int linearize(const xyLoc& coords)
-{
-    return coords.y * width + coords.x;
-}
-
-
-xyLoc coordinatize(int linear)
-{
-	xyLoc coords;
-	coords.x = linear % width;
-	coords.y = linear / width;
-	return coords;
-}
 
 bool ValidateLoc(const xyLoc& loc)
 {

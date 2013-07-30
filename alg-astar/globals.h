@@ -54,28 +54,10 @@ struct Node_info_t
 };
 
 // FIXME speed-up tip: inline
-//extern int linearize(const xyLoc& coords);
-//extern int linearize(int y, int x);
-//extern xyLoc coordinatize(int linear);
+extern int linearize(const xyLoc& coords);
+extern int linearize(int y, int x);
+extern xyLoc coordinatize(int linear);
 
-inline int linearize(int y, int x)
-{
-	return y * width + x;
-}
-
-inline int linearize(const xyLoc& coords)
-{
-    return coords.y * width + coords.x;
-}
-
-
-inline xyLoc coordinatize(int linear)
-{
-	xyLoc coords;
-	coords.x = linear % width;
-	coords.y = linear / width;
-	return coords;
-}
 
 
 extern bool ValidateLoc(const xyLoc& loc);
