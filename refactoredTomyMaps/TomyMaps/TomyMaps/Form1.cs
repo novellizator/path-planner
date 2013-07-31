@@ -15,9 +15,6 @@ namespace TomyMaps
         {
             zoomIn.Enabled = enabled;
             zoomOut.Enabled = enabled;
-            saveImage.Enabled = enabled;
-            checkBox1.Enabled = enabled;
-            loadData.Enabled = enabled;
         }
 
         public Form1()
@@ -61,63 +58,7 @@ namespace TomyMaps
             DrawBitmapAt(TLPoint, forcePrecomputing);
         }
 
-        private void loadMap_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-
-            ofd.Title = "Open Image File";
-            ofd.Filter = ".map|*.map" +
-                "|All types|*.*";
-
-            ofd.FilterIndex = 0;
-            ofd.FileName = "";
-            if (ofd.ShowDialog() != DialogResult.OK)
-                return;
-
-            try
-            {
-                map.Load(ofd.FileName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-
-            imageLoaded = true;
-
-            setButtonsEnabled(true);
-            setTLPoint(new Point(0, 0));
-            squareSize = viewPortControl1.Width / map.getRawMap()[0].Length;
-            DrawBitmap(true);
-
-        }
-
-        private void loadData_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Load the file containing information about the path and scanned vertices";
-            ofd.Filter = ".data| *.data";
-            ofd.Filter += "|All types|*.*";
-
-            if (ofd.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
-
-            try
-            {
-                map.LoadData(ofd.FileName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
-
-            DrawBitmap(true);
-        }
+   
 
 
         private void Form1_SizeChanged(object sender, EventArgs e)
@@ -184,6 +125,11 @@ namespace TomyMaps
 
         private void zoomOut_Click(object sender, EventArgs e)
         {
+            if (!imageLoaded)
+            {
+                return;
+            }
+
             if (squareSize == 1)
             {
                 return;
@@ -209,6 +155,10 @@ namespace TomyMaps
         // zoomINn - the charCenter stays the same
         private void zoomIn_Click(object sender, EventArgs e)
         {
+            if (!imageLoaded)
+            {
+                return;
+            }
             // 1) compute he centerPoint - this won't change
             Point centerPoint = new Point(TLPoint.X + viewPortControl1.Width /2, TLPoint.Y + viewPortControl1.Height /2);
             Point charMapCenterPoint = new Point(centerPoint.X / squareSize, centerPoint.Y / squareSize);
@@ -246,7 +196,72 @@ namespace TomyMaps
             DrawBitmap();
         }
 
-        private void saveImage_Click(object sender, EventArgs e)
+        private void bichromaticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bichromaticToolStripMenuItem.Checked = !bichromaticToolStripMenuItem.Checked;
+
+            isBichromatic = !isBichromatic;
+            DrawBitmap();
+        }
+
+        private void loadMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            ofd.Title = "Open Image File";
+            ofd.Filter = ".map|*.map" +
+                "|All types|*.*";
+
+            ofd.FilterIndex = 0;
+            ofd.FileName = "";
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+
+            try
+            {
+                map.Load(ofd.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+
+            imageLoaded = true;
+
+            setButtonsEnabled(true);
+            setTLPoint(new Point(0, 0));
+            squareSize = viewPortControl1.Width / map.getRawMap()[0].Length;
+            DrawBitmap(true);
+        }
+
+        private void loadPathToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = "Load the file containing information about the path and scanned vertices";
+            ofd.Filter = ".data| *.data";
+            ofd.Filter += "|All types|*.*";
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                map.LoadData(ofd.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            DrawBitmap(true);
+        }
+
+        private void saveVisibleAreaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Title = "Uložiť zobrazený výrez";
@@ -273,12 +288,24 @@ namespace TomyMaps
             bitmapToSave.Save(sfd.FileName);
         }
 
-
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            isBichromatic = !isBichromatic;
-            DrawBitmap();
+            this.Dispose();
+        }
+
+        private void zoomInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            zoomIn_Click(sender, e);
+        }
+
+        private void zoomOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            zoomOut_Click(sender, e);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Created by Tomas Novella, 2013");
         }
 
     }
