@@ -1,0 +1,10 @@
+#!/bin/sh
+
+for subor in "$@"
+do
+	printf "$subor\t"
+	for i in `awk '{print $3}' subor`; do
+		res=`echo 'scale=100; '$i'+'$res | bc` 
+	done 
+	printf "$res\n"
+done

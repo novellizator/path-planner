@@ -93,38 +93,44 @@ Ekvivalenčnú triedu predstavuje obdĺžnik a množinu predstavuje množina vrc
 Alternatívne sa môžeme na úlohu pozerať ako na problém farbenia $n$ guličiek pomocou $k$ farieb.
 \end{note}
 
-Zapíšme túto úlohu formálne. Majme $n$-prvkovú množinu $Prv = \{x_1,\ldots,x_n\}$, $k$-prvkovú množinu ekvivalenčných tried $Ek = \{ek_1,\ldots, ek_k\}$, veľkosť 
+
+Zapíšme túto úlohu formálne. Majme $n$-prvkovú množinu 
+\[Prv = \{x_1,\ldots,x_n\}\] $k$-prvkovú množinu ekvivalenčných tried \[Ek = \{ek_1,\ldots, ek_k\}.\] veľkosť 
 triedy $\|ek_i\|$ označme $k_i$ a zaveďme funkciu $f \colon Prv \to Ek$ ktorá roztriedi prvky do ekvivalenčných tried.
 
-Označme výberový priestor $\Omega = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b \}$.
+Označme výberový priestor \[\Omega = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b \}.\]
 Udalosťou $A_i$ nazveme jav, v~ktorom oba prvky patria do tej istej ekvivalenčnej triedy $ek_i$,
-teda $A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = ek_i \}$.
-Jav $A = \bigcup_{i=1}^{k} A_i$ teda nastáva práve vtedy,
+teda \[A_i = \{(x_a, x_b) | x_a, x_b \in Prv, a \not= b, f(x_a) = f(x_b) = ek_i \}.\]
+Jav \[A = \bigcup_{i=1}^{k} A_i\] teda nastáva práve vtedy,
  keď oba vybrané prvky patria do rovnakej triedy.
 
 Úlohou je navrhnúť funkciu $f$ tak, aby pravdepodobnosť $P[A]$ bola čo najvyššia. 
 Keďže udalosti $A_i$ sú nezlučiteľné, môžme písať 
-$P[A] = P[\bigcup_{i \in Ek} A_i] = \sum_{i \in Ek}P[A_i]$.
+\[P[A] = P[\bigcup_{i \in Ek} A_i] = \sum_{i \in Ek}P[A_i].\]
 
-Ak si pravdepodobnosť každého javu rozpíšeme, dostaneme 
-$\sum_{i \in Ek}P[A_i] = \sum_{i = 1}^{k} \frac{{{k_i} \choose {2}}}{{{|Prv|} \choose {2}}}$.
+Ak si pravdepodobnosť každého javu rozpíšeme, dostaneme
+\[\sum_{i \in Ek}P[A_i] = \sum_{i = 1}^{k} \frac{{{k_i} \choose {2}}}{{{|Prv|} \choose {2}}}.\] 
+
 
 
 Keďže chceme nejak rozvrhnúť prvky v triedach $ek_i$, a menovateľ je konštanta, môžme ho vynechať.
 
 Maximalizujeme hodnotu výrazu 
-$\sum_{i = 1}^{k} {{k_i} \choose {2}} = \sum_{i = 1}^{k} {\frac{k_i!}{(k_i -2 )!2!}} = \sum_{i = 1}^{k}{\frac{k_i (k_i-1)}{2}}$.
+\[\sum_{i = 1}^{k} {{k_i} \choose {2}} = \sum_{i = 1}^{k} {\frac{k_i!}{(k_i -2 )!2!}} = \sum_{i = 1}^{k}{\frac{k_i (k_i-1)}{2}}.\]
+
+
+
 Po vyškrtnutí konštanty a roznásobení sme dostali nasledujúcu optimalizačnú úlohu:
-maximalizovať $\sum_{i = 1}^{k} {k_i^2 - k_i}$ za podmienok $\sum_{k=1}^{k}k_i = n$,
-kde $k_i \in \N_0$.
+maximalizovať \[\sum_{i = 1}^{k} {k_i^2 - k_i}\] za podmienok \[\sum_{k=1}^{k}k_i = n,k_i \in \N_0.\]
+
 
 Sumu si vieme rozpísať ako 
-$\sum_{i = 1}^{k} {k_i^2 - k_i} = \sum_{i = 1}^{k} {k_i^2} + \sum_{i = 1}^{k}{-k_i}$
-druhá suma sa nasčíta na $-n$, čo je konštanta, takže nám stačí maximalizovať 
-$\sum_{i = 1}^{k} {k_i^2}$.
+\[\sum_{i = 1}^{k} {k_i^2 - k_i} = \sum_{i = 1}^{k} {k_i^2} + \sum_{i = 1}^{k}{-k_i}.\]
+Druhá suma sa nasčíta na $-n$, čo je konštanta, takže nám stačí maximalizovať 
+\[\sum_{i = 1}^{k} {k_i^2}.\]
 
 Teraz nám už len zostáva použiť nerovnosť
-$(a+b)^2 \geq a^2 + b^2$, ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie
+\[(a+b)^2 \geq a^2 + b^2,\] ktorá platí pre $a,b \geq 0$, z ktorej jasne vyplýva, že potrebujeme spraviť ľubovoľné $k_i$ čo najväčšie
 a teda aj ekvivalenčné triedy musia byť čo najväčšie.
 
 Potrebujeme teda nájsť obdĺžniky s~najväčším možným obsahom. 

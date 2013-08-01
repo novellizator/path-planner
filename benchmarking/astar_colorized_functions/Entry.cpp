@@ -171,7 +171,7 @@ public:
 
 bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 {
-
+	verticesScanned = 0;
 	vector<Node_info_t> * landmarksOutputBitmap = (vector<Node_info_t> *) data;
 	int from = linearize(s);
 	int to = linearize(g);
@@ -180,6 +180,9 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 	{
 
 		setSameColorPath(path, s, g);
+		
+		// comment this line in proper benchmark for speed
+		cout << "verticesScaned\t"<<path.size() << endl;
 		return true;
 	}
 
@@ -189,7 +192,9 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 	//BucketQueue Q;
     
     Node_t fromV(from, 0.0);
-    Q.push(fromV);
+    Q.push(fromV); 
+	++verticesScanned;
+	
 	outputMap[from].distance = 0.0;
 	outputMap[from].precursorCoords = 0;
 
@@ -280,7 +285,7 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 		std::reverse(path.begin(), path.end());
 
 	}
-
+	cout << "verticesScaned\t"<<path.size() << endl;
 	return true;
 }
 //-------- END OF A*
