@@ -140,13 +140,17 @@ problém môžeme ekvivalentne zapísať ako problém hľadania najväčšej jed
 Tento problém má riešenie v~čase lineárnom od~počtu vrcholov, takže nájdenie $k$ najväčších
 jednotkových matíc trvá $\BigO{k \cdot n}$, kde $n$ je počet vrcholov matice.
 
+Algoritmus je popísaný v blogposte od A. Agrawala \cite{agrawal_largest_submatrix}.
 Slovný popis algoritmu \ref{alg:largest_submatrix}: 
-V~prvom prechode maticou si u~každého vrcholu zapamätáme počet jedničiek naľavo od neho, vrátane daného vrcholu. 
-Tento prechod trvá lineárny čas.
+V~prvom prechode maticou si u~každého vrcholu zapamätáme počet jedničiek naľavo od neho, vrátane daného vrcholu.  
+Tento počet jedničiek môžme nazvať aj výškou riadku vzhľadom k danému vrcholu. Výšku riadku vzhľadom k $p$ označujeme v programe $nalavoOdPrvku(p)$.
+Tento prechod trvá lineárny čas. 
 
-V~druhom prechode algoritmus prejde zaradom všetky stĺpce zľava doprava.
-Každý stĺpec prechádzame odhora nadol a zisťujeme, aký je najväčší obsah obdĺžnika, ktorého horný pravý roh je práve prechádzaný prvok.
-Pričom vy TODO??
+V~druhom prechode algoritmus prechádza zaradom všetky stĺpce zľava doprava. V prechádzanom stĺpci prejde každý vrchol $v$ a zisťuje počet vrcholov nad (uloží do $DlzkaSekvencieNahor$) a pod ($DlzkaSekvencieNadol$) vrcholom $v$, ktoré majú výšku riadku aspoň $nalavoOdPrvku(v)$. 
+
+Obsah najväčšej podmatice vzhľadom k $v$ teda vypočítame ako\\
+$ nalavoOdPrvku(v) \cdot (sequenceSizeUp + 1 + sequenceSizeDown)$.
+
 
 
 \begin{algorithm}
@@ -154,7 +158,7 @@ Pričom vy TODO??
 \label{alg:largest_submatrix}
 \begin{algorithmic}[1] % number one = line numbering is on
 \REQUIRE matica $M$ rozmerov $m \times n$ nad telesom $\Z_2$
-\ENSURE pravý dolný roh podmatice aj s jej rozmermi
+\ENSURE polia DlzkaSekvencieNadol a DlzkaSekvencieNahor, z ktorých vieme vypočítať veľkosť podmatice
 
 
 \FORALL {prvok $p$, $p \in M$}
@@ -166,8 +170,10 @@ Pričom vy TODO??
 \ENDFOR
 
 \FOR {stĺpec $s$, $s \in M$ }
-	\STATE Vytvor nový zásobník dvojice čísel (riadok, nalavoOdPrvku)
-	\FOR {riadok $r$, $r \in M$ }
+	\STATE Vytvor nový zásobník na dvojice čísel (riadok, nalavoOdPrvku)
+
+	\STATE // prejdem stĺpec zhora nadol
+	\FOR {riadok $r$, $r \in M$, prechádzaný zhora nadol}
 		\STATE $p \leftarrow (s, r)$
 		
 		\WHILE {Zásobník je neprázdny}
@@ -175,7 +181,7 @@ Pričom vy TODO??
 			\IF {$top$.nalavoOdPrvku $>$ nalavoOdPrvku(p)}
 						
 				\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)
-				\STATE DlzkaSekvencie(prvokZoZasobnika) = r - prvokZoZasobnika.r
+				\STATE DlzkaSekvencieNadol(prvokZoZasobnika) = r - prvokZoZasobnika.r -1
 			
 			\ELSE
 				\STATE Vložím prvok $prvokZoZasobnika$ do zásobníka
@@ -190,9 +196,11 @@ Pričom vy TODO??
 	\WHILE {Zásobník je neprázdny}
 		\STATE vyberiem prvok $top$ z vrcholu zásobníka
 		\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)
-		\STATE DlzkaSekvencie(prvokZoZasobnika) = m - prvokZoZasobnika.r
+		\STATE DlzkaSekvencieNadol(prvokZoZasobnika) = m - prvokZoZasobnika.r - 1
 		
 	\ENDWHILE
+
+	
 \ENDFOR
 
 
@@ -202,5 +210,42 @@ Pričom vy TODO??
 \end{algorithm}
 
 
+\begin{algorithm}
 
-TODO: pridaj obrazok mapy a jej dekompozicie opdla farieb
+\caption{pokračovanie}
+\begin{algorithmic}
+
+	
+	
+	\STATE // prejdem stĺpec zdola nahor
+
+	\FOR {riadok $r$, $r \in M$, prechádzaný zdola nahor }
+		\STATE $p \leftarrow (s, r)$
+		
+		\WHILE {Zásobník je neprázdny}
+			\STATE vyberiem prvok $top$ z vrcholu zásobníka
+			\IF {$top$.nalavoOdPrvku $>$ nalavoOdPrvku(p)}
+						
+				\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)
+				\STATE DlzkaSekvencieNahor(prvokZoZasobnika) = prvokZoZasobnika.r - r - 1
+			
+			\ELSE
+				\STATE Vložím prvok $prvokZoZasobnika$ do zásobníka
+				\STATE break
+			\ENDIF
+		\ENDWHILE
+		
+		\STATE Do zásobníka vložím dvojicu (r, nalavoOdPrvku(p))
+	\ENDFOR
+	
+	\STATE // prešli sme stĺpec, teda skončíme
+	\WHILE {Zásobník je neprázdny}
+		\STATE vyberiem prvok $top$ z vrcholu zásobníka
+		\STATE prvokZoZasobnika $\leftarrow$ ($top$.r, s)
+		\STATE DlzkaSekvencieNahor(prvokZoZasobnika) = prvokZoZasobnika.r
+		
+	\ENDWHILE
+
+
+\end{algorithmic}
+\end{algorithm}
