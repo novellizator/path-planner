@@ -171,13 +171,14 @@ public:
 
 bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 {
+
 	vector<Node_info_t> * landmarksOutputBitmap = (vector<Node_info_t> *) data;
 	int from = linearize(s);
 	int to = linearize(g);
 
 	if (isSameColor(s, g))
 	{
-	    cout << "YEAH SAME SQUARE" << endl;
+
 		setSameColorPath(path, s, g);
 		return true;
 	}
@@ -288,6 +289,7 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 void readVector(vector<int>& colorizedMap, const char* filename)
 {
 	FILE * file = fopen(filename, "r");
+
 	for (int i = 0; i != width*height; ++i)
 	{
 		int num;
@@ -315,7 +317,7 @@ void PreprocessMap(std::vector<bool> &bits, int w, int h, const char *filename)
 	height = h;
 
 	colorizedMap.resize(width * height, DEFAULT_COLOR);
-
+	colorize();
 	writeVector(colorizedMap, filename);
 }
 

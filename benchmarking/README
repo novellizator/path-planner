@@ -1,0 +1,20 @@
+Vysvetlenia a postup pri testovani:
+
+
+v kazdom priecinku sa nachadza jedna implementacia algoritmu.
+treba ich najprv skompilovat pouzitim prikazu make
+
+potom treba vysledne binarky presunut do priecinka justExecutables -- tam sa nachadzaju mapy a scenaria.
+
+nasledne treba zavoalt skript precompileMaps, ktory vytvori dane pomocne datove struktury
+ v tvare NAZOVALGORITMU-NAZOVMAPY.map.pre
+tento krok je casovo narocny, preto som nechal vysledne mapy v priecinku a netreba teda tento krok aplikovat.
+
+k samotnemu benchmarkingu sluzia utility benchmarkAftershock a benchmarkmaze
+vysledky budu v priecinku results.
+
+Demonstrativne som ich tam aj nechal.
+
+
+
+Poznamka: programy pracuju len na 64 bitovej architekture.

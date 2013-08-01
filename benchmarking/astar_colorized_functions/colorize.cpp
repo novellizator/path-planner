@@ -172,6 +172,7 @@ using namespace std;
 		float debug_area = 0;
 		int color = DEFAULT_COLOR + 1;
 		pair<int, dataAboutRectangle> largestRectangle = findLargestRectangle();
+
 		while (largestRectangle.second.getArea() >= SMALLEST_COLORIZED_RECTANGLE)
 		{
 			colorizeRectangle(largestRectangle, color++);

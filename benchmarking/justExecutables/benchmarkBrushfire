@@ -1,0 +1,28 @@
+#!/bin/bash
+
+printBenchmarkTest()
+{
+    printf "BENCHMARK\tprogram\t$1\tmap\t$2\tscenario\t$3\ttime$2\t\n"
+    ./benchmarkTest $1 $2 $3
+
+}
+
+
+printBenchmarkTest astar_colorized_class Brushfire.map shortBrushfire.map.scen
+printBenchmarkTest astar_colorized_class Brushfire.map longBrushfire.map.scen
+
+
+printBenchmarkTest astar_colorized_functions Brushfire.map shortBrushfire.map.scen
+printBenchmarkTest astar_colorized_functions Brushfire.map longBrushfire.map.scen
+
+printBenchmarkTest astar_nocolor Brushfire.map  shortBrushfire.map.scen
+printBenchmarkTest astar_nocolor Brushfire.map longBrushfire.map.scen
+
+printBenchmarkTest dijkstra_bucket Brushfire.map shortBrushfire.map.scen
+printBenchmarkTest dijkstra_bucket Brushfire.map longBrushfire.map.scen
+
+printBenchmarkTest dijkstra_stdheap Brushfire.map shortBrushfire.map.scen
+printBenchmarkTest dijkstra_stdheap Brushfire.map longBrushfire.map.scen
+
+printBenchmarkTest anderson Brushfire.map shortBrushfire.map.scen
+printBenchmarkTest anderson Brushfire.map longBrushfire.map.scen

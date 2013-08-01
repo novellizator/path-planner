@@ -1,0 +1,5 @@
+./anderson -pre Brushfire.map shortBrushfire.map.scen
+./anderson -pre Aftershock.map shortAftershock.map.scen
+
+./astar_colorized_class -pre Brushfire.map shortBrushfire.map.scen
+./astar_colorized_class -pre Aftershock.map shortAftershock.map.scen

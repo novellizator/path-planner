@@ -3,10 +3,26 @@
 \section{Kritériá a popis testovania}
 \subsection{Vstupné dáta}
 Častým problémom pri vzájomnom porovnávaní algoritmov je
-nájsť testovaciu vzorku, ktorá mi otestovala beh algoritmu na širokej škále grafov.
+nájsť testovaciu vzorku, ktorá by otestovala beh algoritmu na širokej škále grafov.
 Ako bolo v úvode spomenuté, súťaž {\sl Grid-Based Path Planning Competition} poskytuje množstvo máp rôznych typov a rozmerov,
-na ktorých sa algoritmy dajú testovať. Konkrétny popis typov máp sa nachádza v \cite{sturtevant2012benchmarks}.
+na ktorých sa algoritmy dajú testovať. Formát máp popisuje napr. \cite{sturtevant2012benchmarks}.
 
+Programy boli testované na dvoch mapách. Ich grafická reprezentácia bola 
+vytvorená pomocou programu T-map(popis programu sa nachádza v prílohe \ref{userdoc}) 
+a~môžme ju vidieť na obrázkoch Obr.~\ref{fig:aftershock_map} a~Obr.~\ref{fig:brushfire_map}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{./img/Aftershock.png}
+\caption{Graf \uv{Aftershock}}
+\label{fig:aftershock_map}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{./img/Brushfire.png}
+\caption{Graf \uv{Brushfire}}
+\label{fig:brushfire_map}
+\end{figure}
 \subsection{Testovacie kritériá}
 Testovacie kritéria sú podobné ako testovacie kritériá v súťaži. 
 Odlišujú sa z dvoch dôvodov. TODO?? prvych 20 krokov je nezmysel + pridal som niektore veci navyse
