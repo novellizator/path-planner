@@ -178,7 +178,7 @@ Pridanie dvoch prvkov je znázornené na obrázku \ref{fig:priehradky_i}. Priehr
 
 
 Zmazanie prvku vidíme na obrázku \ref{fig:priehradky_i_d1}.
-Celé zmazanie spočíva v inkrementácii ukazovateľa na vrch priehradky.
+Celé zmazanie spočíva v inkrementácii ukazovateľa na vrchol haldy.
 
 \begin{figure}[h]
 \centering
@@ -224,7 +224,7 @@ kým Dijkstrov algoritmus vyberá z haldy vrcholy s neklesajúcou vzdialenosťou
 Použitá heuristická funkcia má dopad na počet prehľadaných vrcholov a teda do zásadnej miery ovplyvňuje výkon algoritmu.
 
 \subsection{Heuristická funkcia}
- Heuristická funkcia nemôže byť ľubovoľná. Funkcia musí predstavovať tzv. {\sl prípustný potenciál}. Podrobnejší popis sa nachádza napr. na \cite{mares07} \cite{golberg01} \cite{goldbergharrelson05}. Ďalej sa budeme venovať len funkciám, ktoré túto podmienku splňujú.
+ Heuristická funkcia nemôže byť ľubovoľná. Funkcia musí predstavovať tzv. {\sl prípustný potenciál}. Podrobnejší popis sa nachádza napr. v \cite{mares07} \cite{golberg01} \cite{goldbergharrelson05}. Ďalej sa budeme venovať len funkciám, ktoré túto podmienku splňujú.
 
 
 Najčastejšie heuristické funkcie sú tieto:
@@ -238,11 +238,9 @@ Najčastejšie heuristické funkcie sú tieto:
 \paragraph{Euklidovská vzdialenosť}
 
 je najjednoduchšie implementovateľná heuristická funkcia.
- Na väčšine jednoduchých grafov s malým počtom prekážok vracia dobré výsledky.
+ Na jednoduchých grafoch s malým počtom prekážok vracia relatívne dobré výsledky.
   Problém nastáva na grafoch, kde začiatok a koniec cesty sú geometricky blízko seba, hoci ich skutočná vzdialenosť je veľká.
 Príklad vidíme na obrázku \ref{fig:antieuclid}.
-TODO?? pozor na blbe rozdelenie obdlznikov - ja to ratam 
-aj cez sikme hrany atd atd
 
 
 \begin{figure}[H]
@@ -254,19 +252,34 @@ aj cez sikme hrany atd atd
 
 
 \paragraph{Landmarks a trojuholníková nerovnosť}
-Nevýhoda použitia euklidovskej heuristickej funkcie je na obecných mapách zjavná. To motivovalo vymyslieť heuristiku, ktorá lepšie odráža vzdialenosti v grafe.
+Nevýhoda použitia euklidovskej heuristickej funkcie je na obecných mriežkových grafoch zjavná. To motivovalo vymyslieť heuristiku, ktorá lepšie odráža vzdialenosti v grafe.
 
 Jednou z týchto heuristík je počítanie dolného odhadu pomocou tzv. {\sl landmarks}. 
-Landmarks sú vybrané vrcholy v grafe, z ktorých je následne prepočítaná najkratšia vzdialenosť do všetkych ostatných
+Landmarks sú vybrané vrcholy v grafe, z ktorých je následne prepočítaná najkratšia vzdialenosť do všetkých ostatných
 vrcholov grafu. 
-Kedže jeden prechod grafu vieme Dijkstrovým algoritmom s priehradkami vykonať za lineárny čas, predpočítanie $ k $ landmarkov trvá $ \BigO{kn} $, kde $n$ značí počet vrcholov grafu.
+Keďže jeden prechod grafu vieme Dijkstrovým algoritmom s priehradkami vykonať za lineárny čas, predpočítanie $ k $ landmarkov trvá $ \BigO{kn} $, kde $n$ značí počet vrcholov grafu.
 
+Na výpočet dolného odhadu vzdialenosti z vrcholu $u$ do vrcholu $t$ cez landmark $l$ využijeme trojuholníkovú nerovnosť.
+ Vďaka nej platí $d(u, l) + d(u, t) > d(l, t)$ a taktiež
+  $d(l, t) + d(u, t) > d(u, l)$.  
+  Z toho vyplýva $d(u, t) > \max  \{d(l,t)-d(l,u), d(l,u)-d(l,t)\}$, kde $d(x, y)$ označuje najkratšiu vzdialenosť z bodu  $x$ do bodu $y$. Pre väčšiu prehľadnosť označme dolný odhad vzdialenosti $d(u, t)$ získaný výpočtom cez landmark $l$, ako $d_l(u, t)$
+  Túto skutočnosť zobrazuje obrázok \ref{fig:landmarks_triangle_inequality}.
 
-TODO?? ako to funguje...
+\begin{figure}[H]
+\centering
+\includegraphics[width=3.5cm]{./img/landmarks.eps}
+\caption{Hľadáme dolný odhad najkratšej cesty z $u$ do $t$, použijúc landmark $l$}
+\label{fig:landmarks_triangle_inequality}
+\end{figure}
+
+Pri použití viacerých landmarkov(nazvime ich $l_1,\dots, l_k$) vieme zistiť kvalitnejší
+dolný odhad vzdialenosti. 
+ ktorý získame ako maximum dolných odhadov cez tieto landmarky. Konkrétne $d(u, t) > \max_{i \in {1,\dots, k}} \{d_{l_i}(u, t)\}$.
+
 
 \subparagraph{Možnosti voľby landmarkov}
 
-Pri voľbe landmarkov sú dva faktory: počet a rozmiestnenie.
+Pri voľbe landmarkov zvažujeme dva faktory: počet a rozmiestnenie.
 
 \begin{example}[na počte záleží]
 Pokiaľ zvolíme málo landmarkov, tak dolný odhad nebude presný.
@@ -274,9 +287,13 @@ Pokiaľ ich zvolíme priveľa, tak prepočet vzdialenosti cez každý landmark p
 \end{example}
 
 \begin{example}[na rozmiestnení záleží]
+\label{ex:landmark_positioning}
 Pokiaľ zvolíme všetky landmarky hneď pri sebe, tak heuristika
-nám nebude vraciať dostatočne presné dolné odhady na vzdialenosť vrcholov, ktoré sú ďaleko od landmarkov.
+nám nebude vracať dostatočne presné dolné odhady na vzdialenosť vrcholov, ktoré sú ďaleko od landmarkov.
 \end{example}
 
-
-TODO??potencialy euklid landmarks landmark selection priblem s priehradkami
+\begin{note}
+Experimentálne sme zistili, že algoritmus funguje najrýchlejšie, ked používame 6 landmarkov.
+Aby landmarky dávali kvalitné dolné odhady (a teda aby nanastal problém popísaný v poznámke \ref{ex:landmark_positioning}), 
+získali sme ich pomocou tohto algoritmu: náhodne sme zvolili 3 vrcholy grafu a prehlásili sme ich za landmarky. Potom sme v týchto vrcholoch spustili Dijkstrov algoritmus, ktorým sme našli 3 najvzdialejšie body od týchto landmarkov. Tie sme tiež prehlásili za landmarky.
+\end{note}

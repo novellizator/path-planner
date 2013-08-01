@@ -232,7 +232,7 @@ namespace TomyMaps
 
             setButtonsEnabled(true);
             setTLPoint(new Point(0, 0));
-            squareSize = viewPortControl1.Width / map.getRawMap()[0].Length;
+            squareSize = Math.Max(1, viewPortControl1.Width / map.getRawMap()[0].Length);
             DrawBitmap(true);
         }
 

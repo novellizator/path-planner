@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ $# -ne 2 ]
+then
+    echo "Usage: `basename $0` <executable name> <map file>"
+    exit $E_BADARGS
+fi
+
+ext=".scen"
+./`basename $1` -run $2 $2$ext | awk '{sum +=$3} END{print sum}'
+
+# ./main -run Aftershock.map Aftershock.map.scen | awk '{sum +=$3} END{print sum}'
