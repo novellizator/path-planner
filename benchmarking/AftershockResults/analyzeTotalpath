@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for subor in "$@"
+do
+	res=`awk '{sum +=$9;} END{print sum}' $subor`
+	printf "$subor\t$res\n"
+done

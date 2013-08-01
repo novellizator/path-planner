@@ -8,7 +8,7 @@ Ako bolo v úvode spomenuté, súťaž {\sl Grid-Based Path Planning Competition
 na ktorých sa algoritmy dajú testovať. Formát máp popisuje napr. \cite{sturtevant2012benchmarks}.
 
 Programy boli testované na dvoch mapách. Ich grafická reprezentácia bola 
-vytvorená pomocou programu T-map(popis programu sa nachádza v prílohe \ref{userdoc}) 
+vytvorená pomocou programu T-map (popis programu sa nachádza v prílohe \ref{userdoc}) 
 a~môžme ju vidieť na obrázkoch Obr.~\ref{fig:aftershock_map} a~Obr.~\ref{fig:brushfire_map}.
 
 \begin{figure}[h]
@@ -24,29 +24,29 @@ a~môžme ju vidieť na obrázkoch Obr.~\ref{fig:aftershock_map} a~Obr.~\ref{fig
 \label{fig:brushfire_map}
 \end{figure}
 \subsection{Testovacie kritériá}
-Testovacie kritéria sú podobné ako testovacie kritériá v súťaži. 
-Odlišujú sa z dvoch dôvodov. TODO?? prvych 20 krokov je nezmysel + pridal som niektore veci navyse
+Algoritmy testujeme podľa nasledovných kritérií:
 
 \begin{itemize}
 \item Počet prehľadaných vrcholov.
 \item Rýchlosť nájdenia cesty.
+\item Optimalita cesty. 
 \end{itemize}
 
 
 \subsection{Testované algoritmy}
 Testovať budeme nasledujúce algoritmy:
 \begin{itemize}
-\item Dijkstrov algoritmus nad binárnou haldou.
-\item Dijkstrov algoritmus nad priehradkovou haldou.
-\item A* používajúc rôzny počet landmarkov.
-\item A* používajú optimálny počet landmarkov a obdĺžnikovú dekompozíciu.
-\item TODO?? nieco dalsie blablabla - cudzie algoritmy zo sutaze
+\item Dijkstrov algoritmus nad binárnou haldou (označíme Dijkstra s haldou).
+\item Dijkstrov algoritmus nad priehradkovou haldou (označime Dijkstra s BucketQueue).
+\item A* používajúci 6 landmarkov.
+\item A* používajúci 6 landmarkov a taktiež obdĺžnikovú dekompozíciu, popísanú v kapitole 3.
+\item Anderson -- s prehľadom najrýchlejší algoritmus, ktorý vyhral súťaž.
 \end{itemize}
 
 
 \subsection{Kompilácia}
 Kód bude kompilovaný kompilátorom g++. Bude porovnaná
-rýchlosť behu programu pri kompilácii s direktívami \emph{g++ -march=native -O3}, čo zaručuje maximálnu rýchlosť a efektivitu behu kódu.
+rýchlosť behu programu pri kompilácii s direktivou \emph{g++ -O3}, čo zaručuje maximálnu rýchlosť a efektivitu behu programu.
 
 \subsection{Typy máp a ciest}
 Algoritmy budú testovane na troch mapách. 
@@ -54,16 +54,16 @@ Ich grafická reprezentácia je vytvorená v programe T-maps.
 Popis programu sa nachádza v prílohách ~\ref{userdoc}~\ref{programdoc}.
 
 
+\section{Výsledky}
+\begin{figure}[H]
+	\begin{tabular}{|l | c|}
+	\hline
+	Dijkstra s haldou & 111\\
+	Dijkstra s bucketqueue & 222\\
+	\hline
+	\end{tabular}
+	\caption{Výsledky obsahujúce počet prejdených vrcholov}
+	\label{fig:verticesscanned_result}
+\end{figure}
 
 
-
-
-
-(ASK?? poet prehladanych vrcholov nie je kriterium, ktore dokazem testovat na cudzich algoritmoch - musel by smo do nich zahat a pridavat tam funkciu, ktora to pocita - co mam robit? mam pocet vrcholov testovat len na mojich algoritmoch?)
-
-
-
-
-Na porovnávanie využijeme benchmark
-
-TODO?? bibliografia styl - priezvisko,meno - alebo naopak???

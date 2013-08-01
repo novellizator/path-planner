@@ -1,0 +1,12 @@
+anderson-longAftershock.map.scen.out	144854
+anderson-shortAftershock.map.scen.out	22057.2
+astar_colorized_class-longAftershock.map.scen.out	144527
+astar_colorized_class-shortAftershock.map.scen.out	8738.43
+astar_colorized_functions-longAftershock.map.scen.out	144527
+astar_colorized_functions-shortAftershock.map.scen.out	8738.43
+astar_nocolor-longAftershock.map.scen.out	144527
+astar_nocolor-shortAftershock.map.scen.out	8743.7
+dijkstra_bucket-longAftershock.map.scen.out	144046
+dijkstra_bucket-shortAftershock.map.scen.out	8710.17
+dijkstra_stdheap-longAftershock.map.scen.out	548861
+dijkstra_stdheap-shortAftershock.map.scen.out	111010

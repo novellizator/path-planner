@@ -1,0 +1,12 @@
+anderson-longBrushfire.map.scen.out	.001747
+anderson-shortBrushfire.map.scen.out	.000359
+astar_colorized_class-longBrushfire.map.scen.out	21.634195
+astar_colorized_class-shortBrushfire.map.scen.out	.284109
+astar_colorized_functions-longBrushfire.map.scen.out	15.670339
+astar_colorized_functions-shortBrushfire.map.scen.out	.197504
+astar_nocolor-longBrushfire.map.scen.out	15.599357
+astar_nocolor-shortBrushfire.map.scen.out	.283890
+dijkstra_bucket-longBrushfire.map.scen.out	4.315670
+dijkstra_bucket-shortBrushfire.map.scen.out	.329444
+dijkstra_stdheap-longBrushfire.map.scen.out	3.803920
+dijkstra_stdheap-shortBrushfire.map.scen.out	4.554813
