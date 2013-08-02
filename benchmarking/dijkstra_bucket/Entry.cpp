@@ -71,7 +71,10 @@ bool Dijkstra(xyLoc s, std::vector<Node_info_t>& outputMap)
         Q.pop();
 
 		outputMap[vertex.coords].isClosed = true;
-	
+		if (vertex.coords == to)
+		{
+			break;
+		}
 		// check all the neighbors
 		for (int i = 0; i < neighborsCount; ++i)
 		{
