@@ -4,17 +4,29 @@ Vysvetlenia a postup pri testovani:
 v kazdom priecinku sa nachadza jedna implementacia algoritmu.
 treba ich najprv skompilovat pouzitim prikazu make
 
-potom treba vysledne binarky presunut do priecinka justExecutables -- tam sa nachadzaju mapy a scenaria.
+potom treba vysledne binarky presunut 
+do priecinka justExecutables -- tam sa nachadzaju mapy a scenaria(mnoziny dvojich vstup vystup).
 
 nasledne treba zavoalt skript precompileMaps, ktory vytvori dane pomocne datove struktury
- v tvare NAZOVALGORITMU-NAZOVMAPY.map.pre
-tento krok je casovo narocny, preto som nechal vysledne mapy v priecinku a netreba teda tento krok aplikovat.
+ pre algoritmy
 
-k samotnemu benchmarkingu sluzia utility benchmarkAftershock a benchmarkmaze
-vysledky budu v priecinku results.
 
-Demonstrativne som ich tam aj nechal.
+k samotnemu benchmarkingu sluzia utility benchmarkAftershock a benchmarkBrushfire
+vysledky treba umiestnit do priecinku AftershockResults resp. BrushfireResults.
+Tam sa nachadzaju pomocne skripty, ktore sa volaju v tvare:
+./analyzeTotalpath *.out
+./analyzeTotaltime *.out
+
+Posledny vysledkovy priecinok je VerticesResults, ktory obsahuje vysledky o pocte 
+navstivenych vrcholov
+
+Vysledne vystupy su umiestnene s RESULTS.
+
+
 
 
 
 Poznamka: programy pracuju len na 64 bitovej architekture.
+Poznamka: astar_colorized_class sa od astar_colorized_functions odlisuju v tom, ze v prvom
+pripade sa o farbenie stara trieda, pricom v druhom pripade su to funkcie. Druhy pripad bol rychlejsi
+a teda ten som aj benchmarkoval.

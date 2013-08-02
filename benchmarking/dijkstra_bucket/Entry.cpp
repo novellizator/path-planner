@@ -71,10 +71,7 @@ bool Dijkstra(xyLoc s, std::vector<Node_info_t>& outputMap)
         Q.pop();
 
 		outputMap[vertex.coords].isClosed = true;
-		if (vertex.coords == to)
-		{
-			break;
-		}
+
 		// check all the neighbors
 		for (int i = 0; i < neighborsCount; ++i)
 		{
@@ -183,13 +180,14 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 	//	return true;
 	//}
 
-
+	verticesScanned = 0;
 	vector<Node_info_t> outputMap(width * height, Node_info_t());
     //priority_queue<Node_t, vector<Node_t>, Comp> Q;
 	BucketQueue Q;
     
     Node_t fromV(from, 0.0);
-    Q.push(fromV);
+    Q.push(fromV); 
+	++verticesScanned;
 	outputMap[from].distance = 0.0;
 	outputMap[from].precursorCoords = 0;
 
@@ -247,6 +245,7 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 			if (lengthThroughV < outputMap[neighborCoords].distance)
 			{	
 				Q.push(Node_t(neighborCoords, lengthThroughV));
+				verticesScanned++;
 				outputMap[neighborCoords].precursorCoords = vertex.coords;
 				outputMap[neighborCoords].distance = vertex.distance + neighborDistances[i];
 			}
@@ -279,7 +278,7 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 		std::reverse(path.begin(), path.end());
 
 	}
-
+	cout << "verticesscanned\t"<< verticesScanned<< endl;
 	return true;
 }
 //-------- END OF A*

@@ -1,0 +1,5 @@
+for subor in $@
+do
+	res=`awk '{if(NF==2){sum +=$2} } END{print sum}' $subor`
+	printf "$subor\t$res\n"
+done

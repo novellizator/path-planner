@@ -1,0 +1,12 @@
+anderson-longBigGameHunters.map.scen.out	135411
+anderson-shortBigGameHunters.map.scen.out	27717.8
+astar_colorized_class-longBigGameHunters.map.scen.out	128885
+astar_colorized_class-shortBigGameHunters.map.scen.out	8769.46
+astar_colorized_functions-longBigGameHunters.map.scen.out	128885
+astar_colorized_functions-shortBigGameHunters.map.scen.out	8769.46
+astar_nocolor-longBigGameHunters.map.scen.out	128885
+astar_nocolor-shortBigGameHunters.map.scen.out	8774.98
+dijkstra_bucket-longBigGameHunters.map.scen.out	128398
+dijkstra_bucket-shortBigGameHunters.map.scen.out	8744.62
+dijkstra_stdheap-longBigGameHunters.map.scen.out	395860
+dijkstra_stdheap-shortBigGameHunters.map.scen.out	82873.9
