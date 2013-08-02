@@ -76,6 +76,12 @@ Kód bude kompilovaný kompilátorom g++ s direktívou \emph{-O3}, čo zaručuje
 
 
 \section{Výsledky}
+Tabuľka \ref{fig:totaltime_result} popisuje čas v sekundách, ktorý strávil daný algoritmus hľadaním cesty medzi všetkými dvojicami zadaného vstupu. Z tabuľky môžme vypozorovať  zaujímavé správanie algoritmov. Najrýchlejší je 
+algoritmus Anderson, ktorý je zatiaľ najrýchlejším algoritmom v tejto súťaži.
+Ďalej vidíme, že dijkstrov algoritmus je na niektorých mapách a vstupoch niekoľkonásobne rýchlejší ako A* a~na~niektorých zasa pomalší.
+Dekompozícia mapy na~obdĺžniky zrýchlila algoritmus A* len keď bola vzdialenosť medzi počiatočným a koncovým bodom dostatočne malá.
+
+
 
 \begin{table}[H]
 	\centering
@@ -90,11 +96,30 @@ Kód bude kompilovaný kompilátorom g++ s direktívou \emph{-O3}, čo zaručuje
 	And  &  0.000543 & 0.002659 & 0.000359 & 0.001747 & 0.000673& 0.002197\\
 	\hline
 	\end{tabular}
-	\caption{Výsledky časov v sekundách}
+	\caption{Časy behu algoritmov nad zadanými množinami vstupov. Uvedené v sekundách}
 	\label{fig:totaltime_result}
 \end{table}
 
+Tabuľka~\ref{fig:totalpath_result} uvádza súčet dĺžok najkratších ciest pre danú testovanú množinu. Vyplýva z~nej, že rýchly algoritmus Anderson nie je optimálny a táto neoptimalita sa prejavuje najmä keď je vzdialenosť medzi bodmi malá. Ostatné algoritmy s~výnimkou implementácie Dijkstrovho algoritmu s~klasickou binárnou haldou vykazujú dobré výsledky.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l | r|r|r|r|r|r|}
+	\hline
+	 & AS & AL & BS & BL & GS & GL \\
+	\hline
+	DH & 111010 & 548861 & 78330.7& 326556 & 82873.9 & 395860 \\
+	DBQ & 8710.17 & 548861 & 8731.65 & 152185 & 8744.62 & 128398 \\
+	A* & 8743.7 & 144527& 8762.74 & 153288 & 8774.98 & 128885 \\
+	A*+ & 8738.43& 144527 & 8758.98 & 153288 & 8769.46 & 128885 \\
+	And & 22057.2 & 144854 & 22010 & 156927 & 27717.8 & 135411 \\
+	\hline
+	\end{tabular}
+	\caption{Dĺžky trás algoritmov. Uvedené ako súčty dĺžok hrán ciest medzi množinami dvojíc vrcholov}
+	\label{fig:totalpath_result}
+\end{table}
 
+Posledná tabuľka~\ref{fig:verticesscanned_result} popisuje
+počet vrcholov grafu, ktoré algoritmus prehľadal, ked hľadal najkratšiu cestu. Táto veličina bola zisťovaná len z algoritmov autora. Z nej vyplýva, že algoritmus A* prehľadáva menej vrcholov, ako dijkstrov algoritmus. Taktiež z nej vyplýva, že dekompozícia grafu na obdĺžniky je pri vzdialených vrcholoch zbytočná.
 \begin{table}[H]
 	\centering
 	
@@ -114,20 +139,4 @@ Kód bude kompilovaný kompilátorom g++ s direktívou \emph{-O3}, čo zaručuje
 	\label{fig:verticesscanned_result}
 \end{table}
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|l | r|r|r|r|r|r|}
-	\hline
-	 & AS & AL & BS & BL & GS & GL \\
-	\hline
-	DH & 111010 & 548861 & 78330.7& 326556 & 82873.9 & 395860 \\
-	DBQ & 8710.17 & 548861 & 8731.65 & 152185 & 8744.62 & 128398 \\
-	A* & 8743.7 & 144527& 8762.74 & 153288 & 8774.98 & 128885 \\
-	A*+ & 8738.43& 144527 & 8758.98 & 153288 & 8769.46 & 128885 \\
-	And & 22057.2 & 144854 & 22010 & 156927 & 27717.8 & 135411 \\
-	\hline
-	\end{tabular}
-	\caption{Výsledky obsahujúce prejdeny vzialenosť}
-	\label{fig:totalpath_result}
-\end{table}
 
