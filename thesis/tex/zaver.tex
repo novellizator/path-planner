@@ -1,4 +1,16 @@
 \chapter*{Záver}
 \addcontentsline{toc}{chapter}{Záver}
 
-Práca sa zaoberala hľadaním ciest na mriežkových grafoch s dôrazom na rýchlosť nájdenia cesty a dĺžku nájdenej cesty. 
+Práca sa zaoberala hľadaním ciest na mriežkových grafoch s dôrazom na rýchlosť nájdenia cesty a~dĺžku nájdenej cesty. 
+
+V prvej časti práca podala prehľad najdôležitejších algoritmov používaných pri hľadaní ciest. Kľúčovým algoritmom je Dijkstrov algoritmus. Postupnými vylepšeniami a~optimalizáciami na mriežkové grafy bol následne skonštruovaný vylepšený Dijkstrov algoritmus bežiaci v lineárnom čase. 
+Ďalším dôležitých algoritmom je algoritmus A*. V práci bol popísaný a naprogramovaný s rôznymi heuristikami.
+
+V druhej časti bol zavedený nový pohľad na analýzu mriežkového grafu --- jeho dekompozícia na obdĺžniky. 
+Pomocou nej bolo možné na grafoch s veľkým počtom hrán vyhľadávať cestu efektívnejšie, ako doterajšími spôsobmi.
+Algoritmus navrhnutý v tejto časti vychádza z Algoritmu A*, používa landmarky a taktiež túto dekompozíciu na obdĺžniky.
+
+Vo štvrtej kapitole sme spravili porovnanie doterajších algoritmov s týmto novým algoritmom. Vo výsledkoch sme zistili, 
+že tento algoritmus poskytuje viditeľné zrýchlenie, pri vyhľadávaní cesty medzi vrcholmi, ktorých vzdialenosť je malá. Z tohto dôvodu navrhujeme začleniť túto metódu do ostatných vyhľadávacích algoritmov, ktoré často hľadajú cestu medzi blízkymi bodmi v mriežkových grafoch s veľkým množstvom hrán.
+
+Práca taktiež ukázala, že nižšia asymptotická zložitosť neznamená vyššiu reálnu rýchlost behu. Taktiež poukázala na to, že hoci algoritmus A* vie orezať počet prehľadaných vrcholov až na tretinu, neznamená to ešte aj vyššiu celkovú rýchlosť behu.
