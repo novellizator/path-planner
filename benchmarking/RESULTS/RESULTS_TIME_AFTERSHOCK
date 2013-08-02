@@ -8,5 +8,5 @@ astar_nocolor-longAftershock.map.scen.out	7.481771
 astar_nocolor-shortAftershock.map.scen.out	.263951
 dijkstra_bucket-longAftershock.map.scen.out	11.505914
 dijkstra_bucket-shortAftershock.map.scen.out	.506893
-dijkstra_stdheap-longAftershock.map.scen.out	8.609133
-dijkstra_stdheap-shortAftershock.map.scen.out	8.706919
+dijkstra_stdheap-longAftershock.map.scen.out	9.978722
+dijkstra_stdheap-shortAftershock.map.scen.out	.372839

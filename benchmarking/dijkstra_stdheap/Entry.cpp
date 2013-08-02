@@ -161,7 +161,7 @@ class Comp
 public:
     bool operator() (const Node_t& a, const Node_t& b)
     {
-        return a.supposedDistance > b.supposedDistance; 
+        return a.distance > b.distance; 
 
     }
 };
@@ -278,7 +278,7 @@ bool GetPath(void* data, xyLoc s, xyLoc g, std::vector<xyLoc> &path)
 		std::reverse(path.begin(), path.end());
 
 	}
-	cout << "verticesScanned\t" << verticesScanned << endl;
+//	cout << "verticesScanned\t" << verticesScanned << endl;
 	return true;
 }
 //-------- END OF A*

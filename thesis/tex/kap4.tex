@@ -32,21 +32,21 @@ Konkrétne máme tieto 4 vstupné súbory:
 \begin{figure}[H]
 \centering
 \includegraphics[width=10cm]{./img/Aftershock.png}
-\caption{Graf \uv{Aftershock}}
+\caption{Graf \uv{Aftershock} má rozmery $512 \times 512$}
 \label{fig:aftershock_map}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=10cm]{./img/Brushfire.png}
-\caption{Graf \uv{Brushfire}}
+\caption{Graf \uv{Brushfire} má rozmery $512 \times 512$}
 \label{fig:brushfire_map}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=10cm]{./img/BigGameHunters.png}
-\caption{Graf \uv{BigGameHunters}}
+\caption{Graf \uv{BigGameHunters} má rozmery $512 \times 512$}
 \label{fig:biggamehunters_map}
 \end{figure}
 
@@ -67,7 +67,7 @@ Testovať budeme nasledujúce algoritmy:
 \item Dijkstrov algoritmus nad priehradkovou haldou (označime DBQ).
 \item A* používajúci 6 landmarkov (označíme A*).
 \item A* používajúci 6 landmarkov a taktiež obdĺžnikovú dekompozíciu, popísanú v kapitole 3 (označíme A*+).
-\item Anderson -- s prehľadom najrýchlejší algoritmus, ktorý vyhral súťaž (označíme And).
+\item Anderson -- s prehľadom najrýchlejší algoritmus, ktorý vyhral súťaž (oz\-na\-čí\-me And).
 \end{itemize}
 
 
@@ -76,7 +76,7 @@ Kód bude kompilovaný kompilátorom g++ s direktívou \emph{-O3}, čo zaručuje
 
 
 \section{Výsledky}
-Tabuľka \ref{fig:totaltime_result} popisuje čas v sekundách, ktorý strávil daný algoritmus hľadaním cesty medzi všetkými dvojicami zadaného vstupu. Z tabuľky môžme vypozorovať  zaujímavé správanie algoritmov. Najrýchlejší je 
+Tabuľka \ref{fig:totaltime_result} popisuje čas v sekundách, ktorý strávil daný algoritmus hľadaním cesty medzi všetkými dvojicami daného vstupu. Z tabuľky môžme vypozorovať  zaujímavé správanie algoritmov. Najrýchlejší je 
 algoritmus Anderson, ktorý je zatiaľ najrýchlejším algoritmom v tejto súťaži.
 Ďalej vidíme, že dijkstrov algoritmus je na niektorých mapách a vstupoch niekoľkonásobne rýchlejší ako A* a~na~niektorých zasa pomalší.
 Dekompozícia mapy na~obdĺžniky zrýchlila algoritmus A* len keď bola vzdialenosť medzi počiatočným a koncovým bodom dostatočne malá.
@@ -89,7 +89,7 @@ Dekompozícia mapy na~obdĺžniky zrýchlila algoritmus A* len keď bola vzdiale
 	\hline
 	  & AS & AL & BS & BL & GS & GL \\
 	\hline
-	DH & 8.706919 & 8.609133 & 4.554813 & 3.803920 & 11.059045 & 7.932771 \\
+	DH & 0.372839 & 9.978722 & 0.356326 & 5.425334 & 0.485236 & 14.354057 \\
 	DBQ & 0.506893 & 11.505914 &  0.329444 & 4.315670 & 0.467251 & 11.990992 \\
 	A* & 0.263951 & 7.481771 & 0.283890 & 15.599357 & 0.393476 & 9.667814 \\
 	A*+  & 0.182731 & 7.502437 &  0.197504 & 15.670339 & 0.257229 & 9.694499\\
@@ -100,26 +100,26 @@ Dekompozícia mapy na~obdĺžniky zrýchlila algoritmus A* len keď bola vzdiale
 	\label{fig:totaltime_result}
 \end{table}
 
-Tabuľka~\ref{fig:totalpath_result} uvádza súčet dĺžok najkratších ciest pre danú testovanú množinu. Vyplýva z~nej, že rýchly algoritmus Anderson nie je optimálny a táto neoptimalita sa prejavuje najmä keď je vzdialenosť medzi bodmi malá. Ostatné algoritmy s~výnimkou implementácie Dijkstrovho algoritmu s~klasickou binárnou haldou vykazujú dobré výsledky.
+Tabuľka~\ref{fig:totalpath_result} uvádza súčet dĺžok najkratších ciest pre danú testovanú množinu. Vyplýva z~nej, že rýchly algoritmus Anderson zďaleka nie je optimálny a táto neoptimalita sa prejavuje najmä keď je vzdialenosť medzi počiatkom a koncom malá. Ostatné algoritmy vykazujú podobne dobré výsledky.
 \begin{table}[H]
 	\centering
 	\begin{tabular}{|l | r|r|r|r|r|r|}
 	\hline
 	 & AS & AL & BS & BL & GS & GL \\
 	\hline
-	DH & 111010 & 548861 & 78330.7& 326556 & 82873.9 & 395860 \\
-	DBQ & 8710.17 & 548861 & 8731.65 & 152185 & 8744.62 & 128398 \\
+	DH & 8710.17 & 144046 & 8731.65& 152185 & 8744.62 & 128398 \\
+	DBQ & 8710.17 & 144046 & 8731.65 & 152185 & 8744.62 & 128398 \\
 	A* & 8743.7 & 144527& 8762.74 & 153288 & 8774.98 & 128885 \\
 	A*+ & 8738.43& 144527 & 8758.98 & 153288 & 8769.46 & 128885 \\
 	And & 22057.2 & 144854 & 22010 & 156927 & 27717.8 & 135411 \\
 	\hline
 	\end{tabular}
-	\caption{Dĺžky trás algoritmov. Uvedené ako súčty dĺžok hrán ciest medzi množinami dvojíc vrcholov}
+	\caption{Súčet dĺžok ciest pre dané dvojice počiatkov a koncov}
 	\label{fig:totalpath_result}
 \end{table}
 
 Posledná tabuľka~\ref{fig:verticesscanned_result} popisuje
-počet vrcholov grafu, ktoré algoritmus prehľadal, ked hľadal najkratšiu cestu. Táto veličina bola zisťovaná len z algoritmov autora. Z nej vyplýva, že algoritmus A* prehľadáva menej vrcholov, ako dijkstrov algoritmus. Taktiež z nej vyplýva, že dekompozícia grafu na obdĺžniky je pri vzdialených vrcholoch zbytočná.
+počet vrcholov grafu, ktoré algoritmus prehľadal, ked hľadal najkratšiu cestu. Táto veličina bola zisťovaná len z algoritmov autora. Z tabuľky vyplýva, že algoritmus A* prehľadáva menej vrcholov, ako dijkstrov algoritmus. Taktiež z nej vyplýva, že dekompozícia grafu na obdĺžniky je pri vzdialených vrcholoch zbytočná.
 \begin{table}[H]
 	\centering
 	
@@ -127,7 +127,7 @@ počet vrcholov grafu, ktoré algoritmus prehľadal, ked hľadal najkratšiu ces
 		\hline
 		  & AS & AL & BS & BL & GS & GL \\
 		\hline
-		DH & 20888032 & 26585115 & 14967159 & 15403707 & 25967574 & 22755932 \\
+		DH & 1067195 & 35126970 & 926032 & 19103546 & 986303 & 35325535 \\
 		DBQ & 1347329 & 39028967 & 1176089 & 20528587 & 1255147 & 40707226 \\
 		A* & 350839 & 13854096& 624561 & 41883515 & 637189 & 17936238 \\
 		A*+ & 250022& 13854096 & 465311 & 41883515 & 407731 & 17936238 \\

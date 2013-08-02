@@ -8,5 +8,5 @@ astar_nocolor-longBigGameHunters.map.scen.out	128885
 astar_nocolor-shortBigGameHunters.map.scen.out	8774.98
 dijkstra_bucket-longBigGameHunters.map.scen.out	128398
 dijkstra_bucket-shortBigGameHunters.map.scen.out	8744.62
-dijkstra_stdheap-longBigGameHunters.map.scen.out	395860
-dijkstra_stdheap-shortBigGameHunters.map.scen.out	82873.9
+dijkstra_stdheap-longBigGameHunters.map.scen.out	128398
+dijkstra_stdheap-shortBigGameHunters.map.scen.out	8744.62

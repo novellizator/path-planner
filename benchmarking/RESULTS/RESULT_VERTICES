@@ -16,9 +16,9 @@ dijkstra_bucket-longBrushfire.map.scen.out	20528587
 dijkstra_bucket-shortAftershock.map.scen.out	1347329
 dijkstra_bucket-shortBigGameHunters.map.scen.out	1255147
 dijkstra_bucket-shortBrushfire.map.scen.out	1176089
-dijkstra_stdheap-longAftershock.map.scen.out	26585115
-dijkstra_stdheap-longBigGameHunters.map.scen.out	22755932
-dijkstra_stdheap-longBrushfire.map.scen.out	15403707
-dijkstra_stdheap-shortAftershock.map.scen.out	20888032
-dijkstra_stdheap-shortBigGameHunters.map.scen.out	25967574
-dijkstra_stdheap-shortBrushfire.map.scen.out	14967159
+dijkstra_stdheap-longAftershock.map.scen.out	35126970
+dijkstra_stdheap-longBigGameHunters.map.scen.out	35325535
+dijkstra_stdheap-longBrushfire.map.scen.out	19103546
+dijkstra_stdheap-shortAftershock.map.scen.out	1067195
+dijkstra_stdheap-shortBigGameHunters.map.scen.out	986303
+dijkstra_stdheap-shortBrushfire.map.scen.out	926032
